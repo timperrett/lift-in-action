@@ -1,0 +1,5 @@
+h1. Lift In Action
+
+The group of code is to accompany the Lift in Action book authored by Timothy Perrett and being published on Manning. 
+
+The code in this repo uses a multi-project SBT build.

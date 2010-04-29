@@ -1,0 +1,135 @@
+/** BASIC */
+
+html, body {
+	height: 100%;
+}
+
+/** LOGO */
+
+#logo {
+	width: 720px;
+	height: 125px;
+	margin: 0px auto;
+	background: url(images/homepage01.jpg) no-repeat left top;
+}
+
+#logo h1 {
+	display: none;
+}
+
+/** MENU */
+
+#menu {
+	width: 720px;
+	height: 54px;
+	margin: 0px auto;
+}
+
+#menu ul {
+	margin: 0px;
+	padding: 12px 0px 0px 0px;
+	list-style: none;
+	text-align: center;
+}
+
+#menu li {
+	display: inline;
+	padding: 0px;
+	background: none;
+}
+
+#menu a {
+	padding: 0 18px 10px 34px;
+	background: url(images/homepage02.jpg) no-repeat left top;
+}
+
+#menu .first a {
+	background: none;
+	padding-left: 16px;
+}
+
+/** PAGE */
+
+#page {
+	width: 720px;
+	margin: 0px auto;
+}
+
+/** SPLASH */
+
+#splash {
+	width: 236px;
+	height: 93px;
+	margin: 0 77px;
+	padding: 100px 290px 0px 40px;
+}
+
+#splash h2 {
+	display: none;
+}
+
+/** CONTENT */
+
+#content {
+	float: right;
+	width: 346px;
+	padding: 0px 79px 0px 0px;
+}
+
+#content-wide {
+	width: 561px;
+	margin-left: 80px;
+}
+
+/** SIDEBAR */
+
+#sidebar {
+	float: left;
+	width: 281px;
+}
+
+/** FOOTER */
+
+#footer {
+	padding-bottom: 50px;
+}
+
+/** BOX1 */
+
+#box1 {
+	padding: 35px 30px 20px 30px;
+}
+
+/** BOX2 */
+
+#box2 {
+	float: left;
+	width: 129px;
+	padding: 0px 0px 0px 30px;
+}
+
+/** BOX3 */
+
+#box3 {
+	float: right;
+	width: 129px;
+	padding: 0px 30px 0px 0px;
+}
+
+/** BOX4 */
+
+#box4 {
+	width: 194px;
+	margin: 0px 0px 0px 77px;
+}
+
+/** BOX5 */
+
+#box5 {
+	padding: 10px 0px 0px 67px;
+}
+
+/** BOX6 */
+
+#box6 {
+}

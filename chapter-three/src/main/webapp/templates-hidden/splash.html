@@ -1,0 +1,31 @@
+<lift:surround with="base" at="content">
+  
+  <div class="topbg homepage">
+    <div class="bottombg">
+      <!-- spash -->
+      <div id="splash">
+        <h2>Lift Travel</h2>
+        <p class="text1">
+          Enjoy <strong>real-time</strong> web applications powered by the Lift web framework
+        </p>
+        <p><a href="about" class="link2">Learn more &gt;&gt;</a></p>
+      </div>
+      <!-- end splash -->
+      <div id="content">
+        <div class="bottombg">
+          <!-- dynamic page content -->
+          <lift:bind name="content" />
+          <!-- end dynamic page content -->
+          <div style="clear: both;">&nbsp;</div>
+        </div>
+      </div>
+      <!-- end content -->
+      <div id="sidebar">
+        <lift:bind name="sidebar" />
+      </div>
+      <!-- end sidebar -->
+      <div style="clear: both; height: 50px;">&nbsp;</div>
+    </div>
+  </div>
+  
+</lift:surround>

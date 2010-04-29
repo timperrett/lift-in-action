@@ -31,4 +31,4 @@ Set current project to four 1.0
 </code></pre>
 
 Then we can run actions on that module like normal:
-</code><pre>> jetty-run</code></pre>
+<pre><code>> jetty-run</code></pre>

@@ -29,12 +29,7 @@ package model {
   class Auction extends LongKeyedMapper[Auction] with IdPK with CreatedUpdated {
     def getSingleton = Auction
     // fields
-    object name extends MappedString(this, 150){
-      override def validations = 
-        valMinLen(3, "Description must be 3 characters") _ :: 
-        valUnique("That link URL has already been taken") _ :: 
-        super.validations
-    }
+    object name extends MappedString(this, 150)
     object description extends MappedText(this)
     object ends_at extends MappedDateTime(this)
     object outbound_on extends MappedDateTime(this)

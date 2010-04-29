@@ -3,3 +3,36 @@ h1. Lift In Action
 The group of code is to accompany the Lift in Action book authored by Timothy Perrett and being published on Manning. 
 
 The code in this repo uses a multi-project SBT build.
+
+h1. Usage
+
+Load up SBT in the normal way:
+<pre><code>timperrett$ sbt</code></pre>
+
+Firstly you need to update the dependencies
+<pre><code>> update</code></pre>
+
+
+Compile the whole thing:
+<pre><code>> compile</code></pre>
+
+
+Then lets take a look at the modules in this project
+<pre><code>
+> projects
+    four 1.0
+    two 1.0
+    three 1.0
+    lift-in-action 1.0
+</code></pre>
+
+Then select a particular module we want to interface with:
+<code><pre>
+> project four
+Set current project to four 1.0
+</code></pre>
+
+Then we can run actions on that module like normal:
+</code><pre>
+> jetty-run
+</code></pre>

@@ -172,6 +172,24 @@ hr { display: none; }
 
 .hr1 {
 	height: 42px;
-	background: url('/images/homepage12.gif) repeat-x left center;
+	background: url('/images/homepage12.gif') repeat-x left center;
 }
 
+
+.auctions {
+  list-style: none;
+}
+.auctions li {
+  height: 100px;
+  border-top: 1px solid #c38a44;
+}
+.auctions li.first {
+  border-top: 1px solid #c38a44;
+}
+.auctions li.last {
+  border-bottom: 1px solid #c38a44;
+}
+.auctions li img {
+  padding-top: 15px;
+  padding-right: 15px;
+}

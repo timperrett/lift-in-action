@@ -1,0 +1,23 @@
+/* theme screen stylesheets */
+
+/* import stylesheets and hide from IE/Mac \*/
+@import url("reset.css");
+@import url("coolblue.css");
+@import url("enhancements.css"); 
+/* end import/hide */
+
+/* content */
+#content-wrap {
+	clear: both;
+  	margin: 0; padding: 0;
+   background: #fff;
+   width: 100%;
+   float: left;
+}
+#content {
+   width: 1000px;
+   margin: 0 auto;
+   padding: 0 0 20px 0;
+   background: #FFF url(../images/content.gif) repeat-y center top;
+/*   overflow: hidden;*/
+}

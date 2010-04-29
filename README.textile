@@ -18,8 +18,7 @@ Compile the whole thing:
 
 
 Then lets take a look at the modules in this project
-<pre><code>
-> projects
+<pre><code>> projects
     four 1.0
     two 1.0
     three 1.0
@@ -27,12 +26,9 @@ Then lets take a look at the modules in this project
 </code></pre>
 
 Then select a particular module we want to interface with:
-<pre><code>
-> project four
+<pre><code>> project four
 Set current project to four 1.0
 </code></pre>
 
 Then we can run actions on that module like normal:
-</code><pre>
-> jetty-run
-</code></pre>
+</code><pre>> jetty-run</code></pre>

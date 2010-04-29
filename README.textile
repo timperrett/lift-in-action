@@ -27,7 +27,7 @@ Then lets take a look at the modules in this project
 </code></pre>
 
 Then select a particular module we want to interface with:
-<code><pre>
+<pre><code>
 > project four
 Set current project to four 1.0
 </code></pre>

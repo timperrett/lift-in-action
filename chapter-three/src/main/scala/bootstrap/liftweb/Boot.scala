@@ -78,20 +78,6 @@ object Application {
     Menu("Suppliers") / "admin" / "suppliers" >> LocGroup("admin") submenus(Supplier.menus : _*),
     Menu("Auction Admin") / "admin" / "auctions" >> LocGroup("admin") submenus(Auction.menus : _*)
   ) ::: Customer.menus
-    
-    // Menu(Loc("Home", List("index"), "Home", LocGroup("public"))) ::
-    // Menu(Loc("Search", List("search"), "Search", LocGroup("public"))) ::
-    // Menu(Loc("History", List("history"), "History", LocGroup("public"))) ::
-    // Menu(Loc("Auctions", List("auctions"), "Auctions", LocGroup("public"))) ::
-    // Menu(Loc("Auction Detail", List("auction"), "Auction Detail", LocGroup("public"), Hidden)) ::
-    // // admin
-    // Menu(Loc("Admin", List("admin","index"), "Admin", LocGroup("admin"))) ::
-    // Menu(Loc("Suppliers", List("admin", "suppliers"), "Suppliers", LocGroup("admin")), 
-    //   Supplier.menus : _*
-    // ) :: Menu(Loc("AuctionAdmin", List("admin", "auctions"), "Auctions", LocGroup("admin")),
-    //   Auction.menus : _*
-    // ) :: Customer.menus
-    
   
   val database = DBVendor
   

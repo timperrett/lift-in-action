@@ -29,7 +29,12 @@ package model {
   class Auction extends LongKeyedMapper[Auction] with IdPK with CreatedUpdated {
     def getSingleton = Auction
     // fields
-    object name extends MappedString(this, 150)
+    object name extends MappedString(this, 150){
+      override def validations = 
+        valMinLen(3, "Description must be 3 characters") _ :: 
+        valUnique("That link URL has already been taken") _ :: 
+        super.validations
+    }
     object description extends MappedText(this)
     object ends_at extends MappedDateTime(this)
     object outbound_on extends MappedDateTime(this)
@@ -49,6 +54,11 @@ package model {
     
     // helper: get all the bids for this auction
     def bids = Bid.findAll(By(Bid.auction, this.id), OrderBy(Bid.id, Descending))
+    
+    def highestBid: Box[Bid] = bids match {
+      case list if list.length > 0 => Full(list.head)
+      case _ => Empty
+    }
   }
   
   

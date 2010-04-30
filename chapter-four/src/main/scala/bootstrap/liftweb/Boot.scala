@@ -47,15 +47,23 @@ class Boot extends Loggable {
     
     // make requests utf-8
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
+    
+    LiftRules.statelessRewrite.append {
+      case RewriteRequest(ParsePath("auction" :: key :: Nil,"",true,_),_,_) =>
+           RewriteResponse("auction" :: Nil, Map("id" -> key.split("-")(0)))
+    }
   }
 }
 
 object Application {
+  val MustBeLoggedIn = If(() => Customer.loggedIn_?, "")
   val sitemap = 
     Menu(Loc("Home", List("index"), "Home", LocGroup("public"))) ::
-    Menu(Loc("Search", List("search"), "Search", LocGroup("public"))) ::
-    Menu(Loc("History", List("history"), "History", LocGroup("public"))) ::
     Menu(Loc("Auctions", List("auctions"), "Auctions", LocGroup("public"))) ::
+    Menu(Loc("History", List("history"), "History", 
+      LocGroup("public"), MustBeLoggedIn)) ::
+    Menu(Loc("Search", List("search"), "Search", 
+      LocGroup("public"), MustBeLoggedIn)) ::
     Menu(Loc("Auction Detail", List("auction"), "Auction Detail", LocGroup("public"), Hidden)) ::
     // admin
     Menu(Loc("Admin", List("admin","index"), "Admin", LocGroup("admin"))) ::

@@ -1,6 +1,7 @@
 package example.travel {
 package model {
   
+  import scala.xml.{MetaData,Text,Null,UnprefixedAttribute}
   import net.liftweb.common.{Full,Box,Empty,Failure}
   import net.liftweb.mapper._
   

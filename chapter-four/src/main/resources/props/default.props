@@ -1,8 +1,0 @@
-db.class=com.mysql.jdbc.Driver
-db.host=localhost
-db.url=jdbc:mysql://localhost/liftinaction?user=root
-db.user=root
-#db.host=ec2-174-129-9-255.compute-1.amazonaws.com
-#db.url=jdbc:mysql://ec2-174-129-9-255.compute-1.amazonaws.com/liftinaction
-#db.user=manning
-#db.pass=perrett

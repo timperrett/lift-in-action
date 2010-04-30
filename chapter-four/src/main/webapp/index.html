@@ -3,25 +3,26 @@
     <h1>Today's top auctions</h1>
     <p><lift:helloWorld.howdy /></p>
     
-    <lift:auctions.top>
-      <img src="images/homepage09.jpg" alt="" width="72" height="72" class="left" />
-      <p><strong><a:name /></strong><br /><a:description /></p>
-    </lift:auctions.top>
-    
-    <a href="/auctions">more auctions &gt; &gt;</a>
+    <lift:listings.top>
+      <div style="clear: both;">
+        <img src="images/homepage09.jpg" alt="" width="72" height="72" class="left" />
+        <p><strong><a:name /></strong><br /><a:description /> <a:link /></p>
+      </div>
+    </lift:listings.top>
+    <p style="clear:both;"><a href="/auctions">more auctions &gt; &gt;</a></p>
   </div>
   
   <!-- this is the home page, so lets spash about a bit -->
-  <lift:with-param name="splash">
+  <lift:bind-at name="splash">
     <lift:embed what="_spash" />
-  </lift:with-param>
+  </lift:bind-at>
   
-  <lift:with-param name="sidebar">
+  <lift:bind-at name="sidebar">
     <lift:embed what="_dark_basket" />
     <div id="box5">
       <a href="#"><img src="/images/homepage07.jpg" alt="" width="214" height="183" /></a>
     </div>
-  </lift:with-param>
+  </lift:bind-at>
   
 </lift:surround>
 

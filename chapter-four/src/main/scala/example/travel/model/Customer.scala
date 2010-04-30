@@ -18,6 +18,7 @@ package model {
     override val basePath = "account" :: Nil
     override def homePage = "/"
     override def skipEmailValidation = true
+    override def loginMenuLocParams = LocGroup("public") :: super.loginMenuLocParams
     override def createUserMenuLocParams = LocGroup("public") :: super.createUserMenuLocParams
     override def screenWrap: Box[Node] = 
       Full(

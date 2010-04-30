@@ -22,8 +22,8 @@ class Boot {
     })
     
     // Build the application SiteMap
-    val entries = Menu(Loc("Home", List("index"), "Home")) :: Nil
-    LiftRules.setSiteMap(SiteMap(entries:_*))
+    def sitemap = SiteMap(Menu("Home") / "index")
+    LiftRules.setSiteMap(sitemap)
   }
 }
 

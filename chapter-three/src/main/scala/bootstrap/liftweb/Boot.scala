@@ -40,7 +40,23 @@ class Boot extends Loggable {
     // LiftRules.loggedInTest = Full(() => User.loggedIn_?)
     
     // set the application sitemap
-    LiftRules.setSiteMap(SiteMap(Application.sitemap:_*))
+    // LiftRules.setSiteMap(SiteMap(Application.sitemap:_*))
+    
+    // def sitemap = SiteMap(
+    //   Menu("Home") / "index" >> LocGroup("public"),
+    //   Menu("Search") / "search" >> LocGroup("public"),
+    //   Menu("History") / "history" >> LocGroup("public"),
+    //   Menu("Auctions") / "auctions" >> LocGroup("public"),
+    //   Menu("Auction Detail") / "auction" >> LocGroup("public"),
+    //   // admin
+    //   Menu("Admin") / "admin" / "index" >> LocGroup("admin"),
+    //   Menu("Suppliers") / "admin" / "suppliers" >> LocGroup("admin") submenus(Supplier.menus : _*),
+    //   Menu("Auction Admin") / "admin" / "auctions" >> LocGroup("admin") submenus(Auction.menus : _*),
+    // )
+    // LiftRules.setSiteMap(sitemap)
+    
+    LiftRules.setSiteMap(SiteMap(Application.sitemap: _*))
+    
     
     // setup the load pattern
     S.addAround(DB.buildLoanWrapper)
@@ -51,19 +67,30 @@ class Boot extends Loggable {
 }
 
 object Application {
-  val sitemap = 
-    Menu(Loc("Home", List("index"), "Home", LocGroup("public"))) ::
-    Menu(Loc("Search", List("search"), "Search", LocGroup("public"))) ::
-    Menu(Loc("History", List("history"), "History", LocGroup("public"))) ::
-    Menu(Loc("Auctions", List("auctions"), "Auctions", LocGroup("public"))) ::
-    Menu(Loc("Auction Detail", List("auction"), "Auction Detail", LocGroup("public"), Hidden)) ::
+  val sitemap = List(
+    Menu("Home") / "index" >> LocGroup("public"),
+    Menu("Search") / "search" >> LocGroup("public"),
+    Menu("History") / "history" >> LocGroup("public"),
+    Menu("Auctions") / "auctions" >> LocGroup("public"),
+    Menu("Auction Detail") / "auction" >> LocGroup("public") >> Hidden,
     // admin
-    Menu(Loc("Admin", List("admin","index"), "Admin", LocGroup("admin"))) ::
-    Menu(Loc("Suppliers", List("admin", "suppliers"), "Suppliers", LocGroup("admin")), 
-      Supplier.menus : _*
-    ) :: Menu(Loc("AuctionAdmin", List("admin", "auctions"), "Auctions", LocGroup("admin")),
-      Auction.menus : _*
-    ) :: Customer.menus
+    Menu("Admin") / "admin" / "index" >> LocGroup("admin"),
+    Menu("Suppliers") / "admin" / "suppliers" >> LocGroup("admin") submenus(Supplier.menus : _*),
+    Menu("Auction Admin") / "admin" / "auctions" >> LocGroup("admin") submenus(Auction.menus : _*)
+  ) ::: Customer.menus
+    
+    // Menu(Loc("Home", List("index"), "Home", LocGroup("public"))) ::
+    // Menu(Loc("Search", List("search"), "Search", LocGroup("public"))) ::
+    // Menu(Loc("History", List("history"), "History", LocGroup("public"))) ::
+    // Menu(Loc("Auctions", List("auctions"), "Auctions", LocGroup("public"))) ::
+    // Menu(Loc("Auction Detail", List("auction"), "Auction Detail", LocGroup("public"), Hidden)) ::
+    // // admin
+    // Menu(Loc("Admin", List("admin","index"), "Admin", LocGroup("admin"))) ::
+    // Menu(Loc("Suppliers", List("admin", "suppliers"), "Suppliers", LocGroup("admin")), 
+    //   Supplier.menus : _*
+    // ) :: Menu(Loc("AuctionAdmin", List("admin", "auctions"), "Auctions", LocGroup("admin")),
+    //   Auction.menus : _*
+    // ) :: Customer.menus
     
   
   val database = DBVendor

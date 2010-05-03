@@ -2,7 +2,7 @@ package example.travel {
 package snippet {
   
   import scala.xml.{NodeSeq,Text}
-  import net.liftweb.common.{Full,Box,Empty,Failure}
+  import net.liftweb.common.{Full,Box,Empty,Failure,Loggable}
   import net.liftweb.util.Helpers._
   import net.liftweb.http.{S,StatefulSnippet,SHtml}
   import net.liftweb.http.js.JsCmd 
@@ -11,52 +11,46 @@ package snippet {
   import net.liftweb.mapper.{MaxRows,By,OrderBy,Descending,StartAt}
   import example.travel.model.{Auction,Bid,Customer}
   
-  class Details extends StatefulSnippet {
+  class Details extends StatefulSnippet with AuctionHelpers with Loggable {
     val dispatch: DispatchIt =  {
       case "show" => show _
       case "bid" => bid _
     }
-    private val messageDiv = "messages"
-    private val amountInput = "amount"
+    
     val auction = Auction.find(By(Auction.id,S.param("id").map(_.toLong).openOr(0L)))
     
     def show(xhtml: NodeSeq): NodeSeq = auction.map(a => 
-      bind("a", xhtml,
-        "name" -> a.name,
-        "description" -> a.description,
+      bind("a", single(a, xhtml),
         "countdown" -> <span class="countdown">1:27:22</span>,
-        "highest_bid" -> a.highestBid.map(_.amount.toString).openOr("£0.00")
+        "current_amount" -> a.currentAmount.toString,
+        "next_amount" -> a.nextAmount.toString
       )).openOr(Text("That auction does not exist"))
     
-    // ajax bidding
     def bid(xhtml: NodeSeq): NodeSeq = {
       var amountBox: Box[String] = Empty
       def submit = {
-        for {
-          amountString <- amountBox ?~ "Amount not entered"
-          amount <- tryo(BigDecimal(amountString).longValue) ?~! "Amount not a number"
-        } yield {
-          new Bid()
-            .auction(auction)
-            .customer(Customer.currentUser)
-            .amount(amount)
-            .save
-          message(messageDiv, "Completed")
+        for(ass <- amountBox ?~ "Amount not entered";
+            amo <- tryo(BigDecimal(ass).doubleValue) ?~! "Amount not a number";
+            auc <- auction;
+            vld <- tryo(amo).filter(_ >= auc.nextAmount) ?~ "Less that required amount!"
+        ) yield {
+          new Bid().auction(auction).customer(Customer.currentUser).amount(amo).save
         }
       } match {
-        case Full(js) => js
-        case Failure(msg, _, _) => message(messageDiv, msg)
-        case _ => message(messageDiv, "Unable to place bid at this time.")
+        case Full(x) => S.notice("Great, your bid was accepted!")
+        case Failure(msg, _, _) => S.error(msg)
+        case _ => S.warning("Unable to place bid at this time.") 
       }
-      
-      SHtml.ajaxForm(bind("b",xhtml,
-        "amount" -%> SHtml.text(amountBox.openOr(""), s => amountBox = Full(s)) % ("id" -> "amount"),
-        "submit" -> SHtml.ajaxSubmit("Place Bid", submit _)
-      ))
+      if(Customer.loggedIn_?){
+        SHtml.ajaxForm(bind("b",xhtml,
+          "amount" -%> SHtml.text(amountBox.openOr(""), s => amountBox = Full(s)) % ("id" -> "amount"),
+          "submit" -> SHtml.ajaxSubmit("Place Bid", () => { submit; Noop })
+        ))
+      } else {
+        S.warning("You must be logged in to bid on auctions.")
+        NodeSeq.Empty
+      } 
     }
-    
-    private def message(id: String, msg: String): JsCmd =
-      Show(messageDiv, 1 seconds) & DisplayMessage(id, Text(msg), 2 seconds, 2 seconds)
     
   }
   

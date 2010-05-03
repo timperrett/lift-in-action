@@ -17,6 +17,8 @@ class Boot extends Loggable {
   def boot {
     LiftRules.addToPackages("example.travel")
     
+    /**** database settings ****/
+    
     // set the JNDI name that we'll be using
     DefaultConnectionIdentifier.jndiName = "jdbc/liftinaction"
     
@@ -32,18 +34,25 @@ class Boot extends Loggable {
     Schemifier.schemify(true, Schemifier.infoF _, 
       Bid, Auction, Supplier, Customer, Order, OrderAuction)
     
-    // setup the 404 handler 
-    LiftRules.uriNotFound.prepend(NamedPF("404handler"){
-      case (req,failure) => NotFoundAsTemplate(ParsePath(List("404"),"html",false,false))
-    })
+    // setup the loan pattern
+    S.addAround(DB.buildLoanWrapper)
+    
+    /**** user experience settings ****/
+    
+    // set the time that notices should be displayed and then fadeout
+    LiftRules.noticesAutoFadeOut.default.set((notices: NoticeType.Value) => Full(2 seconds, 2 seconds))
     
     // LiftRules.loggedInTest = Full(() => User.loggedIn_?)
+    
+    /**** request settings ****/
     
     // set the application sitemap
     LiftRules.setSiteMap(SiteMap(Application.sitemap:_*))
     
-    // setup the load pattern
-    S.addAround(DB.buildLoanWrapper)
+    // setup the 404 handler 
+    LiftRules.uriNotFound.prepend(NamedPF("404handler"){
+      case (req,failure) => NotFoundAsTemplate(ParsePath(List("404"),"html",false,false))
+    })
     
     // make requests utf-8
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))

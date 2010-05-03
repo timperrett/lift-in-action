@@ -53,13 +53,20 @@ package model {
     }
     
     // helper: get all the bids for this auction
-    def bids = Bid.findAll(By(Bid.auction, this.id), OrderBy(Bid.id, Descending))
+    def bids = Bid.findAll(By(Bid.auction, this.id), OrderBy(Bid.amount, Descending))
     
-    def highestBid: Box[Bid] = bids match {
+    private def topBid: Box[Bid] = bids match {
       case list if list.length > 0 => Full(list.head)
       case _ => Empty
     }
+    
+    def currentAmount: Double = topBid.map(_.amount.is).openOr(0D)
+    def nextAmount: Double = (currentAmount + 1D)
+    def travelDates: String = (Box.!!(inbound_on.is), Box.!!(outbound_on.is)) match {
+      case (Full(in), Full(out)) => out.toString + ", returning " + in.toString
+      case (Empty,Full(out)) => out.toString + " (one way)"
+      case _ => "Travel dates not specified, call the vendor."
+    }
   }
-  
   
 }}

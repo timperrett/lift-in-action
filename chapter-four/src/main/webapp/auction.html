@@ -1,21 +1,38 @@
 <lift:surround with="wide" at="content">
-  
-  <div id="box1" class="topbg">
-    <div class="messages" id="messages">Message</div>
-    
-    <lift:details.bid>
-      <b:amount id="amount"/>
-      <b:submit />
-    </lift:details.bid>
-    
-    
+  <div class="auction">
     <lift:details.show>
       <h1><a:name /></h1>
-      <a:countdown />
-      <hr />
-      <p><a:description /></p>
+      
+      <div class="bidder">
+        <label>Time Remaining:</label>
+        <div class="half"><a:countdown /></div>
+        <label>Travel Dates:</label>
+        <div class="half"><a:travel_dates /></div>
+        <label>Current Bid:</label>
+        <div class="half">&pound;<a:current_amount /></div>
+        
+        <lift:details.bid>
+          <!-- below content shows if user is logged in -->
+          <label>Enter New Bid:</label>
+          <div class="half"><b:amount id="amount"/> <b:submit /> <br/>
+          <span class="small">(must be more than: &pound;<a:next_amount />)</span></div>
+        </lift:details.bid>
+        
+      </div>
+      
+      <div class="description">
+        <a:description />
+      </div>
     </lift:details.show>
   </div>
   
+  
+  <!-- <div id="box1" class="topbg auction"> -->
+    <!-- start auction content -->
+    
+    
+    
+    <!-- end auction content -->
+  <!-- </div> -->
 </lift:surround>
 

@@ -14,7 +14,7 @@ package model {
   class Bid extends LongKeyedMapper[Bid] with IdPK with CreatedUpdated {
     def getSingleton = Bid
     // fields
-    object amount extends MappedLong(this)
+    object amount extends MappedDouble(this)
     
     // relationship
     object customer extends LongMappedMapper(this, Customer){
@@ -23,6 +23,9 @@ package model {
     object auction extends LongMappedMapper(this, Auction){
       override def dbColumnName = "auction_id"
     }
+    
+    // helpers
+    def nextBidValue: Double = amount.is + 1D
   }
   
   

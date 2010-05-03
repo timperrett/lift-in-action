@@ -55,7 +55,7 @@ ul {
 
 ul li {
 	padding-left: 9px;
-	background: url('/images/homepage11.gif') no-repeat left center;
+/*  background: url('/images/homepage11.gif') no-repeat left center;*/
 }
 
 ol {
@@ -180,8 +180,10 @@ hr { display: none; }
   list-style: none;
 }
 .auctions li {
-  height: 100px;
+  height: auto;
+/*  overflow: hidden;*/
   border-top: 1px solid #c38a44;
+  padding-bottom: 5px;
 }
 .auctions li.first {
   border-top: 1px solid #c38a44;
@@ -201,13 +203,73 @@ hr { display: none; }
 .auctions li .description {
   padding-top: 15px;
 }
-.messages {
+.auction h1 {
   width: 100%;
-  height: 30px;
-  line-height: 30px;
+  clear: both;
+}
+.auction .bidder {
+  width: 100%; 
+  clear: both; 
+/*  background-color: red;*/
+}
+.auction .bidder .half, .auction .bidder label {
+  width: 50%;
+  font-size: 12px;
+  float: left;
+  padding-right: 9%;
+  height: 35px;
+}
+.auction .bidder label {
+  width: 30%;
+  font-weight: bold;
+}
+.auction .description {
+  clear: both;
+  padding-top: 20px;
+/*  background-color: red;*/
+}
+
+.bold {
+  font-weight: bold;
+}
+.align-right {
+  text-align: right;
+}
+span.small {
+  font-size: 11px;
+}
+
+.messages {
+  clear: both;
+  width: 100%;
+/*  height: 30px;*/
+  line-height: 15px;
   text-indent: 10px;
   font-weight: bold;
-  display: none;
+  margin-bottom: 8px;
+/*  display: none;*/
+}
+.messages ul, .messages ul li {
+  list-style: none;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.messages ul li {
+  text-indent: 25px;
+  line-height: 25px;
+/*  float: left;*/
+}
+
+.sucsess {
   border: 1px solid rgb(198, 216, 128);
   background: rgb(230, 239, 194);
+}
+.warning {
+  background-color: #FFF6BF;
+  border: 2px solid #FFD324;
+}
+.error {
+  background-color: #FBE3E4;
+  border: 2px solid #FBC2C4;
 }

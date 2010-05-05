@@ -5,6 +5,7 @@ package model {
   import net.liftweb.sitemap.Loc._
   import scala.xml.NodeSeq
   import net.liftweb.mapper._
+  import net.liftweb.util.Helpers.tryo
   
   object Auction 
     extends Auction 
@@ -55,13 +56,28 @@ package model {
     // helper: get all the bids for this auction
     def bids = Bid.findAll(By(Bid.auction, this.id), OrderBy(Bid.amount, Descending))
     
+    def barter(next: Box[String]): Box[Bid] = 
+      for(ass <- next ?~! "Amount is not a number";
+          amo <- tryo(BigDecimal(ass).doubleValue) ?~! "Amount is not a number";
+          vld <- tryo(amo).filter(_ >= nextAmount) ?~ "Your bid is lower than required!"
+      ) yield {
+        new Bid().auction(this).customer(Customer.currentUser).amount(vld).saveMe
+      }
+    
+    // def barter(next: Double): Box[Bid] = 
+    //   if(next >= nextAmount){
+    //     tryo(new Bid().auction(this).customer(Customer.currentUser).amount(next).saveMe)
+    //   } else {
+    //     Empty ~> "Amount less than required next amount"
+    //   }
+    
     private def topBid: Box[Bid] = bids match {
       case list if list.length > 0 => Full(list.head)
       case _ => Empty
     }
-    
     def currentAmount: Double = topBid.map(_.amount.is).openOr(0D)
     def nextAmount: Double = (currentAmount + 1D)
+    
     def travelDates: String = (Box.!!(inbound_on.is), Box.!!(outbound_on.is)) match {
       case (Full(in), Full(out)) => out.toString + ", returning " + in.toString
       case (Empty,Full(out)) => out.toString + " (one way)"

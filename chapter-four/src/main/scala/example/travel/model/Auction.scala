@@ -64,13 +64,6 @@ package model {
         new Bid().auction(this).customer(Customer.currentUser).amount(vld).saveMe
       }
     
-    // def barter(next: Double): Box[Bid] = 
-    //   if(next >= nextAmount){
-    //     tryo(new Bid().auction(this).customer(Customer.currentUser).amount(next).saveMe)
-    //   } else {
-    //     Empty ~> "Amount less than required next amount"
-    //   }
-    
     private def topBid: Box[Bid] = bids match {
       case list if list.length > 0 => Full(list.head)
       case _ => Empty

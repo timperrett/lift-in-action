@@ -4,12 +4,16 @@
       <h1><a:name /></h1>
       
       <div class="bidder">
-        <label>Time Remaining:</label>
-        <div class="half"><a:countdown /></div>
-        <label>Travel Dates:</label>
-        <div class="half"><a:travel_dates /></div>
-        <label>Current Bid:</label>
-        <div class="half">&pound;<a:current_amount /></div>
+        <lift:comet type="AuctionUpdater">
+          <label>Time Remaining:</label>
+          <div class="half">
+            <live:countdown />
+          </div>
+          <label>Travel Dates:</label>
+          <div class="half"><a:travel_dates /></div>
+          <label>Current Bid:</label>
+          <div class="half">&pound;<a:current_amount /></div>
+        </lift:comet>
         
         <lift:details.bid>
           <!-- below content shows if user is logged in -->

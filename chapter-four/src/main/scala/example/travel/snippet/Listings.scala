@@ -1,12 +1,13 @@
 package example.travel {
 package snippet {
   
-  import example.travel.model.Auction
   import scala.xml.{NodeSeq,Text}
   import net.liftweb.util.Helpers._
   import net.liftweb.http.{S,DispatchSnippet}
   import net.liftweb.mapper.{MaxRows,By,OrderBy,Descending,StartAt}
   import net.liftweb.mapper.view.{MapperPaginatorSnippet}
+  import example.travel.model.Auction
+  import example.travel.lib.AuctionHelpers
   
   class Listings extends DispatchSnippet with AuctionHelpers {
     override def dispatch = {

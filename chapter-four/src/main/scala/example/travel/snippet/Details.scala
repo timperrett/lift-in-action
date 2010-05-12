@@ -8,6 +8,8 @@ package snippet {
   import net.liftweb.http.js.JsCmds.{Noop}
   import net.liftweb.mapper.{MaxRows,By,OrderBy,Descending,StartAt}
   import example.travel.model.{Auction,Bid,Customer}
+  import example.travel.lib.AuctionHelpers
+  import example.travel.comet.{AuctionServer,AuctionValueChange}
   
   class Details extends StatefulSnippet with AuctionHelpers with Loggable {
     val dispatch: DispatchIt =  {
@@ -15,7 +17,7 @@ package snippet {
       case "bid" => bid _
     }
     
-    val auction = Auction.find(By(Auction.id,S.param("id").map(_.toLong).openOr(0L)))
+    val auction = currentAuction
     
     def bid(xhtml: NodeSeq): NodeSeq = if(!Customer.loggedIn_?){
       S.warning("You must be logged in to bid on auctions.")
@@ -25,10 +27,10 @@ package snippet {
       def submit = boxToNotice(
         "Your bid was accepted!",
         "Unable to place bid at this time."){
-          logger.debug(amountBox)
-          // auction.open_!.barter(amountBox)
-          auction.map(_.barter(amountBox))
-        }
+          (for(a <- auction; v <- a.barter(amountBox)) yield v).pass(box => 
+            if(!box.isEmpty)
+              AuctionServer ! AuctionValueChange(amountBox.openOr("0").toDouble))
+        } 
       SHtml.ajaxForm(bind("b",xhtml,
         "amount" -%> SHtml.text(amountBox.openOr(""), s => amountBox = Box.!!(s)) % ("id" -> "amount"),
         "submit" -> SHtml.ajaxSubmit("Place Bid", { () => submit; Noop })
@@ -37,7 +39,6 @@ package snippet {
     
     def show(xhtml: NodeSeq): NodeSeq = auction.map(a => 
       bind("a", single(a, xhtml),
-        "countdown" -> <span class="countdown">1:27:22</span>,
         "current_amount" -> <span>{a.currentAmount.toString}</span> % ("id" -> "current_amount"),
         "next_amount" -> <span>{a.nextAmount.toString}</span> % ("id" -> "next_amount")
       )).openOr(Text("That auction does not exist"))

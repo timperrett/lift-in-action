@@ -5,7 +5,7 @@ package model {
   import net.liftweb.sitemap.Loc._
   import scala.xml.NodeSeq
   import net.liftweb.mapper._
-  import net.liftweb.util.Helpers.tryo
+  import net.liftweb.util.Helpers.{tryo,now}
   
   object Auction 
     extends Auction 
@@ -63,6 +63,10 @@ package model {
       ) yield {
         new Bid().auction(this).customer(Customer.currentUser).amount(vld).saveMe
       }
+    
+    def expired_? : Boolean = ends_at.is.getTime < now.getTime
+    
+    def winningCustomer: Box[Customer] = topBid.flatMap(_.customer.obj)
     
     private def topBid: Box[Bid] = bids match {
       case list if list.length > 0 => Full(list.head)

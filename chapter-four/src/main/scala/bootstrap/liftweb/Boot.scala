@@ -61,6 +61,10 @@ class Boot extends Loggable {
       case RewriteRequest(ParsePath("auction" :: key :: Nil,"",true,_),_,_) =>
            RewriteResponse("auction" :: Nil, Map("id" -> key.split("-")(0)))
     }
+    
+    
+    logger.debug("DEBUG MODE ENABLED!")
+    
   }
 }
 
@@ -69,9 +73,9 @@ object Application {
   
   val sitemap = List(
     Menu("Home") / "index" >> LocGroup("public"),
+    Menu("Auctions") / "auctions" >> LocGroup("public"),
     Menu("Search") / "search" >> LocGroup("public") >> MustBeLoggedIn,
     Menu("History") / "history" >> LocGroup("public") >> MustBeLoggedIn,
-    Menu("Auctions") / "auctions" >> LocGroup("public"),
     Menu("Auction Detail") / "auction" >> LocGroup("public") >> Hidden,
     // admin
     Menu("Admin") / "admin" / "index" >> LocGroup("admin"),

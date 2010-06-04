@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <stax-web-app>
-  <appid>timperrett/lifttravel</appid>
+  <appid>timperrett/liftinaction</appid>
   <resource name="jdbc/liftinaction" auth="Container" type="javax.sql.DataSource">
     <param name="username" value="manning"/>
     <param name="password" value="perrett"/>

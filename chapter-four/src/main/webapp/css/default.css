@@ -213,14 +213,14 @@ hr { display: none; }
 /*  background-color: red;*/
 }
 .auction .bidder .half, .auction .bidder label {
-  width: 50%;
+  width: 57%;
   font-size: 12px;
   float: left;
   padding-right: 9%;
   height: 35px;
 }
 .auction .bidder label {
-  width: 30%;
+  width: 21%;
   font-weight: bold;
 }
 .auction .description {

@@ -27,12 +27,18 @@
           <span class="small">(bid by: <a:winning_customer />)</span>
         </div>
         
-        <lift:details.bid>
-          <!-- below content shows if user is logged in -->
+        <lift:test_cond.loggedin>
+          <lift:details.bid>
+            <label>Enter New Bid:</label>
+            <div class="half"><b:amount id="amount"/> <b:submit /> <br/>
+            <span class="small">(must be more than: &pound;<a:next_amount />)</span></div>
+          </lift:details.bid>
+        </lift:test_cond.loggedin>
+        
+        <lift:test_cond.loggedout>
           <label>Enter New Bid:</label>
-          <div class="half"><b:amount id="amount"/> <b:submit /> <br/>
-          <span class="small">(must be more than: &pound;<a:next_amount />)</span></div>
-        </lift:details.bid>
+          <div class="half">Log in to place a bid</div>
+        </lift:test_cond.loggedout>
         
       </div>
       

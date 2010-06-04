@@ -18,13 +18,14 @@ package comet {
   case class CurrentAuction(auction: Box[Auction])
   
   // case class AuctionInfoFor(id: Long)
-  case class NewBid(auction: Long, amount: Double)
+  case class NewBid(auction: Long, amount: Double, fromsession: Box[String])
   
   class AuctionUpdater extends CometActor with AuctionRequestHelpers {
     // element ids
     private lazy val countdownId = uniqueId+"_countdown"
     private lazy val nextAmountId = "next_amount"
     private lazy val currentAmountId = "current_amount"
+    private lazy val amountId = "amount"
     // internal helps
     private val server = AuctionServer
     
@@ -37,15 +38,17 @@ package comet {
      * xhtml content
      */
     def countdown = 
-      if(hasExpired_?) Text("This auction has ended.") else Text(timeNow.toString)
+      if(hasExpired_?) Text("This auction has ended.") 
+      else Text(TimeSpan.format((auction.map(_.ends_at.is.getTime).openOr(now.getTime) - now.getTime) / 1000L * 1000L))
     
     def notifyOtherAuctionUpdate {
-      partialUpdate(Run("$.growl('TEST', 'EXAMPLE')"))
+      warning("You have been outbid on an auction you are participating in")
     }
     
     def notifyThisAuctionUpdate {
       partialUpdate(SetHtml(currentAmountId, Text(leadingBid.toString)))
-      partialUpdate(SetHtml(nextAmountId, Text("NEXT")))
+      partialUpdate(SetHtml(nextAmountId, Text(minimumBid.toString)))
+      partialUpdate(SetValueAndFocus(amountId,""))
     }
     
     /**
@@ -61,11 +64,11 @@ package comet {
     }
     
     override def highPriority = {
-      case NewBid(auctionId,amount) => 
-        if(auctionId == auctionId)
-          notifyThisAuctionUpdate
-        else 
+      case NewBid(auctionId,amount,fromsession) => 
+        notifyThisAuctionUpdate
+        if((S.session.map(_.uniqueId) equals fromsession) == false)
           notifyOtherAuctionUpdate
+      //case x => println(x)
     }
     
     override def render = {
@@ -82,11 +85,6 @@ package comet {
       )
     }
     
-    // private def activeUserAuctions {
-    //   if(Customer.loggedIn_?){
-    //     _activeUserAuctions = Customer.currentUser.participatingIn
-    //   }
-    // } 
   }
   
 }}}

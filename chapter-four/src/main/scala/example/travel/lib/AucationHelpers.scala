@@ -32,6 +32,8 @@ package lib {
      * Obtain the currently leading bid for the auction in the request scope
      */
     def leadingBid = auction.map(_.currentAmount).openOr(0D)
+    
+    def minimumBid = auction.map(_.nextAmount).openOr(0D)
   }
   
   /** 

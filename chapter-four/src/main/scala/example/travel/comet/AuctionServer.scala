@@ -14,14 +14,20 @@ package comet {
   object AuctionServer extends LiftActor with Loggable {
     // load auction info from database on demand
     
-    private var cometActorAuctions = Map[CometActor,List[Long]]()
-    private var auctionCometActors = Map[Long, List[CometActor]]()
+    private var cometActorAuctions: Map[CometActor,List[Long]] = Map()
+    private def auctionCometActors: Map[Long, List[CometActor]] = 
+      cometActorAuctions.foldLeft[Map[Long, List[CometActor]]](Map.empty withDefaultValue Nil){
+        case (prev, (k, vs)) => vs.foldLeft(prev)((prev, v) => prev + (v -> (k::prev(v))))
+      }
     
     
     override def messageHandler = {
       case ListenTo(actor,auctions) => 
         println("Actor ("+actor.hashCode+") listening to: "+ auctions.map(_.toString).mkString(","))
         cometActorAuctions = cometActorAuctions + actor -> auctions
+      case msg@NewBid(auction,amount,session) => 
+        println("New bid recived for auction " + auction.toString + ", " + amount.toString)
+        auctionCometActors(auction).foreach(_ ! msg)
     }
     
     // override def lowPriority {

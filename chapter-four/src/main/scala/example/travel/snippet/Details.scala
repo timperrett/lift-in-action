@@ -13,26 +13,21 @@ package snippet {
   
   class Details extends StatefulSnippet with AuctionHelpers with AuctionRequestHelpers with Loggable {
     
-    // println(auction)
-    // if(S.session.flatMap(_.findComet("AuctionUpdater",Empty)).isEmpty){ 
-    //   S.session.map(_.setupComet("AuctionUpdater",Empty,CurrentAuction(auction))) }
-    
     val dispatch: DispatchIt = {
       case "show" => show _
       case "bid" => bid _
     }
     
-    def bid(xhtml: NodeSeq): NodeSeq = if(!Customer.loggedIn_?){
-      S.warning("You must be logged in to bid on auctions.")
-      NodeSeq.Empty
-    } else {
+    def bid(xhtml: NodeSeq): NodeSeq = {
       var amountBox: Box[String] = Empty
       def submit = boxToNotice(
         "Your bid was accepted!",
         "Unable to place bid at this time."){
           (for(a <- auction; v <- a.barter(amountBox)) yield v).pass(box => 
             if(!box.isEmpty)
-              AuctionServer ! NewBid(auction.map(_.id.is).openOr(0L), amountBox.openOr("0").toDouble))
+              AuctionServer ! NewBid(auction.map(_.id.is).openOr(0L), 
+                                     amountBox.openOr("0").toDouble, 
+                                     S.session.map(_.uniqueId)))
         }
       SHtml.ajaxForm(bind("b",xhtml,
         "amount" -%> SHtml.text(amountBox.openOr(""), s => amountBox = Box.!!(s)) % ("id" -> "amount"),

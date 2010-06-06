@@ -7,39 +7,43 @@ package lib {
   import net.liftweb.textile.TextileParser
   import net.liftweb.common.{Full,Box,Empty,Failure,Loggable}
   import net.liftweb.mapper.{By}
-  import net.liftweb.http.{S,RequestVar}
+  import net.liftweb.http.{S,SessionVar}
   import net.liftweb.http.js.JsCmd
   import net.liftweb.http.js.JsCmds.Noop
   
-  
-  object CurrentAuction extends RequestVar[Box[Auction]](
-    Auction.find(By(Auction.id,S.param("id").map(_.toLong).openOr(0L)))
-  )
-  
-  trait AuctionRequestHelpers {
+  trait AuctionActionHelpers {
     
     /** 
      * Accessor for the CurrentAuction request state; if it is empty, attempt to assign it.
      */
-    def auction: Box[Auction] = CurrentAuction.is
+    protected def auction: Box[Auction]
     
     /**
      * Has the auction in the auction in the current request expired?
      */
-    def hasExpired_? : Boolean = auction.map(_.expired_?).openOr(true)
+    protected def hasExpired_? : Boolean = auction.map(_.expired_?).openOr(true)
     
     /**
      * Obtain the currently leading bid for the auction in the request scope
      */
-    def leadingBid = auction.map(_.currentAmount).openOr(0D)
+    protected def leadingBid = auction.map(_.currentAmount).openOr(0D)
     
-    def minimumBid = auction.map(_.nextAmount).openOr(0D)
+    /**
+     * The minimum bid based on any incomming bids etc
+     */
+    protected def minimumBid = auction.map(_.nextAmount).openOr(0D)
+    
+    /**
+     * Winning user name
+     */
+    protected def winningCustomer = 
+      Text(auction.flatMap(_.winningCustomer.map(_.shortName)).openOr("Unknown"))
   }
   
   /** 
    * common helpers for getting auctions and displaying them
    */
-  trait AuctionHelpers extends Loggable {
+  trait AuctionDisplayHelpers extends Loggable {
     
     protected def many(auctions: List[Auction], xhtml: NodeSeq): NodeSeq = 
       auctions.flatMap(a => single(a,xhtml))

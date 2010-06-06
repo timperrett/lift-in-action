@@ -1,30 +1,21 @@
 <lift:surround with="wide" at="content">
-  
-  <head>
-    <script type="text/javascript" src="/js/jquery.growl.js"></script>
-    <!-- // <script type="text/javascript">
-    //   //<![CDATA[
-    //   $(document).ready(function() {
-    //     $.growl("TEST", "EXAMPLE")
-    //    });
-    //   //]]>
-    // </script> -->
-  </head>
-  
   <div class="auction">
+    
+    <!-- <lift:comet type="AuctionUpdater"><live:countdown /></lift:comet> -->
+    <lift:comet type="AuctionUpdater" />
     
     <lift:details.show>
       <h1><a:name /></h1>
       <div class="bidder">
         <label>Time Remaining:</label>
-        <div class="half"><lift:comet type="AuctionUpdater"><live:countdown /></lift:comet></div>
+        <div class="half"><span id="time_remaining">Calculating...</span></div>
         
         <label>Travel Dates:</label>
         <div class="half"><a:travel_dates /></div>
         
         <label>Current Bid:</label>
         <div class="half"><strong>&pound;<a:current_amount /></strong>
-          <span class="small">(bid by: <a:winning_customer />)</span>
+          <div class="small">(bid by: <span id="winning_customer"><a:winning_customer /></span>)</div>
         </div>
         
         <lift:test_cond.loggedin>

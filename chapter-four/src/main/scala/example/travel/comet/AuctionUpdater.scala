@@ -10,7 +10,7 @@ package comet {
   import net.liftweb.util.ActorPing
   import net.liftweb.http.js.JsCmds._
   import example.travel.model.{Auction,Customer}
-  import example.travel.lib.AuctionRequestHelpers
+  import example.travel.lib.AuctionActionHelpers
   
   // messages
   case object CountdownTick
@@ -20,19 +20,18 @@ package comet {
   // case class AuctionInfoFor(id: Long)
   case class NewBid(auction: Long, amount: Double, fromsession: Box[String])
   
-  class AuctionUpdater extends CometActor with AuctionRequestHelpers {
+  class AuctionUpdater extends CometActor with AuctionActionHelpers {
     // element ids
-    private lazy val countdownId = uniqueId+"_countdown"
+    private lazy val countdownId = "time_remaining"
     private lazy val nextAmountId = "next_amount"
     private lazy val currentAmountId = "current_amount"
+    private lazy val winningCustomerId = "winning_customer"
     private lazy val amountId = "amount"
-    // internal helps
+    // helpers
     private val server = AuctionServer
-    
-    // state
-    override def auction = _auction
-    private def auctionId = auction.map(_.id.is).openOr(0L)
     private var _auction: Box[Auction] = Empty
+    protected def auction = _auction
+    private def auctionId = auction.map(_.id.is).openOr(0L)
     
     /**
      * xhtml content
@@ -46,9 +45,12 @@ package comet {
     }
     
     def notifyThisAuctionUpdate {
-      partialUpdate(SetHtml(currentAmountId, Text(leadingBid.toString)))
-      partialUpdate(SetHtml(nextAmountId, Text(minimumBid.toString)))
-      partialUpdate(SetValueAndFocus(amountId,""))
+      partialUpdate {
+        SetHtml(currentAmountId, Text(leadingBid.toString)) & 
+        SetHtml(nextAmountId, Text(minimumBid.toString)) & 
+        SetHtml(winningCustomerId, winningCustomer) &
+        SetValueAndFocus(amountId,"")
+      }
     }
     
     /**
@@ -57,8 +59,7 @@ package comet {
     override def lowPriority = {
       case CountdownTick => {
         partialUpdate(SetHtml(countdownId, countdown))
-        // if its not expired, continue the countdown
-        if(!hasExpired_?) ActorPing.schedule(this, CountdownTick, 1 seconds)
+        if(!hasExpired_?) ActorPing.schedule(this, CountdownTick, 5 seconds)
       }
       case CurrentAuction(a) => _auction = a
     }
@@ -68,21 +69,15 @@ package comet {
         notifyThisAuctionUpdate
         if((S.session.map(_.uniqueId) equals fromsession) == false)
           notifyOtherAuctionUpdate
-      //case x => println(x)
     }
     
     override def render = {
       // listen for bids on this current auction (and auctions the user is bidding on)
-      auction.map(a => {
-        server ! ListenTo(this,(a.id.is :: Customer.currentUser.map(_.participatingIn).openOr(Nil)).removeDuplicates)
-      })
-      
+      auction.map(a => 
+        server ! ListenTo(this,(a.id.is :: Customer.currentUser.map(_.participatingIn).openOr(Nil)).removeDuplicates))
       // need at least one ping after the intial render
       ActorPing.schedule(this, CountdownTick, 2 seconds)
-      // do the render
-      bind("live",defaultXml,
-        "countdown" -> <span id={countdownId}>Calculating...</span>
-      )
+      NodeSeq.Empty
     }
     
   }

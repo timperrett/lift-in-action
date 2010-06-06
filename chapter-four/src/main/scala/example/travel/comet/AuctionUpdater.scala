@@ -10,7 +10,7 @@ package comet {
   import net.liftweb.util.ActorPing
   import net.liftweb.http.js.JsCmds._
   import example.travel.model.{Auction,Customer}
-  import example.travel.lib.AuctionActionHelpers
+  import example.travel.lib.AuctionInstanceHelpers
   
   // messages
   case object CountdownTick
@@ -20,7 +20,7 @@ package comet {
   // case class AuctionInfoFor(id: Long)
   case class NewBid(auction: Long, amount: Double, fromsession: Box[String])
   
-  class AuctionUpdater extends CometActor with AuctionActionHelpers {
+  class AuctionUpdater extends CometActor with AuctionInstanceHelpers {
     // element ids
     private lazy val countdownId = "time_remaining"
     private lazy val nextAmountId = "next_amount"

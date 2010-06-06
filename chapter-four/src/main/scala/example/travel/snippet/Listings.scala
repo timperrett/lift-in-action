@@ -7,9 +7,9 @@ package snippet {
   import net.liftweb.mapper.{MaxRows,By,OrderBy,Descending,StartAt}
   import net.liftweb.mapper.view.{MapperPaginatorSnippet}
   import example.travel.model.Auction
-  import example.travel.lib.AuctionDisplayHelpers
+  import example.travel.lib.AuctionHelpers
   
-  class Listings extends DispatchSnippet with AuctionDisplayHelpers {
+  class Listings extends DispatchSnippet with AuctionHelpers {
     override def dispatch = {
       case "all" => all _
       case "top" => top _ 

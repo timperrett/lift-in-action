@@ -2,15 +2,11 @@ package example {
 package travel {
 package comet {
   
-  import scala.xml.{NodeSeq,Text}
   import scala.collection.immutable.Map
-  import net.liftweb.common.{Full,Empty,Failure,Box,Loggable}
   import net.liftweb.actor.LiftActor 
-  import net.liftweb.http.{CometActor,CometListenee,ListenerManager,S}
-  import net.liftweb.util.Helpers._
-  import example.travel.model.Auction
+  import net.liftweb.http.CometActor
   
-  object AuctionServer extends LiftActor with Loggable {
+  object AuctionServer extends LiftActor {
     /** 
      * Internal state about who's listening for what and what is listening for who!
      */

@@ -8,10 +8,10 @@ package snippet {
   import net.liftweb.http.js.JsCmds.{Noop}
   import net.liftweb.mapper.{MaxRows,By,OrderBy,Descending,StartAt}
   import example.travel.model.{Auction,Bid,Customer}
-  import example.travel.lib.{AuctionDisplayHelpers,AuctionActionHelpers}
+  import example.travel.lib.AuctionInstanceHelpers
   import example.travel.comet.{AuctionServer,NewBid,CurrentAuction}
   
-  class Details extends StatefulSnippet with AuctionDisplayHelpers with AuctionActionHelpers with Loggable {
+  class Details extends StatefulSnippet with AuctionInstanceHelpers with Loggable {
     
     val dispatch: DispatchIt = {
       case "show" => show _
@@ -40,8 +40,8 @@ package snippet {
       S.session.map(_.findComet("AuctionUpdater")).openOr(Nil).foreach(_ ! CurrentAuction(auction))
       auction.map(a => 
         bind("a", single(a, xhtml),
-          "current_amount" -> <span>{a.currentAmount.toString}</span> % ("id" -> "current_amount"),
-          "next_amount" -> <span>{a.nextAmount.toString}</span> % ("id" -> "next_amount")
+          "current_amount" -> <span>{leadingBid.toString}</span> % ("id" -> "current_amount"),
+          "next_amount" -> <span>{minimumBid.toString}</span> % ("id" -> "next_amount")
         )).openOr(Text("That auction does not exist"))
     }
     

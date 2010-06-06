@@ -11,7 +11,7 @@ package lib {
   import net.liftweb.http.js.JsCmd
   import net.liftweb.http.js.JsCmds.Noop
   
-  trait AuctionActionHelpers {
+  trait AuctionInstanceHelpers extends AuctionHelpers {
     
     /** 
      * Accessor for the CurrentAuction request state; if it is empty, attempt to assign it.
@@ -21,29 +21,28 @@ package lib {
     /**
      * Has the auction in the auction in the current request expired?
      */
-    protected def hasExpired_? : Boolean = auction.map(_.expired_?).openOr(true)
+    protected def hasExpired_? : Boolean = hasExpired_?(auction)
     
     /**
      * Obtain the currently leading bid for the auction in the request scope
      */
-    protected def leadingBid = auction.map(_.currentAmount).openOr(0D)
+    protected def leadingBid: Double = leadingBid(auction)
     
     /**
      * The minimum bid based on any incomming bids etc
      */
-    protected def minimumBid = auction.map(_.nextAmount).openOr(0D)
+    protected def minimumBid: Double = minimumBid(auction)
     
     /**
      * Winning user name
      */
-    protected def winningCustomer = 
-      Text(auction.flatMap(_.winningCustomer.map(_.shortName)).openOr("Unknown"))
+    protected def winningCustomer: NodeSeq = winningCustomer(auction)
   }
   
   /** 
    * common helpers for getting auctions and displaying them
    */
-  trait AuctionDisplayHelpers extends Loggable {
+  trait AuctionHelpers extends Loggable {
     
     protected def many(auctions: List[Auction], xhtml: NodeSeq): NodeSeq = 
       auctions.flatMap(a => single(a,xhtml))
@@ -63,11 +62,36 @@ package lib {
       bind("a", xhtml,
         "name" -> auction.name,
         "description" -> TextileParser.toHtml(auction.description),
-        "winning_customer" -> auction.winningCustomer.map(_.shortName).openOr("unknown"),
+        "winning_customer" -> winningCustomer(auction),
         "travel_dates" -> auction.travelDates,
         "link" -%> <a href={"/auction/" +
           auction.id.toString+"-"+auction.permanent_link}>details >></a>
       )
+    
+    
+    /**
+     * Has the auction in the auction in the current request expired?
+     */
+    protected def hasExpired_?(a: Box[Auction]) : Boolean = a.map(_.expired_?).openOr(true)
+
+    /**
+     * Obtain the currently leading bid for the auction in the request scope
+     */
+    protected def leadingBid(a: Box[Auction]): Double = a.flatMap(_.currentAmount).openOr(0D)
+
+    /**
+     * The minimum bid based on any incomming bids etc
+     */
+    protected def minimumBid(a: Box[Auction]): Double = a.flatMap(_.nextAmount).openOr(0D)
+
+    /**
+     * Winning user name
+     */
+    protected def winningCustomer(a: Box[Auction]): NodeSeq = 
+      Text(a.flatMap(_.winningCustomer.map(_.shortName)).openOr("Unknown"))
+    
+    protected def winningCustomer(a: Auction): NodeSeq = 
+      winningCustomer(Full(a))
     
   }
   

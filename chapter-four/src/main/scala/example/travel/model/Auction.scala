@@ -59,7 +59,8 @@ package model {
     def barter(next: Box[String]): Box[Bid] = 
       for(ass <- next ?~! "Amount is not a number";
           amo <- tryo(BigDecimal(ass).doubleValue) ?~! "Amount is not a number";
-          vld <- tryo(amo).filter(_ >= nextAmount) ?~ "Your bid is lower than required!"
+          nxt <- nextAmount;
+          vld <- tryo(amo).filter(_ >= nxt) ?~ "Your bid is lower than required!"
       ) yield {
         new Bid().auction(this).customer(Customer.currentUser).amount(vld).saveMe
       }
@@ -72,8 +73,8 @@ package model {
       case list if list.length > 0 => Full(list.head)
       case _ => Empty
     }
-    def currentAmount: Double = topBid.map(_.amount.is).openOr(0D)
-    def nextAmount: Double = (currentAmount + 1D)
+    def currentAmount: Box[Double] = topBid.map(_.amount.is)
+    def nextAmount: Box[Double] = currentAmount.map(_ + 1D)
     
     def travelDates: String = (Box.!!(inbound_on.is), Box.!!(outbound_on.is)) match {
       case (Full(in), Full(out)) => out.toString + ", returning " + in.toString

@@ -4,10 +4,10 @@ package comet {
   
   import scala.xml.{NodeSeq,Text}
   import net.liftweb.common.{Full,Empty,Failure,Box}
-  import net.liftweb.actor.LiftActor 
-  import net.liftweb.http.{CometActor,CometListenee,ListenerManager,S}
+  import net.liftweb.http.CometActor
   import net.liftweb.util.Helpers._
   import net.liftweb.util.ActorPing
+  import net.liftweb.http.S
   import net.liftweb.http.js.JsCmds._
   import example.travel.model.{Auction,Customer}
   import example.travel.lib.AuctionInstanceHelpers
@@ -53,6 +53,11 @@ package comet {
       }
     }
     
+    def registerListeners {
+      auction.map(a => 
+        server ! ListenTo(this,(a.id.is :: Customer.currentUser.map(_.participatingIn).openOr(Nil)).removeDuplicates))
+    }
+    
     /**
      * comet message handlers
      */
@@ -61,7 +66,9 @@ package comet {
         partialUpdate(SetHtml(countdownId, countdown))
         if(!hasExpired_?) ActorPing.schedule(this, CountdownTick, 5 seconds)
       }
-      case CurrentAuction(a) => _auction = a
+      case CurrentAuction(a) => 
+        _auction = a
+        registerListeners
     }
     
     override def highPriority = {
@@ -73,8 +80,7 @@ package comet {
     
     override def render = {
       // listen for bids on this current auction (and auctions the user is bidding on)
-      auction.map(a => 
-        server ! ListenTo(this,(a.id.is :: Customer.currentUser.map(_.participatingIn).openOr(Nil)).removeDuplicates))
+      registerListeners
       // need at least one ping after the intial render
       ActorPing.schedule(this, CountdownTick, 2 seconds)
       NodeSeq.Empty

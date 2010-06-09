@@ -37,6 +37,8 @@ package snippet {
     }
     
     def show(xhtml: NodeSeq): NodeSeq = {
+      println("Looking for comet: " + S.session.map(_.findComet("AuctionUpdater")).openOr(Nil).toString)
+      
       S.session.map(_.findComet("AuctionUpdater")).openOr(Nil).foreach(_ ! CurrentAuction(auction))
       auction.map(a => 
         bind("a", single(a, xhtml),

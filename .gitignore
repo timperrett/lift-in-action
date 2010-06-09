@@ -42,3 +42,6 @@ test-output
 
 # Pax Runner (for easy OSGi launching)
 runner
+
+stax-web.xml
+stax.txt

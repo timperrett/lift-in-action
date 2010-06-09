@@ -1,0 +1,28 @@
+<lift:surround with="base" at="content">
+  
+  <div class="topbg" style="padding-top: 36px;">
+    <div class="bottombg">
+      <div id="content-wide">
+        <div class="bottombg">
+          <div id="box1" class="topbg">
+            <lift:msgs showAll="true">
+              <lift:error_msg>Error:</lift:error_msg>
+              <lift:error_class>messages error</lift:error_class>
+              <lift:warning_msg>Warning:</lift:warning_msg>
+              <lift:warning_class>messages warning</lift:warning_class>
+              <lift:notice_msg>Note:</lift:notice_msg>
+              <lift:notice_class>messages sucsess</lift:notice_class>
+            </lift:msgs>
+            <!-- dynamic page content -->
+            <lift:bind name="content" />
+            <!-- end dynamic page content -->
+          </div>
+          <div style="clear: both;">&nbsp;</div>
+        </div>
+      </div>
+      <!-- end content -->
+      <div style="clear: both; height: 50px;">&nbsp;</div>
+    </div>
+  </div>
+  
+</lift:surround>

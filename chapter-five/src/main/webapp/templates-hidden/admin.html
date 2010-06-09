@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>
+      Admin: <lift:menu.title />
+    </title>
+    <meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/admin/css/screen.css" />
+    <script src="/classpath/jquery.js" type="text/javascript"></script>
+    
+  </head>
+  <body>
+    <!--header -->
+    <div id="header-wrap">
+      <div id="header">
+        <a name="top" id="top"></a>
+        <div id="nav">
+          <lift:menu.builder group="admin" linkToSelf="true"
+            li_item:id="current" />
+        </div>
+      </div>
+    </div>
+    
+    <!-- content -->
+    <div id="content-wrap" class="clear">
+      <div id="content">
+        <!-- messages appear here -->
+        <lift:msgs showAll="true" />
+        <!-- content goes here -->
+        <lift:bind name="content" />
+        
+      </div>
+    </div>
+    
+  </body>
+</html>

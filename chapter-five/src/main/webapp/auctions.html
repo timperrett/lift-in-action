@@ -1,0 +1,20 @@
+<lift:surround with="wide" at="content">
+  <h1>Actions</h1>
+  <ol class="auctions">
+    <lift:listings.all>
+      <li class="top">
+        <img src="images/homepage09.jpg" alt=""/>
+        <div class="description">
+          <h4><a:name /></h4><br/>
+          <a:description /> <a:link />
+        </div>
+      </li>
+    </lift:listings.all>
+  </ol>
+  <div>
+    <lift:listings.paginate>
+      <p><nav:records/></p>
+      <nav:first /> | <nav:prev/> | <nav:allpages> | </nav:allpages> | <nav:next/> | <nav:last />
+    </lift:listings.paginate>
+  </div>
+</lift:surround>

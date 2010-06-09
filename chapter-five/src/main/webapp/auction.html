@@ -1,0 +1,45 @@
+<lift:surround with="wide" at="content">
+  <div class="auction">
+    
+    <!-- <lift:comet type="AuctionUpdater"><live:countdown /></lift:comet> -->
+    <lift:comet type="AuctionUpdater" />
+    
+    <lift:details.show>
+      <h1><a:name /></h1>
+      <div class="bidder">
+        <label>Time Remaining:</label>
+        <div class="half"><span id="time_remaining">Calculating...</span></div>
+        
+        <label>Travel Dates:</label>
+        <div class="half"><a:travel_dates /></div>
+        
+        <label>Current Bid:</label>
+        <div class="half"><strong>&pound;<a:current_amount /></strong>
+          <div class="small">(bid by: <span id="winning_customer"><a:winning_customer /></span>)</div>
+        </div>
+        
+        <lift:test_cond.loggedin>
+          <lift:details.bid>
+            <label>Enter New Bid:</label>
+            <div class="half"><b:amount id="amount"/> <b:submit /> <br/>
+            <span class="small">(must be more than: &pound;<a:next_amount />)</span></div>
+          </lift:details.bid>
+        </lift:test_cond.loggedin>
+        
+        <lift:test_cond.loggedout>
+          <label>Enter New Bid:</label>
+          <div class="half">Log in to place a bid</div>
+        </lift:test_cond.loggedout>
+        
+      </div>
+      
+      <div class="description">
+        <a:description />
+      </div>
+    </lift:details.show>
+    
+    
+    
+  </div>
+</lift:surround>
+

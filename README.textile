@@ -9,15 +9,7 @@ h1. Usage
 Load up SBT in the normal way:
 <pre><code>timperrett$ sbt</code></pre>
 
-Firstly you need to update the dependencies
-<pre><code>> update</code></pre>
-
-
-Compile the whole thing:
-<pre><code>> compile</code></pre>
-
-
-Then lets take a look at the modules in this project
+Take a look at the modules in this project
 <pre><code>> projects
     four 1.0
     two 1.0
@@ -25,10 +17,15 @@ Then lets take a look at the modules in this project
     lift-in-action 1.0
 </code></pre>
 
-Then select a particular module we want to interface with:
+Then select a particular module we want to interact with:
 <pre><code>> project four
 Set current project to four 1.0
 </code></pre>
 
+Then you need to update the dependencies
+<pre><code>> update</code></pre>
+
 Then we can run actions on that module like normal:
 <pre><code>> jetty-run</code></pre>
+
+

@@ -6,11 +6,20 @@ package model {
   import scala.xml.NodeSeq
   import net.liftweb.mapper._
   import net.liftweb.util.Helpers.{tryo,now}
+  import net.liftweb.machine.{ProtoStateMachine,MetaProtoStateMachine}
+  
+  class AuctionStates extends Enumeration {
+    object Active extends Val(1,"Active")
+    object Expired extends Val(2,"Expired")
+  }
+  
+  case object AuctionExpires extends ATransition(,on,)
   
   object Auction 
     extends Auction 
     with LongKeyedMetaMapper[Auction]
-    with CRUDify[Long,Auction]{
+    with CRUDify[Long,Auction]
+    with MetaProtoStateMachine[Auction, AuctionStates] {
       override def dbTableName = "auctions"
       override def fieldOrder = List(name,description,ends_at,
         outbound_on,inbound_on,flying_from,permanent_link,is_closed)
@@ -25,9 +34,19 @@ package model {
       override def viewMenuLocParams = LocGroup("admin") :: Nil
       override def editMenuLocParams = LocGroup("admin") :: Nil
       override def deleteMenuLocParams = LocGroup("admin") :: Nil
+      
+      // state machine methods
+      def instantiate = new Auction
+      val stateEnumeration = new AuctionStates
+      def initialState = stateEnumeration.Active
+      def globalTransitions = Nil
+      def states = List(,new State(stateEnumeration.Active, List(AuctionExpires)))
     }
 
-  class Auction extends LongKeyedMapper[Auction] with IdPK with CreatedUpdated {
+  class Auction extends LongKeyedMapper[Auction]
+      with CreatedUpdated 
+      with ProtoStateMachine[Auction, AuctionStates]
+      with IdPK {
     def getSingleton = Auction
     // fields
     object name extends MappedString(this, 150){

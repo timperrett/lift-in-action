@@ -11,7 +11,7 @@ import net.liftweb.mapper.{DB,Schemifier,DefaultConnectionIdentifier,StandardDBV
 
 // app imports
 import example.travel.model.{Auction,Supplier,Customer,Bid,Order,OrderAuction}
-// import example.travel.lib.{Helpers}
+import example.travel.lib.{PaypalHandler}
 
 class Boot extends Loggable {
   def boot {
@@ -43,7 +43,12 @@ class Boot extends Loggable {
     LiftRules.noticesAutoFadeOut.default.set((notices: NoticeType.Value) => Full(2 seconds, 2 seconds))
 
     LiftRules.loggedInTest = Full(() => Customer.loggedIn_?)
-
+    
+    /**** paypal settings ****/
+    
+    // wire up the various DispatchPFs for both PDT and IPN
+    PaypalHandler.dispatch.foreach(LiftRules.dispatch.append(_))
+    
     /**** request settings ****/
 
     // set the application sitemap

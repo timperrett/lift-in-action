@@ -6,8 +6,8 @@
     <filter-name>LiftFilter</filter-name>
     <display-name>Lift Filter</display-name>
     <description>The Filter that intercepts lift calls</description>
-    <filter-class>bootstrap.liftweb.StaxLiftFilter</filter-class>
-    <!-- <filter-class>net.liftweb.http.LiftFilter</filter-class> -->
+    <!-- <filter-class>bootstrap.liftweb.StaxLiftFilter</filter-class> -->
+    <filter-class>net.liftweb.http.LiftFilter</filter-class>
   </filter>
   <!-- <resource-ref>
     <res-ref-name>jdbc/liftinaction</res-ref-name>

@@ -67,7 +67,7 @@ class Boot extends Loggable {
 }
 
 object Application {
-  val MustBeLoggedIn = If(() => Customer.loggedIn_?, "")
+  val MustBeLoggedIn = Customer.loginFirst
   
   val sitemap = List(
     Menu("Home") / "index" >> LocGroup("public"),

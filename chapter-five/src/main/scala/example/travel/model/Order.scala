@@ -12,7 +12,8 @@ package model {
       with IdPK with OneToMany[Long, Order] with CreatedUpdated {
     def getSingleton = Order
     // fields
-    // object reference extends MappedString(this, 150)
+    object reference extends MappedString(this, 150)
+    object transaction_status extends MappedString(this, 100)
     
     // relationships
     object customer extends LongMappedMapper(this, Customer){

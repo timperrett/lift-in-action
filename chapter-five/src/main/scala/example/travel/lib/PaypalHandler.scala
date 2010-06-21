@@ -3,7 +3,7 @@ package lib {
   
   import net.liftweb.common.{Loggable,Full,Box,Empty,Failure}
   import net.liftweb.paypal.{PaypalIPN,PaypalPDT}
-  import net.liftweb.http.DoRedirectResponse 
+  import net.liftweb.http.DoRedirectResponse
   
   /**
    * The handler that implements the paypal integration from Lift. 

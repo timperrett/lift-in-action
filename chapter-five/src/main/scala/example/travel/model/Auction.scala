@@ -20,7 +20,7 @@ package model {
     extends Auction 
     with LongKeyedMetaMapper[Auction]
     with CRUDify[Long,Auction] 
-    // with MetaProtoStateMachine[Auction, AuctionStates.type] 
+    with MetaProtoStateMachine[Auction, AuctionStates.type] 
     {
       override def dbTableName = "auctions"
       override def fieldOrder = List(name,description,ends_at,
@@ -38,16 +38,16 @@ package model {
       override def deleteMenuLocParams = LocGroup("admin") :: Nil
       
       // state machine methods
-      // def instantiate = new Auction
-      // val stateEnumeration = AuctionStates
-      // def initialState = AuctionStates.Active
-      // def globalTransitions = Nil
-      // def states = State(AuctionStates.Active, After(1 hour, AuctionStates.Expired)) :: Nil
+      def instantiate = new Auction
+      val stateEnumeration = AuctionStates
+      def initialState = AuctionStates.Active
+      def globalTransitions = Nil
+      def states = State(AuctionStates.Active, After(1 hour, AuctionStates.Expired)) :: Nil
     }
 
   class Auction extends LongKeyedMapper[Auction]
       with CreatedUpdated 
-      // with ProtoStateMachine[Auction, AuctionStates.type]
+      with ProtoStateMachine[Auction, AuctionStates.type]
       with IdPK {
     def getSingleton = Auction
     // fields
@@ -104,6 +104,8 @@ package model {
     }
     
     def expires_at: TimeSpan = TimeSpan(((ends_at.is.getTime - now.getTime) / 1000L * 1000L))
+    
+    // onLogIn = customer =>  :: onLogIn
   }
   
 }}

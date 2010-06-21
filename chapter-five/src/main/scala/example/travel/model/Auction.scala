@@ -105,7 +105,12 @@ package model {
     
     def expires_at: TimeSpan = TimeSpan(((ends_at.is.getTime - now.getTime) / 1000L * 1000L))
     
-    // onLogIn = customer =>  :: onLogIn
+    private val ensurePresentOrder: Customer => Unit = customer => {
+      if(CurrentOrder.is.isEmpty) CurrentOrder(new Order().saveMe)
+      else CurrentOrder.is
+    }
+    
+    onLogIn = customer => { ensurePresentOrder } :: onLogIn
   }
   
 }}

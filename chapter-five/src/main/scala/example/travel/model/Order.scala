@@ -7,7 +7,7 @@ package model {
   object Order extends Order with LongKeyedMetaMapper[Order]{
     override def dbTableName = "orders"
   }
-
+  
   class Order extends LongKeyedMapper[Order] 
       with IdPK with OneToMany[Long, Order] with CreatedUpdated {
     def getSingleton = Order

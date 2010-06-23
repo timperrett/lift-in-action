@@ -229,6 +229,59 @@ hr { display: none; }
 /*  background-color: red;*/
 }
 
+/***** checkout *******/
+.checkout-stages {
+/*  background-color: red;*/
+  background-repeat: no-repeat;
+  background-position: top center;
+  width: 500px;
+  font-weight: bold;
+  height: 60px;
+}
+.checkout-stage-one {
+  background-image: url('../images/checkout-stage-1.png');
+}
+.checkout-stages .finalize {
+  position: relative;
+  top: 40px;
+  left: 39px;
+/*  background-color: red;*/
+  float: left;
+}
+.checkout-stages .payment {
+  position: relative;
+  top: 40px;
+  left: 178px;
+  float: left;
+}
+.checkout-stages .complete {
+  position: relative;
+  top: 40px;
+  left: 320px;
+  float: left;
+}
+.checkout {
+  clear: both;
+  width: 100%;
+  height: 200px;
+  padding-top: 20px;
+/*  background-color: red;*/
+}
+.checkout .row {
+  width: 100%;
+  height: 30px;
+/*  background-color: blue;*/
+}
+.checkout .row .label {
+  width: 100px;
+  line-height: 30px;
+/*  background-color: red;*/
+  float: left;
+}
+.checkout .row input {
+  width: 200px;
+} 
+
 .bold {
   font-weight: bold;
 }

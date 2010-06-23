@@ -15,6 +15,7 @@ package model {
     object reference extends MappedString(this, 150)
     object transaction_status extends MappedString(this, 100)
     
+    
     // relationships
     object customer extends LongMappedMapper(this, Customer){
       override def dbColumnName = "customer_id"

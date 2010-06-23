@@ -5,23 +5,13 @@ package model {
   import net.liftweb.sitemap.Loc._
   import scala.xml.NodeSeq
   import net.liftweb.mapper._
-  // import net.liftweb.util.Helpers.TimeSpan 
+  import example.travel.lib.CurrentOrder
   import net.liftweb.util.Helpers._
-  import net.liftweb.machine.{ProtoStateMachine,MetaProtoStateMachine}
-  
-  
-  object AuctionStates extends Enumeration {
-    val Active, Expired = Value
-  }
-  
-  // case object AuctionExpires extends ATransition(,on,)
   
   object Auction
     extends Auction 
     with LongKeyedMetaMapper[Auction]
-    with CRUDify[Long,Auction] 
-    with MetaProtoStateMachine[Auction, AuctionStates.type] 
-    {
+    with CRUDify[Long,Auction]{
       override def dbTableName = "auctions"
       override def fieldOrder = List(name,description,ends_at,
         outbound_on,inbound_on,flying_from,permanent_link,is_closed)
@@ -36,19 +26,9 @@ package model {
       override def viewMenuLocParams = LocGroup("admin") :: Nil
       override def editMenuLocParams = LocGroup("admin") :: Nil
       override def deleteMenuLocParams = LocGroup("admin") :: Nil
-      
-      // state machine methods
-      def instantiate = new Auction
-      val stateEnumeration = AuctionStates
-      def initialState = AuctionStates.Active
-      def globalTransitions = Nil
-      def states = State(AuctionStates.Active, After(1 hour, AuctionStates.Expired)) :: Nil
     }
 
-  class Auction extends LongKeyedMapper[Auction]
-      with CreatedUpdated 
-      with ProtoStateMachine[Auction, AuctionStates.type]
-      with IdPK {
+  class Auction extends LongKeyedMapper[Auction] with CreatedUpdated with IdPK {
     def getSingleton = Auction
     // fields
     object name extends MappedString(this, 150){
@@ -104,13 +84,6 @@ package model {
     }
     
     def expires_at: TimeSpan = TimeSpan(((ends_at.is.getTime - now.getTime) / 1000L * 1000L))
-    
-    private val ensurePresentOrder: Customer => Unit = customer => {
-      if(CurrentOrder.is.isEmpty) CurrentOrder(new Order().saveMe)
-      else CurrentOrder.is
-    }
-    
-    onLogIn = customer => { ensurePresentOrder } :: onLogIn
   }
   
 }}

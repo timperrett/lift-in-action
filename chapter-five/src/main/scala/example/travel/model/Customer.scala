@@ -32,6 +32,19 @@ package model {
         </lift:surround>
       )
    
+   // private val ensurePresentOrder: Customer => Unit = customer => {
+   //   Order.find(By(Order.customer, customer), NotIn(Order.completed_?))
+   //   
+   //   
+   //   
+   //   if(CurrentOrder.is.isEmpty){
+   //     CurrentOrder(Box.!!(new Order().saveMe))
+   //   }
+   //   else CurrentOrder.is
+   // }
+
+   // onLogIn = customer => { ensurePresentOrder } :: onLogIn
+   
   }
   class Customer extends MegaProtoUser[Customer] with CreatedUpdated {
     def getSingleton = Customer

@@ -2,11 +2,11 @@ package example {
 package travel {
 package snippet {
   
-  import net.liftweb.http.DispatchSnippet
   import scala.xml.NodeSeq
+  import net.liftweb.http.DispatchSnippet
   // import net.liftweb.
   
-  class Cart extends DispatchSnippet {
+  class Cart {
     // def items(xhtml: NodeSeq): NodeSeq = 
   }
   

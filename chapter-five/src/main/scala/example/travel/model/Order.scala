@@ -3,18 +3,26 @@ package model {
   
   import net.liftweb.common.{Full,Box,Empty,Failure}
   import net.liftweb.mapper._
+  import net.liftweb.util.Helpers.randomLong
+  
+  object OrderStatus extends Enumeration {
+    val Open = Value(1,"open")
+    val Pending = Value(2,"pending")
+    val Complete = Value(3,"complete")
+    val Failed = Value(4,"failed")
+  }
   
   object Order extends Order with LongKeyedMetaMapper[Order]{
     override def dbTableName = "orders"
+    override def beforeCreate = List(_.customer(Customer.currentUser).status(OrderStatus.Open).reference(randomLong(99999999L)))
   }
   
   class Order extends LongKeyedMapper[Order] 
       with IdPK with OneToMany[Long, Order] with CreatedUpdated {
     def getSingleton = Order
     // fields
-    object reference extends MappedString(this, 150)
-    object transaction_status extends MappedString(this, 100)
-    
+    object reference extends MappedLong(this)
+    object status extends MappedEnum(this, OrderStatus)
     
     // relationships
     object customer extends LongMappedMapper(this, Customer){

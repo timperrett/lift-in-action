@@ -1,14 +1,15 @@
 package example.travel {
 package model {
   
-  import net.liftweb.common.{Full,Box,Empty,Failure}
+  import net.liftweb.common.{Full,Box,Empty,Failure,Loggable}
   import net.liftweb.mapper._
   import net.liftweb.sitemap.Loc._
   import scala.xml.{NodeSeq,Node}
+  import example.travel.lib.CurrentOrder
   
   object Customer extends Customer 
       with KeyedMetaMapper[Long, Customer]
-      with MetaMegaProtoUser[Customer]{
+      with MetaMegaProtoUser[Customer] with Loggable {
     
     override def dbTableName = "customers"
     override def fieldOrder = id :: firstName :: lastName :: 
@@ -31,23 +32,18 @@ package model {
           </lift:with-param>
         </lift:surround>
       )
-   
-   // private val ensurePresentOrder: Customer => Unit = customer => {
-   //   Order.find(By(Order.customer, customer), NotIn(Order.completed_?))
-   //   
-   //   
-   //   
-   //   if(CurrentOrder.is.isEmpty){
-   //     CurrentOrder(Box.!!(new Order().saveMe))
-   //   }
-   //   else CurrentOrder.is
-   // }
-
-   // onLogIn = customer => { ensurePresentOrder } :: onLogIn
+    
+    onLogIn = List({ c => CurrentOrder(c.order) })
    
   }
   class Customer extends MegaProtoUser[Customer] with CreatedUpdated {
     def getSingleton = Customer
+    
+    // helpers
+    def order: Box[Order] = 
+      Order.find(By(Order.customer, this.id), 
+        By(Order.status, OrderStatus.Open)) or Full(new Order().saveMe)
+    
     
     def participatingIn: List[Long] = 
       Bid.findAll(By(Bid.customer, this.id)).map(_.auction.obj)

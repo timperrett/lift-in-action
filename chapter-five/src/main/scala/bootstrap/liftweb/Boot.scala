@@ -7,18 +7,21 @@ import net.liftweb.util.Helpers._
 import net.liftweb.http._
 import net.liftweb.sitemap._
 import net.liftweb.sitemap.Loc._
-import net.liftweb.mapper.{DB,Schemifier,DefaultConnectionIdentifier,StandardDBVendor}
+import net.liftweb.mapper.{DB,Schemifier,DefaultConnectionIdentifier,StandardDBVendor,MapperRules}
 
 // app imports
-import example.travel.model.{Auction,Supplier,Customer,Bid,Order,OrderAuction}
+import example.travel.model.{Auction,Supplier,Customer,Bid,Order,OrderAuction,AuctionMachine}
 import example.travel.lib.{PaypalHandler}
 
 class Boot extends Loggable {
   def boot {
     LiftRules.addToPackages("example.travel")
-
+    
     /**** database settings ****/
-
+    
+    MapperRules.columnName = (_,name) => StringHelpers.snakify(name)
+    MapperRules.tableName =  (_,name) => StringHelpers.snakify(name)
+    
     // set the JNDI name that we'll be using
     DefaultConnectionIdentifier.jndiName = "jdbc/liftinaction"
 
@@ -32,7 +35,7 @@ class Boot extends Loggable {
 
     // automatically create the tables
     Schemifier.schemify(true, Schemifier.infoF _, 
-      Bid, Auction, Supplier, Customer, Order, OrderAuction)
+      Bid, Auction, Supplier, Customer, Order, OrderAuction, AuctionMachine)
 
     // setup the loan pattern
     S.addAround(DB.buildLoanWrapper)
@@ -68,6 +71,11 @@ class Boot extends Loggable {
     }
     
     logger.debug("DEBUG MODE ENABLED!")
+    
+    
+    // AuctionMachine.newInstance(AuctionMachine.FirstEvent)
+    
+    
   }
 }
 

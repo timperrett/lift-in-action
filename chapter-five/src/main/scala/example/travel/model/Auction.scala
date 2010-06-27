@@ -15,6 +15,8 @@ package model {
       override def dbTableName = "auctions"
       override def fieldOrder = List(name,description,ends_at,
         outbound_on,inbound_on,flying_from,permanent_link,is_closed)
+      // life cycle
+      // override def afterCreate = List(auction => )
       
       // crudify
       override def pageWrapper(body: NodeSeq) = 

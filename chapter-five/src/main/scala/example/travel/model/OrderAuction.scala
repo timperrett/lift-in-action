@@ -6,19 +6,17 @@ package model {
   
   object OrderAuction extends OrderAuction with LongKeyedMetaMapper[OrderAuction]{
     override def dbTableName = "order_auctions"
+    override def fieldOrder = id :: order :: auction :: createdAt :: updatedAt :: Nil
   }
 
-  class OrderAuction extends LongKeyedMapper[OrderAuction] 
-    with IdPK with CreatedUpdated {
+  class OrderAuction extends LongKeyedMapper[OrderAuction] with IdPK with CreatedUpdated {
     def getSingleton = OrderAuction
-    // fields
-    object name extends MappedString(this, 150)
-    
-    // relationships
     object order extends LongMappedMapper(this, Order){
       override def dbColumnName = "order_id"
     }
-    // def auction = 
+    object auction extends LongMappedMapper(this, Auction){
+      override def dbColumnName = "auction_id"
+    }
   }
   
   

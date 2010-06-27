@@ -33,8 +33,8 @@ package model {
         </lift:surround>
       )
     
-    onLogIn = List({ c => CurrentOrder(c.order) })
-   
+    //onLogIn = List({ c => CurrentOrder(c.order) })
+   onLogIn = List({ _.order })
   }
   class Customer extends MegaProtoUser[Customer] with CreatedUpdated {
     def getSingleton = Customer
@@ -42,7 +42,8 @@ package model {
     // helpers
     def order: Box[Order] = 
       Order.find(By(Order.customer, this.id), 
-        By(Order.status, OrderStatus.Open)) or Full(new Order().saveMe)
+        ByList(Order.status, List(OrderStatus.Open, OrderStatus.Pending))
+      ) or Full(new Order().saveMe)
     
     
     def participatingIn: List[Long] = 

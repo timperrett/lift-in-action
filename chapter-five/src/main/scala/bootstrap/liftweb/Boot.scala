@@ -71,11 +71,6 @@ class Boot extends Loggable {
     }
     
     logger.debug("DEBUG MODE ENABLED!")
-    
-    
-    // AuctionMachine.newInstance(AuctionMachine.FirstEvent)
-    
-    
   }
 }
 

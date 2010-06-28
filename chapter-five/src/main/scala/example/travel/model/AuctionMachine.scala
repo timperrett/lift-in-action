@@ -6,26 +6,36 @@ package model {
   import net.liftweb.mapper.MappedLongForeignKey
   import net.liftweb.util.Helpers._
   
+  /**
+   * The enumeration of all possible states. In this instance, 
+   * we want to keep it simple so only have three states.
+   */
   object AuctionStates extends Enumeration {
-    val Initial, Active, LastFiveMins, Expired = Value
+    val Initial, Active, Expired = Value
   }
   
+  /**
+   * The companion object for the machine table.
+   * The real method of importants here is the states list that defines
+   * the story of how states knit together and the actions that are to
+   * to be executed for each transistion. 
+   */
   object AuctionMachine extends AuctionMachine with MetaProtoStateMachine[AuctionMachine, AuctionStates.type]{
-    
-    println("TOUCHED!")
-    // override def timedEventInitialWait = 10000L
     def instantiate = new AuctionMachine
     val stateEnumeration = AuctionStates
     def initialState = AuctionStates.Initial
     def globalTransitions = Nil
     def states = List(
-      State(AuctionStates.Initial, On({case _ => }, AuctionStates.Active))
-      // State(AuctionStates.Initial, After(2 minutes, AuctionStates.Active)),
+      State(AuctionStates.Initial, On({case _ => }, AuctionStates.Active)),
+      State(AuctionStates.Active, After(2 minutes, AuctionStates.Expired))
     )
-    
     case object FirstEvent extends Event
   }
   
+  /** 
+   * Instance defintion of the machine. The important part here is the 
+   * transistion method that lets us specify code to execute 
+   */
   class AuctionMachine extends ProtoStateMachine[AuctionMachine, AuctionStates.type]{
     def getSingleton = AuctionMachine
     
@@ -38,8 +48,7 @@ package model {
       (from, to, auction.obj) match {
         case (AuctionStates.Initial, AuctionStates.Active, _) =>
           println("Initial to Active")
-        case (AuctionStates.Active, AuctionStates.Expired, Full(a)) =>
-          println("Active to Expired!")
+        case (AuctionStates.Active, AuctionStates.Expired, Full(auc)) => auc.close
         case (from,to,why) => println("default transition, don't do anything")
       }
       super.transition(from, to, why)

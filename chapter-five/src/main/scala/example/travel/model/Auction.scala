@@ -16,7 +16,9 @@ package model {
       override def fieldOrder = List(name,description,ends_at,
         outbound_on,inbound_on,flying_from,permanent_link,is_closed)
       // life cycle
-      // override def afterCreate = List(auction => )
+      override def afterCreate = List(auction => 
+        AuctionMachine.createNewInstance(AuctionMachine.FirstEvent, Full(_.auction(auction)))
+      )
       
       // crudify
       override def pageWrapper(body: NodeSeq) = 
@@ -86,6 +88,8 @@ package model {
     }
     
     def expires_at: TimeSpan = TimeSpan(((ends_at.is.getTime - now.getTime) / 1000L * 1000L))
+    
+    def close: Boolean = this.is_closed(true).save
   }
   
 }}

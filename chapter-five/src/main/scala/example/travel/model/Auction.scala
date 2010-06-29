@@ -15,10 +15,14 @@ package model {
       override def dbTableName = "auctions"
       override def fieldOrder = List(name,description,ends_at,
         outbound_on,inbound_on,flying_from,permanent_link,is_closed)
+      
       // life cycle
+      override def beforeCreate = List(_.ends_at(duration.date))
       override def afterCreate = List(auction => 
         AuctionMachine.createNewInstance(AuctionMachine.FirstEvent, Full(_.auction(auction)))
       )
+      
+      val duration = 24 hours
       
       // crudify
       override def pageWrapper(body: NodeSeq) = 
@@ -70,7 +74,7 @@ package model {
         new Bid().auction(this).customer(Customer.currentUser).amount(vld).saveMe
       }
     
-    def expired_? : Boolean = ends_at.is.getTime < now.getTime
+    def expired_? : Boolean = if(!is_closed.is) ends_at.is.getTime < now.getTime else true
     
     def winningCustomer: Box[Customer] = topBid.flatMap(_.customer.obj)
     

@@ -27,7 +27,7 @@ package model {
     def globalTransitions = Nil
     def states = List(
       State(AuctionStates.Initial, On({case _ => }, AuctionStates.Active)),
-      State(AuctionStates.Active, After(auction.obj.map(_.expires_at).openOr(2 minutes), AuctionStates.Expired))
+      State(AuctionStates.Active, After(Auction.duration, AuctionStates.Expired))
     )
     case object FirstEvent extends Event
   }
@@ -53,7 +53,6 @@ package model {
       }
       super.transition(from, to, why)
     }
-    
   }
   
   

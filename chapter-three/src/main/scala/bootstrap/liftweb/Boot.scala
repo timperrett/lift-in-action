@@ -7,7 +7,7 @@ import net.liftweb.util.Helpers._
 import net.liftweb.http._
 import net.liftweb.sitemap._
 import net.liftweb.sitemap.Loc._
-import net.liftweb.mapper.{DB,Schemifier,DefaultConnectionIdentifier,StandardDBVendor}
+import net.liftweb.mapper.{DB,Schemifier,DefaultConnectionIdentifier,StandardDBVendor,MapperRules}
 
 // app imports
 import example.travel.model.{Auction,Supplier,Customer,Bid,Order,OrderAuction}
@@ -16,6 +16,9 @@ import example.travel.model.{Auction,Supplier,Customer,Bid,Order,OrderAuction}
 class Boot extends Loggable {
   def boot {
     LiftRules.addToPackages("example.travel")
+    
+    MapperRules.columnName = (_,name) => StringHelpers.snakify(name)
+    MapperRules.tableName =  (_,name) => StringHelpers.snakify(name)
     
     // set the JNDI name that we'll be using
     DefaultConnectionIdentifier.jndiName = "jdbc/liftinaction"

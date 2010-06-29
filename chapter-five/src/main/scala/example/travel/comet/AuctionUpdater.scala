@@ -9,6 +9,7 @@ package comet {
   import net.liftweb.util.ActorPing
   import net.liftweb.http.S
   import net.liftweb.http.js.JsCmds._
+  import net.liftweb.http.js.jquery.JqJsCmds.FadeOut 
   import example.travel.model.{Auction,Customer}
   import example.travel.lib.AuctionInstanceHelpers
   
@@ -27,6 +28,7 @@ package comet {
     private lazy val currentAmountId = "current_amount"
     private lazy val winningCustomerId = "winning_customer"
     private lazy val amountId = "amount"
+    //private lazy val biddingFormId = "bidding-form"
     // helpers
     private val server = AuctionServer
     private var _auction: Box[Auction] = Empty
@@ -64,7 +66,8 @@ package comet {
     override def lowPriority = {
       case CountdownTick => {
         partialUpdate(SetHtml(countdownId, countdown))
-        if(!hasExpired_?) ActorPing.schedule(this, CountdownTick, 5 seconds)
+        if(!hasExpired_?)
+          ActorPing.schedule(this, CountdownTick, 5 seconds)
       }
       case CurrentAuction(a) => 
         _auction = a

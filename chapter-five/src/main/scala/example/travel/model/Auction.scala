@@ -14,15 +14,18 @@ package model {
     with CRUDify[Long,Auction]{
       override def dbTableName = "auctions"
       override def fieldOrder = List(name,description,ends_at,
-        outbound_on,inbound_on,flying_from,permanent_link,is_closed)
+        outbound_on,inbound_on,flying_from,permanent_link,starting_amount,is_closed)
       
       // life cycle
-      override def beforeCreate = List(_.ends_at(duration.date))
-      override def afterCreate = List(auction => 
-        AuctionMachine.createNewInstance(AuctionMachine.FirstEvent, Full(_.auction(auction)))
+      override def beforeCreate = List(_.ends_at(TimeSpan(now.getTime + duration.toMillis)))
+      override def afterCreate = List(
+        a => new Bid().amount(a.starting_amount.is).auction(a).save,
+        a => AuctionMachine.createNewInstance(AuctionMachine.FirstEvent, Full(_.auction(a)))
       )
       
-      val duration = 24 hours
+      val duration = 1 minutes
+      // val duration = 5 minutes
+      // val duration = 24 hours
       
       // crudify
       override def pageWrapper(body: NodeSeq) = 
@@ -52,6 +55,7 @@ package model {
     object flying_from extends MappedString(this, 100)
     object permanent_link extends MappedString(this, 150)
     object is_closed extends MappedBoolean(this)
+    object starting_amount extends MappedDouble(this)
     
     // relationships
     object supplier extends LongMappedMapper(this, Supplier){
@@ -94,6 +98,16 @@ package model {
     def expires_at: TimeSpan = TimeSpan(((ends_at.is.getTime - now.getTime) / 1000L * 1000L))
     
     def close: Boolean = this.is_closed(true).save
+    
+    def attributeToWinningCustomer {
+      println("Attributing auction to the winning customer")
+      winningCustomer.map(_.order.foreach(o => {
+        println(o)
+        o.order_auctions.+:(new OrderAuction().order(o).auction(this)).save
+        o.status(OrderStatus.Pending).save
+      }))
+    }
+    
   }
   
 }}

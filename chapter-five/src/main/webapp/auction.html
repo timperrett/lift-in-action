@@ -19,11 +19,13 @@
         </div>
         
         <lift:test_cond.loggedin>
+          <div id="bidding-form">
           <lift:details.bid>
             <label>Enter New Bid:</label>
             <div class="half"><b:amount id="amount"/> <b:submit /> <br/>
             <span class="small">(must be more than: &pound;<a:next_amount />)</span></div>
           </lift:details.bid>
+          </div>
         </lift:test_cond.loggedin>
         
         <lift:test_cond.loggedout>

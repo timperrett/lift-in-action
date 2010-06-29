@@ -48,8 +48,11 @@ package model {
       (from, to, auction.obj) match {
         case (AuctionStates.Initial, AuctionStates.Active, _) =>
           println("Initial to Active")
-        case (AuctionStates.Active, AuctionStates.Expired, Full(auc)) => auc.close
-        case (from,to,why) => println("default transition, don't do anything")
+        case (AuctionStates.Active, AuctionStates.Expired, Full(auc)) => {
+          auc.attributeToWinningCustomer
+          auc.close
+        }
+        case (from,to,why) =>
       }
       super.transition(from, to, why)
     }

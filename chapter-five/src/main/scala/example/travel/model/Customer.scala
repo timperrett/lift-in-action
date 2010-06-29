@@ -33,7 +33,6 @@ package model {
         </lift:surround>
       )
     
-    //onLogIn = List({ c => CurrentOrder(c.order) })
    onLogIn = List({ _.order })
   }
   class Customer extends MegaProtoUser[Customer] with CreatedUpdated {

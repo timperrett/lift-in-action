@@ -17,7 +17,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   // chapter two requires mapper, as we'll be doing some database stuff
   class ChapterThree(info: ProjectInfo) extends ChapterTwo(info){
     val mapper = "net.liftweb" % "lift-mapper" % liftVersion % "compile"
-    val mysql = "mysql" % "mysql-connector-java" % "5.1.12" % "compile"
+    val mysql = "com.h2database" % "h2" % "1.2.137" % "compile"
   }
   
   class ChapterFour(info: ProjectInfo) extends ChapterThree(info){

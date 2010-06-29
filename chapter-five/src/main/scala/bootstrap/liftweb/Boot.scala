@@ -95,10 +95,10 @@ object Application {
   val database = DBVendor
   
   object DBVendor extends StandardDBVendor(
-    Props.get("db.class").openOr("com.mysql.jdbc.Driver"),
-    Props.get("db.url").openOr("jdbc:mysql://localhost/liftinaction?user=root"),
-    Props.get("db.user"),
-    Props.get("db.pass"))
+    Props.get("db.class").openOr("org.h2.Driver"),
+    Props.get("db.url").openOr("jdbc:h2:database/chapter_five;DB_CLOSE_DELAY=-1"),
+    Props.get("db.user").openOr("sa"),
+    Props.get("db.pass").openOr("sa"))
   
 }
 

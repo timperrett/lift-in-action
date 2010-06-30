@@ -2,8 +2,10 @@ package example.travel {
 package lib {
   
   import net.liftweb.common.{Loggable,Full,Box,Empty,Failure}
-  import net.liftweb.paypal.{PaypalIPN,PaypalPDT}
+  import net.liftweb.paypal.{PaypalIPN,PaypalPDT,PaypalTransactionStatus,PayPalInfo}
   import net.liftweb.http.DoRedirectResponse
+  import net.liftweb.mapper.By
+  import example.travel.model.{Order,OrderStatus}
   
   /**
    * The handler that implements the paypal integration from Lift. 
@@ -32,8 +34,19 @@ package lib {
      * Paypal IPN
      */
     def actions = {
+      case (PaypalTransactionStatus.CompletedPayment,info,_) => 
+        updateOrder(info,OrderStatus.Complete)
+      case (PaypalTransactionStatus.FailedPayment,info,_) => 
+        updateOrder(info,OrderStatus.Failed)
       case (status, info, resp) =>
         logger.info("Got a PayPal IPN response of: " + status + ", with info: " + info)
+    }
+    
+    private def updateOrder(info: PayPalInfo, status: OrderStatus.Value){
+      Order.find(By(Order.reference, info.itemNumber.map(_.toLong).openOr(0L))) match {
+        case Full(order) => order.status(status).save
+        case _ =>
+      }
     }
     
   }

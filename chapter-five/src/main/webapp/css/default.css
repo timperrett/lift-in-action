@@ -292,6 +292,16 @@ span.small {
   font-size: 11px;
 }
 
+.basket-row {
+  clear: both;
+  border-top: 1px solid #c38a44;
+/*  border-bottom: 1px solid #c38a44;*/
+/*  min-height: 50px;*/
+  line-height: 25px;
+  padding-bottom: 2px;
+  
+}
+
 .messages {
   clear: both;
   width: 100%;

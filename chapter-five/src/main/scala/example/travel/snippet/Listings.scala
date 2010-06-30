@@ -24,7 +24,7 @@ package snippet {
     def all(xhtml: NodeSeq): NodeSeq = many(paginator.page, xhtml)
     
     def top(xhtml: NodeSeq): NodeSeq = 
-      many(Auction.findAll(MaxRows(3), OrderBy(Auction.id, Descending)), xhtml)
+      many(Auction.findAll(By(Auction.is_closed, false), MaxRows(3), OrderBy(Auction.id, Descending)), xhtml)
   }
   
 }}

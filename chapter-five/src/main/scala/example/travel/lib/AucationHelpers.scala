@@ -67,6 +67,9 @@ package lib {
         "link" -%> <a href={"/auction/" +
           auction.id.toString+"-"+auction.permanent_link}>details >></a>
       )
+      
+    protected def single(box: Box[Auction], xhtml: NodeSeq): NodeSeq = 
+      single(box.openOr(new Auction), xhtml)
     
     
     /**

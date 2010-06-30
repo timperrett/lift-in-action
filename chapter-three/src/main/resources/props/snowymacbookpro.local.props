@@ -1,0 +1,2 @@
+db.class=com.mysql.jdbc.Driver
+db.url=jdbc:mysql://localhost/liftinaction?user=root

@@ -1,26 +1,25 @@
 package example.travel {
 package snippet {
   
-  import net.liftweb.http.LiftScreen
+  import net.liftweb.http.{LiftScreen,S}
+  import example.travel.model.{Customer,Order}
   
-  // object Checkout extends LiftScreen {
-  //   val flavor = field("What's your favorite Ice cream flavor", "",
-  //                      trim, valMinLen(2,S ? "Name too short"),
-  //                      valMaxLen(40,S ? "That's a long name"))
-  //   
-  //   object person extends ScreenVar(Person.create)
-  //   
-  //   _register(() => person.is)
-  //   
-  //   val shouldSave = field("Save ?", false)
-  //   
-  //   def finish() {
-  //     S.notice("Thank you for adding "+person.is)
-  //     if (shouldSave.is) {
-  //       person.is.save
-  //       S.notice(person.is.toString+" Saved in the database")
-  //     }
-  //   }
-  // }
+  object Checkout extends LiftScreen {
+    object order extends ScreenVar(Customer.currentUser.flatMap(_.order) openOr Order.create)
+    
+    _register(() => order.shippingAddressOne)
+    _register(() => order.shippingAddressTwo)
+    _register(() => order.shippingAddressCity)
+    _register(() => order.shippingAddressPostalCode)
+    _register(() => order.shippingAddressCounty)
+    
+    def finish(){
+      if(order.save){
+        S.redirectTo("summary")
+      } else {
+        S.error("Unable to save order details")
+      }
+    }
+  }
   
 }}

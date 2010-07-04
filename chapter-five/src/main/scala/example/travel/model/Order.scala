@@ -23,13 +23,35 @@ package model {
     // fields
     object reference extends MappedLong(this)
     object status extends MappedEnum(this, OrderStatus)
+    object shippingAddressOne extends MappedString(this,255){
+      override def displayName = "Address One"
+    }
+    object shippingAddressTwo extends MappedString(this,255){
+      override def displayName = "Address Two"
+    }
+    object shippingAddressCity extends MappedString(this,255){
+      override def displayName = "City"
+    }
+    object shippingAddressPostalCode extends MappedPostalCode(this,shippingAddressCounty){
+      override def displayName = "Postcode"
+    }
+    object shippingAddressCounty extends MappedCountry(this){
+      override def displayName = "Country"
+    }
     
     // relationships
     object customer extends LongMappedMapper(this, Customer){
       override def dbColumnName = "customer_id"
     }
     object order_auctions extends MappedOneToMany(OrderAuction, OrderAuction.order) 
-        with Owned[OrderAuction] 
+        with Owned[OrderAuction]
+    
+    // helpers 
+    def totalValue: Double = (for(
+      oa <- order_auctions.all;
+      au <- oa.auction.obj;
+      av <- au.currentAmount) yield av).reduceLeft(_ + _)    
+    
   }
   
   

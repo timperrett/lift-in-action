@@ -7,7 +7,6 @@ package snippet {
   import net.liftweb.util.Helpers._
   import example.travel.model.Customer
   import example.travel.lib.AuctionHelpers
-  // import net.liftweb.
   
   class Basket extends AuctionHelpers {
     private lazy val items = 
@@ -21,7 +20,6 @@ package snippet {
       val template = if(items.isEmpty) "empty" else "full"
       bind("b",chooseTemplate("basket",template,xhtml))
     }
-    
   }
   
 }}}

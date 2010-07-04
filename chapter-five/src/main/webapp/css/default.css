@@ -241,6 +241,12 @@ hr { display: none; }
 .checkout-stage-one {
   background-image: url('../images/checkout-stage-1.png');
 }
+.checkout-stage-two {
+  background-image: url('../images/checkout-stage-2.png');
+}
+.checkout-stage-three {
+  background-image: url('../images/checkout-stage-3.png');
+}
 .checkout-stages .finalize {
   position: relative;
   top: 40px;
@@ -281,6 +287,19 @@ hr { display: none; }
 .checkout .row input {
   width: 200px;
 } 
+.row .form {
+  float: left;
+  line-height: 30px;
+}
+.row .errors {
+  font-weight: bold;
+  color: red;
+/*  height: 20px;*/
+  width: 140px;
+  margin-left: 10px;
+  float: left;
+  line-height: 30px;
+}
 
 .bold {
   font-weight: bold;

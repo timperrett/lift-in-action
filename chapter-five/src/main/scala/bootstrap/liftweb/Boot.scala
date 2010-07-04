@@ -84,6 +84,7 @@ object Application {
     Menu("History") / "history" >> LocGroup("public") >> MustBeLoggedIn,
     Menu("Auction Detail") / "auction" >> LocGroup("public") >> Hidden,
     Menu("Checkout") / "checkout" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
+    Menu("Checkout Finalize") / "summary" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
     Menu("Transaction Complete") / "paypal" / "success" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
     Menu("Transaction Failure") / "paypal" / "error" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
     // admin

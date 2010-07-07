@@ -25,9 +25,10 @@ package lib {
      */
     val paypalAuthToken = "0Chc848Vqe3ztH0uzJqgl697_U6tLzajlcar4fEcbYSOzQTWsK4CEID_aFO"
     def pdtResponse = {
-      case (info, resp) =>
-        logger.info("Got a PayPal PDT response of: " + resp)
-        DoRedirectResponse.apply("/")
+      case (info, resp) => resp.param("tx") match {
+        case Full(token) => DoRedirectResponse.apply("/paypal/success")
+        case _ => DoRedirectResponse.apply("/paypal/failure")
+      }
     }
     
     /**

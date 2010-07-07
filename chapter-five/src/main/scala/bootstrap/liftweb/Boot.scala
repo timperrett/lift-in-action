@@ -86,7 +86,7 @@ object Application {
     Menu("Checkout") / "checkout" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
     Menu("Checkout Finalize") / "summary" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
     Menu("Transaction Complete") / "paypal" / "success" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
-    Menu("Transaction Failure") / "paypal" / "error" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
+    Menu("Transaction Failure") / "paypal" / "failure" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
     // admin
     Menu("Admin") / "admin" / "index" >> LocGroup("admin"),
     Menu("Suppliers") / "admin" / "suppliers" >> LocGroup("admin") submenus(Supplier.menus : _*),

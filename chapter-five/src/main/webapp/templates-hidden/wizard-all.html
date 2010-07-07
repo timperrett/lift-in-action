@@ -1,0 +1,33 @@
+<div>
+  
+  <wizard:errors>
+    <div>
+      <ul>
+        <wizard:item>
+          <li><wizard:bind/></li>
+        </wizard:item>
+      </ul> 
+    </div> 
+  </wizard:errors>
+  
+  <wizard:fields>
+    <wizard:line>
+      <div class="row">
+        <div class="label">
+          <wizard:label><label wizard:for=""><wizard:bind/></label></wizard:label>
+          <wizard:help><span><wizard:bind/></span></wizard:help>
+        </div>
+        <div class="form"><wizard:form/></div>
+        <div class="errors">
+          <wizard:field_errors><wizard:error><wizard:bind /></wizard:error></wizard:field_errors>
+        </div>
+      </div>
+    </wizard:line>
+  </wizard:fields>
+  
+  <div class="row">
+    <div class="label">&nbsp;</div>
+    <wizard:next /> 
+  </div>
+  
+</div>

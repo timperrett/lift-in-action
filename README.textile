@@ -26,6 +26,6 @@ Then you need to update the dependencies
 <pre><code>> update</code></pre>
 
 Then we can run actions on that module like normal:
-<pre><code>> jetty-run</code></pre>
+<pre><code>> jetty</code></pre>
 
 

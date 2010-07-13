@@ -8,6 +8,7 @@ import net.liftweb.http._
 import net.liftweb.sitemap._
 import net.liftweb.sitemap.Loc._
 import net.liftweb.mapper.{DB,Schemifier,DefaultConnectionIdentifier,StandardDBVendor,MapperRules}
+import net.liftweb.paypal.PaypalRules
 
 // app imports
 import example.travel.model.{Auction,Supplier,Customer,Bid,Order,OrderAuction,AuctionMachine}
@@ -49,6 +50,8 @@ class Boot extends Loggable {
     
     /**** paypal settings ****/
     
+    PaypalRules.init
+    
     // wire up the various DispatchPFs for both PDT and IPN
     PaypalHandler.dispatch.foreach(LiftRules.dispatch.append(_))
     
@@ -85,8 +88,8 @@ object Application {
     Menu("Auction Detail") / "auction" >> LocGroup("public") >> Hidden,
     Menu("Checkout") / "checkout" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
     Menu("Checkout Finalize") / "summary" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
-    Menu("Transaction Complete") / "paypal" / "success" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
-    Menu("Transaction Failure") / "paypal" / "failure" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
+    Menu("Transaction Complete") / "paypal" / "success" >> LocGroup("public") >> Hidden,
+    Menu("Transaction Failure") / "paypal" / "failure" >> LocGroup("public") >> Hidden,
     // admin
     Menu("Admin") / "admin" / "index" >> LocGroup("admin"),
     Menu("Suppliers") / "admin" / "suppliers" >> LocGroup("admin") submenus(Supplier.menus : _*),

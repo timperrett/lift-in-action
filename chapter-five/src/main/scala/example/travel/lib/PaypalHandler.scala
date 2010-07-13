@@ -23,10 +23,10 @@ package lib {
     /**
      * Paypal PDT
      */
-    val paypalAuthToken = "0Chc848Vqe3ztH0uzJqgl697_U6tLzajlcar4fEcbYSOzQTWsK4CEID_aFO"
+    val paypalAuthToken = "WhsP9vgRJ7lIegtlIaIpgvtio5X8g9kCbEmqZgNzOiG5ZhumC1WI067_KBq"
     def pdtResponse = {
-      case (info, resp) => resp.param("tx") match {
-        case Full(token) => DoRedirectResponse.apply("/paypal/success")
+      case (info, resp) => info.paymentStatus match {
+        case Full(PaypalTransactionStatus.CompletedPayment) => DoRedirectResponse.apply("/paypal/success")
         case _ => DoRedirectResponse.apply("/paypal/failure")
       }
     }
@@ -36,8 +36,10 @@ package lib {
      */
     def actions = {
       case (PaypalTransactionStatus.CompletedPayment,info,_) => 
+        logger.info("IPN completed")
         updateOrder(info,OrderStatus.Complete)
       case (PaypalTransactionStatus.FailedPayment,info,_) => 
+        logger.info("IPN failed")
         updateOrder(info,OrderStatus.Failed)
       case (status, info, resp) =>
         logger.info("Got a PayPal IPN response of: " + status + ", with info: " + info)

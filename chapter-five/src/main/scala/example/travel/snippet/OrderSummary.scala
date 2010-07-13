@@ -3,15 +3,27 @@ package travel {
 package snippet {
   
   import scala.xml.{NodeSeq,Text}
+  import net.liftweb.paypal.snippet.BuyNowSnippet
   import net.liftweb.util.Helpers._
   import example.travel.model.Customer
   
-  class OrderSummary {
-    private val order = Customer.currentUser.flatMap(_.order)
-    private val totalValue = order.map(_.totalValue).openOr(0D)
-    private val reference = order.map(_.reference.is).openOr("n/a")
+  class OrderSummary extends BuyNowSnippet {
+    override def dispatch = {
+      case "paynow" => buynow _
+      case "value" => value _
+      case "shipping" => shipping _
+    }
     
-    def value(xhtml: NodeSeq): NodeSeq = Text(totalValue.toString)
+    
+    val order = Customer.currentUser.flatMap(_.order)
+    val amount = order.map(_.totalValue).openOr(0D)
+    val reference = order.map(_.reference.is.toString).openOr("n/a")
+    override val values = Map(
+      "business" -> "seller_1278962623_biz@getintheloop.eu",
+      "item_number" -> reference,
+      "item_name" -> ("Auction Order: " + reference))
+    
+    def value(xhtml: NodeSeq): NodeSeq = Text(amount.toString)
     
     def shipping(xhtml: NodeSeq): NodeSeq = Customer.currentUser.flatMap(_.order.map(order =>
       bind("s",xhtml,
@@ -20,17 +32,6 @@ package snippet {
         "city" -> order.shippingAddressCity.is,
         "postcode" -> order.shippingAddressPostalCode.is
       ))).openOr(NodeSeq.Empty)
-    
-    def paynow(xhtml: NodeSeq): NodeSeq =
-      <form name="_xclick" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
-        <input type="hidden" name="cmd" value="_xclick" />
-        <input type="hidden" name="business" value="me@mybusiness.com" />
-        <input type="hidden" name="currency_code" value="GBP" />
-        <input type="hidden" name="item_name" value={"Order " + reference} />
-        <input type="hidden" name="amount" value={totalValue.toString} />
-        <input type="image" src="images/x-click-but23.gif" name="submit" alt="" />
-      </form>
-    
     
   }
   

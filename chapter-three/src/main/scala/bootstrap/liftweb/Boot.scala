@@ -40,26 +40,7 @@ class Boot extends Loggable {
       case (req,failure) => NotFoundAsTemplate(ParsePath(List("404"),"html",false,false))
     })
     
-    // LiftRules.loggedInTest = Full(() => User.loggedIn_?)
-    
-    // set the application sitemap
-    // LiftRules.setSiteMap(SiteMap(Application.sitemap:_*))
-    
-    // def sitemap = SiteMap(
-    //   Menu("Home") / "index" >> LocGroup("public"),
-    //   Menu("Search") / "search" >> LocGroup("public"),
-    //   Menu("History") / "history" >> LocGroup("public"),
-    //   Menu("Auctions") / "auctions" >> LocGroup("public"),
-    //   Menu("Auction Detail") / "auction" >> LocGroup("public"),
-    //   // admin
-    //   Menu("Admin") / "admin" / "index" >> LocGroup("admin"),
-    //   Menu("Suppliers") / "admin" / "suppliers" >> LocGroup("admin") submenus(Supplier.menus : _*),
-    //   Menu("Auction Admin") / "admin" / "auctions" >> LocGroup("admin") submenus(Auction.menus : _*),
-    // )
-    // LiftRules.setSiteMap(sitemap)
-    
     LiftRules.setSiteMap(SiteMap(Application.sitemap: _*))
-    
     
     // setup the load pattern
     S.addAround(DB.buildLoanWrapper)

@@ -2,13 +2,14 @@ import sbt._
 import hoffrocket.YuiCompressorPlugin
 
 class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
-  val liftVersion = "2.0-SNAPSHOT"
+  val liftVersion = "2.1-SNAPSHOT"
   
   // implement the module definitions
   lazy val chptwo = project("chapter-two", "two", new ChapterTwo(_))
   lazy val chpthree = project("chapter-three", "three", new ChapterThree(_))
   lazy val chpfour = project("chapter-four", "four", new ChapterFour(_))
   lazy val chpfive = project("chapter-five", "five", new ChapterFive(_))
+  lazy val chpEightA = project("chapter-eight-a", "eight-a", new ChapterEightA(_))
   
   // define each module and any specific dependencies that it has
   // As chapter one is so basic, it has no specilized deps
@@ -16,19 +17,21 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   
   // chapter two requires mapper, as we'll be doing some database stuff
   class ChapterThree(info: ProjectInfo) extends ChapterTwo(info){
-    val mapper = "net.liftweb" % "lift-mapper" % liftVersion % "compile"
+    val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile->default"
     val h2 = "com.h2database" % "h2" % "1.2.137" % "compile"
     val mysql = "mysql" % "mysql-connector-java" % "5.1.12" % "compile"
   }
   
   class ChapterFour(info: ProjectInfo) extends ChapterThree(info){
-    val textile = "net.liftweb" % "lift-textile" % liftVersion % "compile"
+    val textile = "net.liftweb" %% "lift-textile" % liftVersion % "compile->default"
   }
   
   class ChapterFive(info: ProjectInfo) extends ChapterFour(info){
-    val machine = "net.liftweb" % "lift-machine" % liftVersion % "compile"
-    val paypal = "net.liftweb" % "lift-paypal" % liftVersion % "compile"
+    val machine = "net.liftweb" %% "lift-machine" % liftVersion % "compile->default"
+    val paypal = "net.liftweb" %% "lift-paypal" % liftVersion % "compile->default"
   }
+  
+  class ChapterEightA(info: ProjectInfo) extends ProjectDefaults(info)
   
   // define some defaults
   abstract class ProjectDefaults(info: ProjectInfo) 
@@ -43,7 +46,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
     override def scanDirectories = Nil 
     
     // every chapter will be using lift (of course!)
-    val webkit = "net.liftweb" % "lift-webkit" % liftVersion % "compile"
+    val webkit = "net.liftweb" %% "lift-webkit" % liftVersion % "compile->default"
     val jetty6 = "org.mortbay.jetty" % "jetty" % "6.1.21" % "test"
     val servlet = "javax.servlet" % "servlet-api" % "2.5" % "provided"
     

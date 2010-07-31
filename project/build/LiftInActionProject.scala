@@ -9,7 +9,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   lazy val chpthree = project("chapter-three", "three", new ChapterThree(_))
   lazy val chpfour = project("chapter-four", "four", new ChapterFour(_))
   lazy val chpfive = project("chapter-five", "five", new ChapterFive(_))
-  lazy val chpEightA = project("chapter-eight-a", "eight-a", new ChapterEightA(_))
+  lazy val chpEight = project("chapter-eight", "eight", new ChapterEight(_))
   
   // define each module and any specific dependencies that it has
   // As chapter one is so basic, it has no specilized deps
@@ -31,7 +31,8 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
     val paypal = "net.liftweb" %% "lift-paypal" % liftVersion % "compile->default"
   }
   
-  class ChapterEightA(info: ProjectInfo) extends ProjectDefaults(info)
+  // we only need mapper and textile, so just extend chapter four
+  class ChapterEight(info: ProjectInfo) extends ChapterFour(info)
   
   // define some defaults
   abstract class ProjectDefaults(info: ProjectInfo) 

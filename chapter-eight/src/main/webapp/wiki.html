@@ -1,0 +1,18 @@
+<lift:surround with="default" at="content">
+  <lift:wiki>
+    <p><a href="/wiki/all">Show All Pages</a></p>
+    
+    <!-- Contents to display for edit page -->
+    <display:edit>
+      <p><e:message /><br /><e:textarea /></p>
+      <p><e:cancel /> <e:submit /></p>
+    </display:edit>
+    
+    <!-- Content to display for view page -->
+    <display:view>
+      <v:content />
+      <p><v:edit /></p>
+    </display:view>
+    
+  </lift:wiki>
+</lift:surround>

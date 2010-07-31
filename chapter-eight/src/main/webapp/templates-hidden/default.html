@@ -3,7 +3,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
-    <title>code:app:0.1-SNAPSHOT</title>
+    <title>code:app:0.1-SNAPSHOT :: <lift:menu.title /></title>
     <script id="jquery" src="/classpath/jquery.js" type="text/javascript"/>
   </head>
   <body>
@@ -12,7 +12,13 @@
     
     <hr />
     
-    <lift:Menu.builder />
+    <lift:menu.builder 
+      ul:class="test"
+      level="0"
+      li:class="sample"
+      li_item:class="selectedMenu"
+      li_path:class="p" />
+
     
   </body>
 </html>

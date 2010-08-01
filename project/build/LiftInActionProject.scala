@@ -5,11 +5,12 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   val liftVersion = "2.1-SNAPSHOT"
   
   // implement the module definitions
-  lazy val chptwo = project("chapter-two", "two", new ChapterTwo(_))
-  lazy val chpthree = project("chapter-three", "three", new ChapterThree(_))
-  lazy val chpfour = project("chapter-four", "four", new ChapterFour(_))
-  lazy val chpfive = project("chapter-five", "five", new ChapterFive(_))
-  lazy val chpEight = project("chapter-eight", "eight", new ChapterEight(_))
+  lazy val chptwo = project("chapter-2", "two", new ChapterTwo(_))
+  lazy val chpthree = project("chapter-3", "three", new ChapterThree(_))
+  lazy val chpfour = project("chapter-4", "four", new ChapterFour(_))
+  lazy val chpfive = project("chapter-5", "five", new ChapterFive(_))
+  lazy val chpEight = project("chapter-8", "eight", new ChapterEight(_))
+  lazy val chpThirteen = project("chapter-13", "thirteen", new ChapterThirteen(_))
   
   // define each module and any specific dependencies that it has
   // As chapter one is so basic, it has no specilized deps
@@ -33,6 +34,9 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   
   // we only need mapper and textile, so just extend chapter four
   class ChapterEight(info: ProjectInfo) extends ChapterFour(info)
+  
+  class ChapterThirteen(info: ProjectInfo) extends ChapterFour(info)
+  
   
   // define some defaults
   abstract class ProjectDefaults(info: ProjectInfo) 

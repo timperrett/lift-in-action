@@ -5,7 +5,7 @@ package model {
   import net.liftweb.mapper._
   import net.liftweb.sitemap.Loc._
   import scala.xml.{NodeSeq,Node}
-  import example.travel.lib.CurrentOrder
+  //import example.travel.lib.CurrentOrder
   
   object Customer extends Customer 
       with KeyedMetaMapper[Long, Customer]

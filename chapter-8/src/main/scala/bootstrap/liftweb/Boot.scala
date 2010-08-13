@@ -70,7 +70,8 @@ object Application {
         >> TestAccess(() => LoggedIn.is.choice(x => Empty)(Full(RedirectResponse("login")))),
     Menu("Example") / "sample" / "localhost-only" >> MySnippets >> Test(req => req.hostName == "localhost"),
     Menu("Edit Something") / "edit" >> Hidden >> Unless(() => S.param("id").isEmpty, () => RedirectResponse("index")),
-    Menu(Wiki)
+    Menu(Wiki),
+    Menu("JSON Menu") / "json"
   )
   
   val database = DBVendor

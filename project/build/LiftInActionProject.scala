@@ -1,5 +1,6 @@
 import sbt._
 import hoffrocket.YuiCompressorPlugin
+import eu.getintheloop.Native2AsciiPlugin
 
 class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   val liftVersion = "2.1-SNAPSHOT"
@@ -35,7 +36,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   // we only need mapper and textile, so just extend chapter four
   class ChapterEight(info: ProjectInfo) extends ChapterFour(info)
   
-  class ChapterThirteen(info: ProjectInfo) extends ChapterFour(info)
+  class ChapterThirteen(info: ProjectInfo) extends ChapterFour(info) with Native2AsciiPlugin
   
   
   // define some defaults

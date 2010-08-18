@@ -1,0 +1,2 @@
+index.greeting=Pourquoi Bonjour!
+index.quote=Hommes de pouvoir et d'influence peuvent promouvoir les bonnes mœurs. Qu'ils dans leurs stations plusieurs encourager la vertu ... laissez-les pour et participer à tout projet qui pourrait être formé pour la promotion de la morale.

@@ -23,9 +23,10 @@ package model {
         a => AuctionMachine.createNewInstance(AuctionMachine.FirstEvent, Full(_.auction(a)))
       )
       
-      val duration = 1 minutes
-      // val duration = 5 minutes
+      //val duration = 1 minutes
+      val duration = 5 minutes
       // val duration = 24 hours
+      // val duration = 48 hours
       
       // crudify
       override def pageWrapper(body: NodeSeq) = 
@@ -72,8 +73,7 @@ package model {
     def barter(next: Box[String]): Box[Bid] = 
       for(ass <- next ?~! "Amount is not a number";
           amo <- tryo(BigDecimal(ass).doubleValue) ?~! "Amount is not a number";
-          nxt <- nextAmount;
-          vld <- tryo(amo).filter(_ >= nxt) ?~ "Your bid is lower than required!"
+          vld <- tryo(amo).filter(_ >= (nextAmount openOr 0D)) ?~ "Your bid is lower than required!"
       ) yield {
         new Bid().auction(this).customer(Customer.currentUser).amount(vld).saveMe
       }
@@ -103,7 +103,10 @@ package model {
       println("Attributing auction to the winning customer")
       winningCustomer.map(_.order.foreach(o => {
         println(o)
-        o.order_auctions.+:(new OrderAuction().order(o).auction(this)).save
+        
+        (o.order_auctions.+=(new OrderAuction().order(o).auction(this))).save
+        
+        //o.order_auctions.+:(new OrderAuction().order(o).auction(this)).save
         o.status(OrderStatus.Pending).save
       }))
     }

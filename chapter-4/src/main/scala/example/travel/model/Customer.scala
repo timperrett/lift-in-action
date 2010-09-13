@@ -38,7 +38,7 @@ package model {
     
     def participatingIn: List[Long] = 
       Bid.findAll(By(Bid.customer, this.id)).map(_.auction.obj)
-        .removeDuplicates.filter(!_.isEmpty).map(_.open_!.id.is)
+        .distinct.filter(!_.isEmpty).map(_.open_!.id.is)
   }
   
 }}

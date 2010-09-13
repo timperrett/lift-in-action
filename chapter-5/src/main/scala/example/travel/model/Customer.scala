@@ -5,7 +5,6 @@ package model {
   import net.liftweb.mapper._
   import net.liftweb.sitemap.Loc._
   import scala.xml.{NodeSeq,Node}
-  //import example.travel.lib.CurrentOrder
   
   object Customer extends Customer 
       with KeyedMetaMapper[Long, Customer]
@@ -47,7 +46,7 @@ package model {
     
     def participatingIn: List[Long] = 
       Bid.findAll(By(Bid.customer, this.id)).map(_.auction.obj)
-        .removeDuplicates.filter(!_.isEmpty).map(_.open_!.id.is)
+        .distinct.filter(!_.isEmpty).map(_.open_!.id.is)
   }
   
 }}

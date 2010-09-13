@@ -6,10 +6,11 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   val liftVersion = "2.1-SNAPSHOT"
   
   // implement the module definitions
-  lazy val chptwo = project("chapter-2", "two", new ChapterTwo(_))
-  lazy val chpthree = project("chapter-3", "three", new ChapterThree(_))
-  lazy val chpfour = project("chapter-4", "four", new ChapterFour(_))
-  lazy val chpfive = project("chapter-5", "five", new ChapterFive(_))
+  lazy val chpTwo = project("chapter-2", "two", new ChapterTwo(_))
+  lazy val chpThree = project("chapter-3", "three", new ChapterThree(_))
+  lazy val chpFour = project("chapter-4", "four", new ChapterFour(_))
+  lazy val chpFive = project("chapter-5", "five", new ChapterFive(_))
+  lazy val chpSeven = project("chapter-7", "seven", new ChapterEight(_))
   lazy val chpEight = project("chapter-8", "eight", new ChapterEight(_))
   lazy val chpThirteen = project("chapter-13", "thirteen", new ChapterThirteen(_))
   
@@ -32,6 +33,8 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
     val machine = "net.liftweb" %% "lift-machine" % liftVersion % "compile->default"
     val paypal = "net.liftweb" %% "lift-paypal" % liftVersion % "compile->default"
   }
+  
+  class ChapterSeven(info: ProjectInfo) extends ProjectDefaults(info)
   
   // we only need mapper and textile, so just extend chapter four
   class ChapterEight(info: ProjectInfo) extends ChapterFour(info)

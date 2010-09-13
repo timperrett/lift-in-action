@@ -6,13 +6,13 @@ import java.util.Locale
 import net.liftweb.common.{Box,Full,Empty,Loggable}
 import net.liftweb.util.Props
 import net.liftweb.util.Helpers._
-import net.liftweb.http.{LiftRules,S,RedirectResponse,SessionVar}
+import net.liftweb.http._
 import net.liftweb.http.provider.HTTPRequest
 import net.liftweb.mapper.{DefaultConnectionIdentifier,DB,Schemifier,StandardDBVendor,MapperRules}
 
 class Boot extends Loggable {
   def boot {
-    LiftRules.addToPackages("sample.snippet")
+    LiftRules.addToPackages("sample")
     
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
     
@@ -28,6 +28,11 @@ class Boot extends Loggable {
       request.flatMap(_.locale).openOr(Locale.getDefault())
     }
     
+    LiftRules.statelessRewrite.prepend {
+      case RewriteRequest(ParsePath("sample" :: Nil, _, _,_), _, _) => 
+           RewriteResponse("index" :: Nil)
+    }
+
     
     //LiftRules.setSiteMap(SiteMap(Application.sitemap:_*))
   }

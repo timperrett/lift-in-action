@@ -57,7 +57,7 @@ package comet {
     
     def registerListeners {
       auction.map(a => 
-        server ! ListenTo(this,(a.id.is :: Customer.currentUser.map(_.participatingIn).openOr(Nil)).removeDuplicates))
+        server ! ListenTo(this,(a.id.is :: Customer.currentUser.map(_.participatingIn).openOr(Nil)).distinct))
     }
     
     /**

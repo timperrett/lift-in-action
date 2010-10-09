@@ -3,7 +3,7 @@ import hoffrocket.YuiCompressorPlugin
 import eu.getintheloop.Native2AsciiPlugin
 
 class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
-  val liftVersion = "2.1-SNAPSHOT"
+  val liftVersion = "2.1"
   
   // implement the module definitions
   lazy val chpTwo = project("chapter-2", "two", new ChapterTwo(_))
@@ -34,7 +34,9 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
     val paypal = "net.liftweb" %% "lift-paypal" % liftVersion % "compile->default"
   }
   
-  class ChapterSeven(info: ProjectInfo) extends ProjectDefaults(info)
+  class ChapterSeven(info: ProjectInfo) extends ProjectDefaults(info){
+    val scalate = "net.liftweb" %% "lift-scalate" % liftVersion
+  }
   
   // we only need mapper and textile, so just extend chapter four
   class ChapterEight(info: ProjectInfo) extends ChapterFour(info)

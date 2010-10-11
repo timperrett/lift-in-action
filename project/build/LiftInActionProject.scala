@@ -10,7 +10,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   lazy val chpThree = project("chapter-3", "three", new ChapterThree(_))
   lazy val chpFour = project("chapter-4", "four", new ChapterFour(_))
   lazy val chpFive = project("chapter-5", "five", new ChapterFive(_))
-  lazy val chpSeven = project("chapter-7", "seven", new ChapterEight(_))
+  lazy val chpSeven = project("chapter-7", "seven", new ChapterSeven(_))
   lazy val chpEight = project("chapter-8", "eight", new ChapterEight(_))
   lazy val chpThirteen = project("chapter-13", "thirteen", new ChapterThirteen(_))
   
@@ -35,7 +35,8 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   }
   
   class ChapterSeven(info: ProjectInfo) extends ProjectDefaults(info){
-    val scalate = "net.liftweb" %% "lift-scalate" % liftVersion
+    val wizard = "net.liftweb" %% "lift-wizard" % liftVersion
+    val scalate = "net.liftweb" %% "lift-scalate" % liftVersion % "compile->default"
   }
   
   // we only need mapper and textile, so just extend chapter four
@@ -77,7 +78,9 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
         syncTask(sxrTestPath, sxrPublishPath / "test") dependsOn(testCompile)
       )
     
-    val smackRepo = "m2-repository-smack" at "http://maven.reucon.com/public"
+    val jbossRepo = "jboss-repo" at "http://repository.jboss.org/nexus/content/groups/public-jboss/"
+    //val smackRepo = "m2-repository-smack" at "http://maven.reucon.com/public"
+    val scalaReleases = "scala-tools.snapshots" at "http://scala-tools.org/repo-releases/"
     val scalaSnapshots = "scala-tools.snapshots" at "http://scala-tools.org/repo-snapshots/"
     val sonatype = "oss.sonatype.org" at "http://oss.sonatype.org/content/groups/github/"
     

@@ -39,6 +39,9 @@ class Boot extends Loggable {
     Menu("Listing 7.12: Wiring a () => NodeSeq into LiftRules.viewDispatch") / "seven_dot_tweleve" / "example",
     Menu("Listing 7.13: Implementing LiftView sub-type") / "MyView" / "sample",
     Menu("Listing 7.14: Implementing a RequestVar[Box[String]]") / "request_var",
-    Menu("Listing 7.15: Getting and setting a cookie value") / "seven_dot_fifteen"
+    Menu("Listing 7.15: Getting and setting a cookie value") / "seven_dot_fifteen",
+    Menu("Listing 7.16: Basic LiftScreen implementation") / "lift_screen_one",
+    Menu("Listing 7.17: Applying validation to LiftScreen sample (7.16)") / "lift_screen_two",
+    Menu("Listing 7.18: Building Wizard workflow") / "wizard_example"
   )
 }

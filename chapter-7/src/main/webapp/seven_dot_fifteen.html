@@ -1,0 +1,10 @@
+<lift:surround with="single_bind" at="content">
+  <h1>Cookies</h1>
+  
+  <p>Attempted looking for cookie: <strong><lift:cookie_sample /></strong></p>
+  <p>
+    <lift:cookie_sample.add form="post"><c:button /></lift:cookie_sample.add>
+    <br />
+    <lift:cookie_sample.delete form="post"><c:button /></lift:cookie_sample.delete>
+  </p>
+</lift:surround>

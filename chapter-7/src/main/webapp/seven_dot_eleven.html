@@ -1,0 +1,10 @@
+<lift:surround with="single_bind" at="content">
+  
+  <h1>Stateful Snippet Example</h1>
+  
+  <lift:count_increment.render form="post">
+    <!-- if the value is above 5, these are ignored -->
+    <p><s:count /><br /><s:increment /></p>
+  </lift:count_increment.render>
+  
+</lift:surround>

@@ -9,6 +9,8 @@ import net.liftweb.http.auth.{HttpBasicAuthentication,AuthRole,userRoles}
 import net.liftweb.sitemap._
 import net.liftweb.sitemap.Loc._
 
+import net.liftweb.widgets.autocomplete.AutoComplete
+
 import sample.snippet.RequestVarSample
 
 class Boot extends Loggable {
@@ -22,6 +24,8 @@ class Boot extends Loggable {
     LiftRules.viewDispatch.append {
       case "seven_dot_tweleve" :: "example" :: Nil => Left(() => Full(<h1>Manual Sample</h1>))
     }
+    
+    AutoComplete.init
     
     LiftRules.setSiteMap(SiteMap(sitemap:_*))
   }
@@ -42,6 +46,7 @@ class Boot extends Loggable {
     Menu("Listing 7.15: Getting and setting a cookie value") / "seven_dot_fifteen",
     Menu("Listing 7.16: Basic LiftScreen implementation") / "lift_screen_one",
     Menu("Listing 7.17: Applying validation to LiftScreen sample (7.16)") / "lift_screen_two",
-    Menu("Listing 7.18: Building Wizard workflow") / "wizard_example"
+    Menu("Listing 7.18: Building Wizard workflow") / "wizard_example",
+    Menu("Listing 7.19: AutoComplete Widget") / "auto_complete"
   )
 }

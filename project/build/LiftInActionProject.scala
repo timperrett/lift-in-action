@@ -36,6 +36,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   
   class ChapterSeven(info: ProjectInfo) extends ProjectDefaults(info){
     val wizard = "net.liftweb" %% "lift-wizard" % liftVersion
+    val widgets = "net.liftweb" %% "lift-widgets" % liftVersion
     val scalate = "net.liftweb" %% "lift-scalate" % liftVersion % "compile->default"
   }
   

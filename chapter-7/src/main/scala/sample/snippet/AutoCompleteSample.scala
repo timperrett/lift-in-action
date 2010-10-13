@@ -9,6 +9,8 @@ class AutoCompleteSample {
   
   def sample(xhtml: NodeSeq): NodeSeq = 
     bind("f", xhtml, 
-      "find_name" -> AutoComplete("", (current,limit) => data, x => println("Submitted: " + x))
+      "find_name" -> AutoComplete("", 
+        (current,limit) => data.filter(_.toLowerCase.startsWith(current.toLowerCase)), 
+        x => println("Submitted: " + x))
     )
 }

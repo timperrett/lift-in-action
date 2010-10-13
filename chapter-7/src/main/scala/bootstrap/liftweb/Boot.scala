@@ -47,6 +47,7 @@ class Boot extends Loggable {
     Menu("Listing 7.16: Basic LiftScreen implementation") / "lift_screen_one",
     Menu("Listing 7.17: Applying validation to LiftScreen sample (7.16)") / "lift_screen_two",
     Menu("Listing 7.18: Building Wizard workflow") / "wizard_example",
-    Menu("Listing 7.19: AutoComplete Widget") / "auto_complete"
+    Menu("Listing 7.19: Implementing the AutoComplete snippet helper") / "auto_complete",
+    Menu("Listing 7.20: The Gravatar Widget") / "gravatar_sample"
   )
 }

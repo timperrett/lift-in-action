@@ -8,7 +8,7 @@ package comet {
   
   object AuctionServer extends LiftActor {
     /** 
-     * Internal state about who's listening for what and what is listening for who!
+     * Internal state about who's listening for what and what is listening for whom!
      */
     private var cometActorAuctions: Map[CometActor,List[Long]] = Map()
     private def auctionCometActors: Map[Long, List[CometActor]] = 

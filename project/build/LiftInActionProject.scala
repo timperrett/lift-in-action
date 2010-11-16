@@ -12,6 +12,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   lazy val chpFive = project("chapter-5", "five", new ChapterFive(_))
   lazy val chpSeven = project("chapter-7", "seven", new ChapterSeven(_))
   lazy val chpEight = project("chapter-8", "eight", new ChapterEight(_))
+  lazy val chpNine = project("chapter-9", "nine", new ChapterNine(_))
   lazy val chpThirteen = project("chapter-13", "thirteen", new ChapterThirteen(_))
   
   // define each module and any specific dependencies that it has
@@ -42,6 +43,8 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   
   // we only need mapper and textile, so just extend chapter four
   class ChapterEight(info: ProjectInfo) extends ChapterFour(info)
+  
+  class ChapterNine(info: ProjectInfo) extends ProjectDefaults(info)
   
   class ChapterThirteen(info: ProjectInfo) extends ChapterFour(info) with Native2AsciiPlugin
   

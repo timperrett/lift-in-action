@@ -1,7 +1,7 @@
 package bootstrap.liftweb
 
 import net.liftweb.http.{LiftRules,RewriteRequest,RewriteResponse,ParsePath}
-import sample.lib.BasicDispatchUsage
+import sample.lib.{BasicDispatchUsage,SecondDispatchUsage}
 
 class Boot {
   def boot {
@@ -15,9 +15,11 @@ class Boot {
     }
     
     // listing 9.2
-    
-    
     LiftRules.dispatch.append(BasicDispatchUsage)
+    
+    // listing 9.3
+    LiftRules.dispatch.append(SecondDispatchUsage)
+    
     
   }
 }

@@ -7,6 +7,7 @@ class Boot {
   def boot {
     LiftRules.addToPackages("sample.snippet")
     
+    LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
     
     // listing 9.1
     LiftRules.statelessRewrite.append {
@@ -20,7 +21,9 @@ class Boot {
     // listing 9.3
     LiftRules.dispatch.append(SecondDispatchUsage)
     
-    
+    LiftRules.urlDecorate.prepend {
+      case url => if(url.contains("?")) url + "&srv_id=001" else "?srv_id=001"
+    }    
   }
 }
 

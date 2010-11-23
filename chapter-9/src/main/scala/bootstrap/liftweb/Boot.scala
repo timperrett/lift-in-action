@@ -2,7 +2,8 @@ package bootstrap.liftweb
 
 import net.liftweb.common.{Box,Full,Empty}
 import net.liftweb.http.{LiftRules,RewriteRequest,RewriteResponse,ParsePath,Req,GetRequest}
-import sample.lib.{BasicDispatchUsage,SecondDispatchUsage,BookshopService}
+import sample.lib.{BasicDispatchUsage,SecondDispatchUsage,
+  BookshopHttpServiceBasic,BookshopHttpServiceAdvanced}
 
 class Boot {
   def boot {
@@ -30,12 +31,11 @@ class Boot {
       case Req("nolift" :: Nil,"xml",_) => false
     }
     
-    LiftRules.dispatch.append {
-      case Req("bookshop" :: "books" :: Nil, "xml", GetRequest) => 
-        BookshopService.xml.list
-      case Req("bookshop" :: "books" :: publisher :: Nil, "xml", GetRequest) => 
-        BookshopService.xml.listByPublisher(publisher)
-    }
+    // section 9.3.2
+    LiftRules.dispatch.append(BookshopHttpServiceBasic)
+    
+    // section 9.3.3
+    LiftRules.dispatch.append(BookshopHttpServiceAdvanced)
   }
 }
 

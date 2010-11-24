@@ -18,10 +18,12 @@ object Bookshop {
 */
 object Book {
   implicit val booksAsXml: Return[List[Book]]#As[XmlResponse] = 
-    (books:List[Book]) => 
-      XmlResponse(<books>{books.flatMap{b => <book publisher={b.publisher} title={b.title}/>}}</books>)
+    (books:List[Book]) => XmlResponse(
+      <books>{books.flatMap(b => 
+        <book publisher={b.publisher} title={b.title}/>)
+      }</books>)
   
   implicit val booksAsPlainText: ReturnAs[List[Book], PlainTextResponse] = 
-    (books:List[Book]) => 
-      PlainTextResponse("Books\n"+books.map(b => "publisher:"+b.publisher + ",title:"+b.title))
+    (books:List[Book]) => PlainTextResponse("Books\n"+
+      books.map(b => "publisher:"+b.publisher + ", title:"+b.title))
 }

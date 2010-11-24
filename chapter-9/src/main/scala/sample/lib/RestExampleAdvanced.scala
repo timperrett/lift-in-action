@@ -11,7 +11,7 @@ trait ReturnAs[A, B] {
   def as(a:A):B
 }
 object ReturnAs{
-  implicit def f2ReturnAs[A, B](f:A => B):ReturnAs[A, B] = 
+  implicit def f2ReturnAs[A, B](f: A => B): ReturnAs[A, B] = 
     new ReturnAs[A, B]{
       def as(a:A) = f(a)
     }

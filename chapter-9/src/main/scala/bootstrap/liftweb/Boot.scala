@@ -1,9 +1,10 @@
 package bootstrap.liftweb
 
 import net.liftweb.common.{Box,Full,Empty}
+import net.liftweb.util.Helpers.AsInt
 import net.liftweb.http.{LiftRules,RewriteRequest,RewriteResponse,ParsePath,Req,GetRequest}
 import sample.lib.{BasicDispatchUsage,SecondDispatchUsage,
-  BookshopHttpServiceBasic,BookshopHttpServiceAdvanced}
+  BookshopHttpServiceBasic,BookshopHttpServiceAdvanced,CurrentAccountId}
 
 class Boot {
   def boot {
@@ -15,6 +16,16 @@ class Boot {
     LiftRules.statelessRewrite.append {
       case RewriteRequest(ParsePath("category" :: cid :: "product" :: pid :: Nil,"",true,_),_,_) =>
            RewriteResponse("product" :: Nil, Map("pid" -> pid))
+    }
+    
+    // section 9.2.2
+    LiftRules.statelessRewrite.append {
+      case RewriteRequest(ParsePath("account" :: AsInt(aid) :: Nil,"",true,false),_,_) => {
+           RewriteResponse("account" :: Nil)
+      }
+    }
+    LiftRules.snippetDispatch.append {
+      case "account" => sample.snippet.Account
     }
     
     // listing 9.2

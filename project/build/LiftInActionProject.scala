@@ -14,6 +14,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   lazy val chpEight = project("chapter-8", "eight", new ChapterEight(_))
   lazy val chpNine = project("chapter-9", "nine", new ChapterNine(_))
   lazy val chpThirteen = project("chapter-13", "thirteen", new ChapterThirteen(_))
+  lazy val chpFourteen = project("chapter-14", "fourteen", new ChapterFourteen(_))
   
   // define each module and any specific dependencies that it has
   // As chapter one is so basic, it has no specilized deps
@@ -47,6 +48,10 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   class ChapterNine(info: ProjectInfo) extends ProjectDefaults(info)
   
   class ChapterThirteen(info: ProjectInfo) extends ChapterFour(info) with Native2AsciiPlugin
+  
+  class ChapterFourteen(info: ProjectInfo) extends ProjectDefaults(info){
+    val ostrich = "com.twitter" % "ostrich" % "2.3.1"
+  }
   
   
   // define some defaults
@@ -83,7 +88,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
       )
     
     val jbossRepo = "jboss-repo" at "http://repository.jboss.org/nexus/content/groups/public-jboss/"
-    //val smackRepo = "m2-repository-smack" at "http://maven.reucon.com/public"
+    val twitterRepo = "twitter-repo" at "http://maven.twttr.com/"
     val scalaReleases = "scala-tools.snapshots" at "http://scala-tools.org/repo-releases/"
     val scalaSnapshots = "scala-tools.snapshots" at "http://scala-tools.org/repo-snapshots/"
     val sonatype = "oss.sonatype.org" at "http://oss.sonatype.org/content/groups/github/"

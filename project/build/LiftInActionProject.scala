@@ -51,6 +51,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   
   class ChapterFourteen(info: ProjectInfo) extends ProjectDefaults(info){
     val ostrich = "com.twitter" % "ostrich" % "2.3.1"
+    val mapper = "net.liftweb" %% "lift-mapper" % liftVersion
   }
   
   

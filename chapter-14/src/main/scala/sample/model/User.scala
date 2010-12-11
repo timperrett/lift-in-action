@@ -4,6 +4,7 @@ import scala.xml.{NodeSeq,Node}
 import net.liftweb.common.{Full,Box,Empty,Failure,Loggable}
 import net.liftweb.sitemap.Loc._
 import net.liftweb.mapper._
+import com.twitter.ostrich.Stats
 
 object User extends User 
     with KeyedMetaMapper[Long, User]
@@ -21,7 +22,8 @@ object User extends User
       </lift:surround>
     )
   // for extended sessions
-  onLogIn = List({ ExtendedSession.userDidLogin _ })
+  onLogIn = List({ ExtendedSession.userDidLogin _ }, u => Stats.incr("userLoggedOut"))
+  onLogOut = List(u => Stats.incr("usersLoggedOut"))
 }
 
 class User extends MegaProtoUser[User] with CreatedUpdated {

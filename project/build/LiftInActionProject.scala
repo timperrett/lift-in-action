@@ -3,18 +3,19 @@ import hoffrocket.YuiCompressorPlugin
 import eu.getintheloop.Native2AsciiPlugin
 
 class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
-  val liftVersion = "2.1"
+  val liftVersion = "2.2-SNAPSHOT"
+  val h2Version = "1.3.146"
   
   // implement the module definitions
-  lazy val chpTwo = project("chapter-2", "two", new ChapterTwo(_))
-  lazy val chpThree = project("chapter-3", "three", new ChapterThree(_))
-  lazy val chpFour = project("chapter-4", "four", new ChapterFour(_))
-  lazy val chpFive = project("chapter-5", "five", new ChapterFive(_))
-  lazy val chpSeven = project("chapter-7", "seven", new ChapterSeven(_))
-  lazy val chpEight = project("chapter-8", "eight", new ChapterEight(_))
-  lazy val chpNine = project("chapter-9", "nine", new ChapterNine(_))
-  lazy val chpThirteen = project("chapter-13", "thirteen", new ChapterThirteen(_))
-  lazy val chpFourteen = project("chapter-14", "fourteen", new ChapterFourteen(_))
+  lazy val chpTwo = project("chapter-2", "2", new ChapterTwo(_))
+  lazy val chpThree = project("chapter-3", "3", new ChapterThree(_))
+  lazy val chpFour = project("chapter-4", "4", new ChapterFour(_))
+  lazy val chpFive = project("chapter-5", "5", new ChapterFive(_))
+  lazy val chpSeven = project("chapter-7", "7", new ChapterSeven(_))
+  lazy val chpEight = project("chapter-8", "8", new ChapterEight(_))
+  lazy val chpNine = project("chapter-9", "9", new ChapterNine(_))
+  lazy val chpThirteen = project("chapter-13", "13", new ChapterThirteen(_))
+  lazy val chpFourteen = project("chapter-14", "14", new ChapterFourteen(_))
   
   // define each module and any specific dependencies that it has
   // As chapter one is so basic, it has no specilized deps
@@ -23,8 +24,8 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   // chapter two requires mapper, as we'll be doing some database stuff
   class ChapterThree(info: ProjectInfo) extends ChapterTwo(info){
     val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile->default"
-    val h2 = "com.h2database" % "h2" % "1.2.137" % "compile"
-    val mysql = "mysql" % "mysql-connector-java" % "5.1.12" % "compile"
+    val h2 = "com.h2database" % "h2" % h2Version % "compile->default"
+    val mysql = "mysql" % "mysql-connector-java" % "5.1.12" % "compile->default"
   }
   
   class ChapterFour(info: ProjectInfo) extends ChapterThree(info){
@@ -37,8 +38,8 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   }
   
   class ChapterSeven(info: ProjectInfo) extends ProjectDefaults(info){
-    val wizard = "net.liftweb" %% "lift-wizard" % liftVersion
-    val widgets = "net.liftweb" %% "lift-widgets" % liftVersion
+    val wizard = "net.liftweb" %% "lift-wizard" % liftVersion % "compile->default"
+    val widgets = "net.liftweb" %% "lift-widgets" % liftVersion % "compile->default"
     val scalate = "net.liftweb" %% "lift-scalate" % liftVersion % "compile->default"
   }
   
@@ -50,8 +51,9 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   class ChapterThirteen(info: ProjectInfo) extends ChapterFour(info) with Native2AsciiPlugin
   
   class ChapterFourteen(info: ProjectInfo) extends ProjectDefaults(info){
-    val ostrich = "com.twitter" % "ostrich" % "2.3.1"
-    val mapper = "net.liftweb" %% "lift-mapper" % liftVersion
+    val ostrich = "com.twitter" % "ostrich" % "2.3.1" % "compile->default"
+    val h2 = "com.h2database" % "h2" % h2Version % "compile->default"
+    val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile->default"
   }
   
   

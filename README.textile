@@ -11,15 +11,21 @@ Load up SBT in the normal way:
 
 Take a look at the modules in this project
 <pre><code>> projects
-    four 1.0
-    two 1.0
-    three 1.0
-    lift-in-action 1.0
+  9 1.0
+  2 1.0
+  7 1.0
+  3 1.0
+  5 1.0
+  14 1.0
+  4 1.0
+  8 1.0
+  13 1.0
+  lift-in-action 1.0
 </code></pre>
 
 Then select a particular module we want to interact with:
-<pre><code>> project four
-Set current project to four 1.0
+<pre><code>> project 2
+Set current project to 2 1.0
 </code></pre>
 
 Then you need to update the dependencies

@@ -22,8 +22,8 @@ object User extends User
       </lift:surround>
     )
   // for extended sessions
-  onLogIn = List({ ExtendedSession.userDidLogin _ }, u => Stats.incr("userLoggedOut"))
-  onLogOut = List(u => Stats.incr("usersLoggedOut"))
+  onLogIn = List(u => Stats.incr("userLoggedIn"), ExtendedSession.userDidLogin(_))
+  onLogOut = List(u => Stats.incr("usersLoggedOut"), ExtendedSession.userDidLogout(_))
 }
 
 class User extends MegaProtoUser[User] with CreatedUpdated {

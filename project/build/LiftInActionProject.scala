@@ -24,8 +24,6 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   // chapter two requires mapper, as we'll be doing some database stuff
   class ChapterThree(info: ProjectInfo) extends ChapterTwo(info){
     val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile->default"
-    val h2 = "com.h2database" % "h2" % h2Version % "compile->default"
-    val mysql = "mysql" % "mysql-connector-java" % "5.1.12" % "compile->default"
   }
   
   class ChapterFour(info: ProjectInfo) extends ChapterThree(info){
@@ -52,7 +50,6 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   
   class ChapterFourteen(info: ProjectInfo) extends ProjectDefaults(info){
     val ostrich = "com.twitter" % "ostrich" % "2.3.1" % "compile->default"
-    val h2 = "com.h2database" % "h2" % h2Version % "compile->default"
     val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile->default"
   }
   
@@ -74,6 +71,9 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
     val jetty6 = "org.mortbay.jetty" % "jetty" % "6.1.21" % "test"
     val servlet = "javax.servlet" % "servlet-api" % "2.5" % "provided"
     val log4j = "org.slf4j" % "slf4j-log4j12" % "1.6.1" % "compile->default"
+    val h2 = "com.h2database" % "h2" % h2Version % "compile->default"
+    val mysql = "mysql" % "mysql-connector-java" % "5.1.12" % "compile->default"
+    
     // stax
     override def staxApplicationId = "liftinaction"
     override def staxUsername = "timperrett"

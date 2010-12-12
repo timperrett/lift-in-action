@@ -21,10 +21,6 @@ class Boot extends LazyLoggable {
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
     LiftRules.setSiteMap(SiteMap(Application.sitemap:_*))
     
-    // mapper
-    MapperRules.columnName = (_,name) => Helpers.snakify(name)
-    MapperRules.tableName =  (_,name) => Helpers.snakify(name)
-    
     DefaultConnectionIdentifier.jndiName = "jdbc/liftinaction"
     if (!DB.jndiJdbcConnAvailable_?){
       DB.defineConnectionManager(DefaultConnectionIdentifier, Application.database)
@@ -50,7 +46,7 @@ class Boot extends LazyLoggable {
     
     // jmx monitoring
     //if (Props.getBool("jmx.enable", false))
-  
+    logger.info("Booting Ostrich...")
     val runtime = new RuntimeEnvironment(getClass)
     var config = new Config
     config("admin_http_port") = 9990
@@ -70,7 +66,7 @@ object Application {
   lazy val database = DBVendor
   object DBVendor extends StandardDBVendor(
     Props.get("db.class").openOr("org.h2.Driver"),
-    Props.get("db.url").openOr("jdbc:h2:database/chapter_fourteen;DB_CLOSE_DELAY=-1"),
+    Props.get("db.url").openOr("jdbc:h2:mem:chapter_fourteen;DB_CLOSE_DELAY=-1"),
     Props.get("db.user"),
     Props.get("db.pass"))
 }

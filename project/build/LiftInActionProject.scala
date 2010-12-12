@@ -73,7 +73,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
     val webkit = "net.liftweb" %% "lift-webkit" % liftVersion % "compile->default"
     val jetty6 = "org.mortbay.jetty" % "jetty" % "6.1.21" % "test"
     val servlet = "javax.servlet" % "servlet-api" % "2.5" % "provided"
-    
+    val log4j = "org.slf4j" % "slf4j-log4j12" % "1.6.1" % "compile->default"
     // stax
     override def staxApplicationId = "liftinaction"
     override def staxUsername = "timperrett"

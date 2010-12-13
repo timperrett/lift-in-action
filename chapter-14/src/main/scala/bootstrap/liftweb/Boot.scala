@@ -1,9 +1,11 @@
 package bootstrap.liftweb
 
 import scala.xml.{Text,NodeSeq}
-import net.liftweb.common.LazyLoggable
+import net.liftweb.common.{LazyLoggable,Box,Full}
+import net.liftweb.actor.LiftActor
 import net.liftweb.util.{Helpers,Props}
-import net.liftweb.http.{LiftRules,S,Req,GetRequest}
+import net.liftweb.http.{LiftRules,S,Req,GetRequest,LiftSession,
+  SessionMaster,SessionWatcherInfo,RequestVar,LiftResponse}
 import net.liftweb.sitemap.{SiteMap,Menu,Loc}
 
 // extended sessions
@@ -11,10 +13,10 @@ import net.liftweb.mapper.{StandardDBVendor,MapperRules,DefaultConnectionIdentif
 import sample.model.{User,ExtendedSession}
 
 // jmx monitoring
-import com.twitter.ostrich.{RuntimeEnvironment, ServiceTracker, Stats, StatsMBean}
+import com.twitter.ostrich.{RuntimeEnvironment, ServiceTracker, Stats, StatsMBean, Service}
 import net.lag.configgy.Config
 
-class Boot extends LazyLoggable {
+class Boot extends LazyLoggable with Service {
   def boot {
     // http
     LiftRules.addToPackages("sample")
@@ -44,14 +46,54 @@ class Boot extends LazyLoggable {
     // import net.liftweb.http.provider.servlet.containers.Jetty7AsyncProvider
     // LiftRules.servletAsyncProvider = new Jetty7AsyncProvider(_)
     
+    StatsMBean("manning.lia.sample")
+    
     // jmx monitoring
     //if (Props.getBool("jmx.enable", false))
     logger.info("Booting Ostrich...")
     val runtime = new RuntimeEnvironment(getClass)
     var config = new Config
     config("admin_http_port") = 9990
-    config("admin_jmx_package") = "manning.lia.sample"
+    ServiceTracker.register(this)
     ServiceTracker.startAdmin(config, runtime)
+    
+    Stats.makeGauge("current_session_count"){ 
+      SessionMonitor.count.toDouble 
+    }
+    
+    // session gauge
+    SessionMaster.sessionWatchers = SessionMonitor :: SessionMaster.sessionWatchers
+    
+    // request timer
+    LiftSession.onBeginServicing = RequestTimer.beginServicing _ ::
+      LiftSession.onBeginServicing
+    
+    LiftSession.onEndServicing = RequestTimer.endServicing _ ::
+      LiftSession.onEndServicing
+    
+  }
+  def shutdown(){}
+  def quiesce(){}
+}
+
+object SessionMonitor extends LiftActor {
+  private var sessionSize = 0
+  protected def messageHandler = {
+    case SessionWatcherInfo(sessions) => sessionSize = sessions.size
+  }
+  def count = sessionSize
+}
+
+object RequestTimer {
+  object startTime extends RequestVar(0L)
+  
+  def beginServicing(session: LiftSession, req: Req){
+    startTime(Helpers.millis)
+  }
+  
+  def endServicing(session: LiftSession, req: Req, response: Box[LiftResponse]) {
+    val delta = Helpers.millis - startTime.is
+    Stats.addTiming("request_duration", delta.toInt)
   }
 }
 

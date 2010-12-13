@@ -5,7 +5,7 @@ import net.liftweb.common.{LazyLoggable,Box,Full}
 import net.liftweb.actor.LiftActor
 import net.liftweb.util.{Helpers,Props}
 import net.liftweb.http.{LiftRules,S,Req,GetRequest,LiftSession,
-  SessionMaster,SessionWatcherInfo,RequestVar,LiftResponse}
+  SessionMaster,SessionWatcherInfo,RequestVar,LiftResponse,RedirectResponse}
 import net.liftweb.sitemap.{SiteMap,Menu,Loc}
 
 // extended sessions
@@ -16,7 +16,7 @@ import sample.model.{User,ExtendedSession}
 import com.twitter.ostrich.{RuntimeEnvironment, ServiceTracker, Stats, StatsMBean, Service}
 import net.lag.configgy.Config
 
-class Boot extends LazyLoggable with Service {
+class Boot extends LazyLoggable {
   def boot {
     // http
     LiftRules.addToPackages("sample")
@@ -46,6 +46,11 @@ class Boot extends LazyLoggable with Service {
     // import net.liftweb.http.provider.servlet.containers.Jetty7AsyncProvider
     // LiftRules.servletAsyncProvider = new Jetty7AsyncProvider(_)
     
+    // exception handler
+    LiftRules.exceptionHandler.prepend {
+      case (Props.RunModes.Production, _, exception) => RedirectResponse("/error")
+    }
+    
     StatsMBean("manning.lia.sample")
     
     // jmx monitoring
@@ -54,7 +59,7 @@ class Boot extends LazyLoggable with Service {
     val runtime = new RuntimeEnvironment(getClass)
     var config = new Config
     config("admin_http_port") = 9990
-    ServiceTracker.register(this)
+    ServiceTracker.register(RequestTimer)
     ServiceTracker.startAdmin(config, runtime)
     
     Stats.makeGauge("current_session_count"){ 
@@ -72,8 +77,7 @@ class Boot extends LazyLoggable with Service {
       LiftSession.onEndServicing
     
   }
-  def shutdown(){}
-  def quiesce(){}
+
 }
 
 object SessionMonitor extends LiftActor {
@@ -84,7 +88,7 @@ object SessionMonitor extends LiftActor {
   def count = sessionSize
 }
 
-object RequestTimer {
+object RequestTimer extends Service {
   object startTime extends RequestVar(0L)
   
   def beginServicing(session: LiftSession, req: Req){
@@ -95,6 +99,8 @@ object RequestTimer {
     val delta = Helpers.millis - startTime.is
     Stats.addTiming("request_duration", delta.toInt)
   }
+  def shutdown(){}
+  def quiesce(){}
 }
 
 object Application {

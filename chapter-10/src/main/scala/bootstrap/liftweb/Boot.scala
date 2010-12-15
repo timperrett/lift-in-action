@@ -1,25 +1,16 @@
 package bootstrap.liftweb
 
-import _root_.net.liftweb.common._
-import _root_.net.liftweb.util._
-import _root_.net.liftweb.util.Helpers._
-import _root_.net.liftweb.http._
-import _root_.net.liftweb.sitemap._
-import _root_.net.liftweb.sitemap.Loc._
+import net.liftweb.http.LiftRules
+import net.liftweb.http.js.jquery.JQuery14Artifacts 
+import net.liftweb.sitemap.{SiteMap,Menu}
 
-/**
-  * A class that's instantiated early and run.  It allows the application
-  * to modify lift's environment
-  */
 class Boot {
   def boot {
     // where to search snippet
-    LiftRules.addToPackages("example.travel")
+    LiftRules.addToPackages("sample")
     
-    LiftRules.uriNotFound.prepend(NamedPF("404handler"){
-      case (req,failure) => NotFoundAsTemplate(
-        ParsePath(List("exceptions","404"),"html",false,false))
-    })
+    // set the JSArtifacts
+    LiftRules.jsArtifacts = JQuery14Artifacts
     
     // Build the application SiteMap
     def sitemap = SiteMap(Menu("Home") / "index")

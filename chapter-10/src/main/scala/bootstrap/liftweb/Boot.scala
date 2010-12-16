@@ -13,7 +13,11 @@ class Boot {
     LiftRules.jsArtifacts = JQuery14Artifacts
     
     // Build the application SiteMap
-    def sitemap = SiteMap(Menu("Home") / "index")
+    def sitemap = SiteMap(
+      Menu("Home") / "index",
+      Menu("Basic JavaScript") / "basic_javascript",
+      Menu("Basic AJAX") / "basic_ajax"
+    )
     LiftRules.setSiteMap(sitemap)
   }
 }

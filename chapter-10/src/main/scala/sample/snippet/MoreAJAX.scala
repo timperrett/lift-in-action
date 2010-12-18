@@ -2,8 +2,8 @@ package sample.snippet
 
 import scala.xml.{NodeSeq,Text}
 import net.liftweb.util.Helpers._
-import net.liftweb.http.{SHtml,SessionVar,RequestVar,S}
-import net.liftweb.http.js.JsCmds.{SetHtml,Alert,Noop}
+import net.liftweb.http.{SHtml,SessionVar}
+import net.liftweb.http.js.JsCmds.SetHtml
 import net.liftweb.http.js.jquery.JqJsCmds.{Show,Hide}
 
 case class Book(reference: String, var title: String)
@@ -16,7 +16,6 @@ class MoreAjax {
     Book("MNOP", "Lift in Action")
   ))
   
-  private val bookListDiv = "book_list"
   private val editFormDiv = "edit_display"
   
   def list = {

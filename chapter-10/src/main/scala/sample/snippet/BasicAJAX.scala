@@ -1,8 +1,10 @@
 package sample.snippet
 
 import scala.xml.{NodeSeq,Text}
+import net.liftweb.util.Helpers._
 import net.liftweb.http.{SHtml,SessionVar}
-import net.liftweb.http.js.JsCmds.{SetHtml,Alert,Noop}
+import net.liftweb.http.js.JsCmds.{Alert}
+import net.liftweb.http.js.jquery.JqJsCmds.FadeIn
 
 class BasicAjax {
   
@@ -15,6 +17,6 @@ class BasicAjax {
     SHtml.ajaxEditable(
       Text(ExampleVar.is), 
       SHtml.text(ExampleVar.is, ExampleVar(_)), 
-      () => Noop)
+      () => FadeIn("example_two_notice"))
     
 }

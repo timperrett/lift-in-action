@@ -1,5 +1,6 @@
 package bootstrap.liftweb
 
+import net.liftweb.common.{Full}
 import net.liftweb.http.LiftRules
 import net.liftweb.http.js.jquery.JQuery14Artifacts 
 import net.liftweb.sitemap.{SiteMap,Menu}
@@ -12,11 +13,21 @@ class Boot {
     // set the JSArtifacts
     LiftRules.jsArtifacts = JQuery14Artifacts
     
-    // Build the application SiteMap
+    // make the furniture appear
+    LiftRules.ajaxStart =
+      Full(() => LiftRules.jsArtifacts.show("loading").cmd)
+    
+    // make the furniture go away when it ends
+    LiftRules.ajaxEnd =
+      Full(() => LiftRules.jsArtifacts.hide("loading").cmd)
+    
+    
+    // build the application SiteMap
     def sitemap = SiteMap(
       Menu("Home") / "index",
       Menu("Basic JavaScript") / "basic_javascript",
-      Menu("Basic AJAX") / "basic_ajax"
+      Menu("Basic AJAX") / "basic_ajax",
+      Menu("Sophisticated AJAX") / "more_ajax"
     )
     LiftRules.setSiteMap(sitemap)
   }

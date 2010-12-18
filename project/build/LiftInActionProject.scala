@@ -64,6 +64,8 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
       with YuiCompressorPlugin
       with stax.StaxPlugin {
     
+    override def compileOptions = Unchecked :: super.compileOptions.toList
+    
     // deployment
     override def managedStyle = ManagedStyle.Maven
     override def jettyWebappPath = webappPath 
@@ -93,6 +95,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
         syncTask(sxrTestPath, sxrPublishPath / "test") dependsOn(testCompile)
       )
     
+    val mavenLocal = "Local Maven Repository" at "file://"+Path.userHome+"/.m2/repository"
     val jbossRepo = "jboss-repo" at "http://repository.jboss.org/nexus/content/groups/public-jboss/"
     val twitterRepo = "twitter-repo" at "http://maven.twttr.com/"
     val scalaReleases = "scala-tools.snapshots" at "http://scala-tools.org/repo-releases/"

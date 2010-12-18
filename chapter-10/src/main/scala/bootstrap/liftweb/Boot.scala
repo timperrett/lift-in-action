@@ -27,7 +27,8 @@ class Boot {
       Menu("Home") / "index",
       Menu("Basic JavaScript") / "basic_javascript",
       Menu("Basic AJAX") / "basic_ajax",
-      Menu("Sophisticated AJAX") / "more_ajax"
+      Menu("Sophisticated AJAX") / "more_ajax",
+      Menu("JSON Form") / "json_form"
     )
     LiftRules.setSiteMap(sitemap)
   }

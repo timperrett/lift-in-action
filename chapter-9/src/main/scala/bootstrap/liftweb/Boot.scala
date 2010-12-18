@@ -4,7 +4,7 @@ import net.liftweb.common.{Box,Full,Empty}
 import net.liftweb.util.Helpers.AsInt
 import net.liftweb.http.{LiftRules,RewriteRequest,RewriteResponse,ParsePath,Req,GetRequest}
 import sample.lib.{BasicDispatchUsage,SecondDispatchUsage,
-  BookshopHttpServiceBasic,BookshopHttpServiceAdvanced,CurrentAccountId}
+  BookshopHttpServiceBasic,BookshopHttpServiceAdvanced}
 
 class Boot {
   def boot {
@@ -23,9 +23,6 @@ class Boot {
       case RewriteRequest(ParsePath("account" :: AsInt(aid) :: Nil,"",true,false),_,_) => {
            RewriteResponse("account" :: Nil)
       }
-    }
-    LiftRules.snippetDispatch.append {
-      case "account" => sample.snippet.Account
     }
     
     // listing 9.2
@@ -49,15 +46,3 @@ class Boot {
     LiftRules.dispatch.append(BookshopHttpServiceAdvanced)
   }
 }
-
-
-// object ParamsExtractor { 
-//   def unapply(pp: ParsePath): Option[(Account, OrgUnit)] = { 
-//     val result:Box[(Account, OrgUnit)] = if (pp.wholePath.startsWith(path) && pp.wholePath.length == (path.length + 2)){ 
-//       val res = Full((XX,YY)) 
-//       debug("Decoded URL: %s=%s".format(pp,res)) 
-//       res 
-//     } else None 
-//     result 
-//   } 
-// }

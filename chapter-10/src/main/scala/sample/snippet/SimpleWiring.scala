@@ -21,9 +21,9 @@ class FormulaWiring {
   }
   
   def tax(xhtml: NodeSeq): NodeSeq = 
-    WiringUI.asText(xhtml, taxValue.lift(_.toString), JqWiringSupport.fade)
+    WiringUI.asText(xhtml, taxValue, JqWiringSupport.fade)
   
   def total(xhtml: NodeSeq): NodeSeq = 
-    WiringUI.asText(xhtml, totalValue.lift(_.toString), JqWiringSupport.fade)
+    WiringUI.asText(xhtml, totalValue, JqWiringSupport.fade)
   
 }

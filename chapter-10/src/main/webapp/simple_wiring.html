@@ -1,12 +1,18 @@
 <div class="lift:surround?with=default;at=content">
   
   <h2>Simple Wiring Example</h2>
-  <p>Choose your favourite make of super car</p>
+  <p>The AJAX event will happen onBlur, so enter a value and then click outside of the cell
+     to see the two values update themselves.</p>
   
-  <ul class="lift:SimpleWiring.manufacturers">
-    <li class="line"></li>
-  </ul>
+  <div class="lift:formula_wiring.product">
+    <p>Product value (minus tax): <input id="value" /></p>
+  </div>
   
-  <p class="lift:SimpleWiring.favorite">unknown</p>
+  <h2>Output</h2>
+  
+  <p>
+    Tax: <span class="lift:formula_wiring.tax">unknown</span><br />
+    Total: <span class="lift:formula_wiring.total">unknown</span>
+  </p>
   
 </div>

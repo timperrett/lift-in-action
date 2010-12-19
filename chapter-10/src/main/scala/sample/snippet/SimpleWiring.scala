@@ -8,26 +8,22 @@ import net.liftweb.http.{SHtml,WiringUI}
 import net.liftweb.http.js.JsCmds.Noop
 import net.liftweb.http.js.jquery.JqWiringSupport
 
-class SimpleWiring {
+class FormulaWiring {
   
-  object CarManufacturers extends Enumeration {
-    val Ferrari, Bugatti, Lamborghini, Pagani = Value
+  private val productValue = ValueCell[Box[Double]](Empty)
+  private val taxValue = productValue.lift(_.map(x => (x/100d*17.5d)).openOr(0d))
+  private val totalValue = productValue.lift(_.map(x => (x+taxValue.currentValue._1)).openOr(0d))
+  
+  def product = {
+    "#value" #> SHtml.ajaxText(
+      productValue.map(_.toString).openOr(""), 
+      v => { asDouble(v).pass(productValue.set(_)); Noop })
   }
   
-  val radios = SHtml.ajaxRadio(CarManufacturers.values.toList.sortBy(_.id).map(_.id), 
-    Empty, (v:Int) => { selection.set(Full(v)); Noop })
+  def tax(xhtml: NodeSeq): NodeSeq = 
+    WiringUI.asText(xhtml, taxValue.lift(_.toString), JqWiringSupport.fade)
   
-  private val selection = ValueCell[Box[Int]](Empty)
-  private val chosen = selection.lift(_.map(i => 
-    "I love %s super cars".format(CarManufacturers(i).toString)
-  ).openOr("You dont like super cars"))
-  
-  def manufacturers = {
-    ".line *" #> radios.map(ci => 
-      ci.xhtml ++ Text(CarManufacturers(ci.key).toString))
-  }
-  
-  def favorite(xhtml: NodeSeq): NodeSeq = 
-    WiringUI.asText(xhtml, chosen, JqWiringSupport.fade)
+  def total(xhtml: NodeSeq): NodeSeq = 
+    WiringUI.asText(xhtml, totalValue.lift(_.toString), JqWiringSupport.fade)
   
 }

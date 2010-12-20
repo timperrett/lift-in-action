@@ -21,7 +21,6 @@ class Boot {
     LiftRules.ajaxEnd =
       Full(() => LiftRules.jsArtifacts.hide("loading").cmd)
     
-    
     // build the application SiteMap
     def sitemap = SiteMap(
       Menu("Home") / "index",
@@ -29,7 +28,8 @@ class Boot {
       Menu("Basic AJAX") / "basic_ajax",
       Menu("Sophisticated AJAX") / "more_ajax",
       Menu("JSON Form") / "json_form",
-      Menu("Wiring: Basic") / "simple_wiring"
+      Menu("Wiring: Basic") / "simple_wiring",
+      Menu("Comet: Rock, Paper, Scissors") / "rock_paper_scissors"
     )
     LiftRules.setSiteMap(sitemap)
   }

@@ -1,43 +1,46 @@
 package sample.comet
 
 import scala.xml.Text
+import scala.collection.mutable.Map
+import net.liftweb.common.{Box,Full,Empty}
 import net.liftweb.actor.LiftActor
 import net.liftweb.util.ActorPing
 import net.liftweb.util.Helpers._
 import net.liftweb.http.{CometActor,SHtml}
-import net.liftweb.http.js.JsCmds.SetHtml
+import net.liftweb.http.js.JsCmds.{SetHtml,Noop}
 
-trait Move
+sealed trait Move
 final case object Rock extends Move
 final case object Paper extends Move
 final case object Scissors extends Move
 
-final case object WaitingOnOpponent
+sealed trait Outcome
+final case object Tie
+final case class Winner(is: CometActor)
 
-final case class Game(playerOne: CometActor, playerTwo: CometActor)
-case object StartGame
-
-case class AddPlayer(who: CometActor)
-case class RemovePlayer(who: CometActor)
-case object PairPlayersInLobby
+final case class AddPlayer(who: CometActor)
+final case class RemovePlayer(who: CometActor)
+final case object PairPlayersInLobby
+final case class NowPlaying(game: Game)
+final case class Make(move: Move, from: CometActor)
+final case object HurryUpAndMakeYourMove
+final case object ResetGame
+final case object LeaveGame
+final case object Adjudicate
 
 object GameServer extends LiftActor {
   private var games: List[Game] = Nil
   private var lobby: List[CometActor] = Nil
   
-  // ActorPing.schedule(this, PairPlayersInLobby, 5 seconds)
-  
-  def messageHandler = {      
+  def messageHandler = {
     case PairPlayersInLobby => {
-      println("before: " + lobby)
       for(i <- 0 until (lobby.size / 2)){
         val players = lobby.take(2)
-        val game = Game(players.head, players.last)
-        players.foreach(_ ! StartGame)
+        val game = new Game(players.head, players.last)
         games ::= game
+        players.foreach(_ ! NowPlaying(game))
         lobby = lobby diff players
       }
-      println("after: " + lobby)
     }
     case AddPlayer(who) => 
       lobby ::= who
@@ -48,33 +51,102 @@ object GameServer extends LiftActor {
   
 }
 
+
+class Game(playerOne: CometActor, playerTwo: CometActor) extends LiftActor {
+  private var moves: Map[CometActor, Box[Move]] = Map()
+  clearMoves()
+  
+  private def sendToAllPlayers(msg: Any){
+    moves.foreach(_._1 ! msg)
+  }
+  
+  private def clearMoves() {
+    moves = Map(playerOne -> Empty, playerTwo -> Empty)
+  }
+  
+  def messageHandler = {
+    case Adjudicate => {
+      val p1move = moves(playerOne)
+      val p2move = moves(playerTwo)
+      if(p1move == p2move)
+        sendToAllPlayers(Tie)
+      else {
+        (p1move, p2move) match {
+          case (Full(Rock), Full(Scissors)) | 
+               (Full(Paper), Full(Rock)) | 
+               (Full(Scissors), Full(Paper)) => 
+            sendToAllPlayers(Winner(playerOne))
+          case _ => 
+            // playerOne didnt win, and its not a tie, so playerTwo must have won
+            sendToAllPlayers(Winner(playerTwo))
+        }
+      }
+      ActorPing.schedule(this, ResetGame, 5 seconds)
+    }
+      
+    case Make(move, from) => {
+      moves.update(from,Full(move))
+      if(moves.flatMap(_._2).size == 2){
+        this ! Adjudicate
+      } else {
+        // one of the players hasnt made their move,
+        // prompt the other one to do something
+        moves.filter(_._1 ne from).head._1 ! HurryUpAndMakeYourMove
+      } 
+    }
+    case ResetGame => 
+      clearMoves()
+      sendToAllPlayers(ResetGame)
+      
+    case LeaveGame => 
+      // one player left, you cant play on your own so 
+      // both players are sent back to the lobby
+      
+  }
+}
+
 class RockPaperScissors extends CometActor {
   
   private var nickName = ""
-  private var inGame_? = false
+  private var game: Box[Game] = Empty
+  private lazy val informationDiv = "information"
   
   override def mediumPriority = {
-    case StartGame => 
-      inGame_? = true
-      partialUpdate(SetHtml("information", Text("Starting the game, one moment " + nickName)))
-    case WaitingOnOpponent =>  
-      
+    case NowPlaying(g) => 
+      game = Full(g)
+      reRender(true)
+    case HurryUpAndMakeYourMove =>
+      partialUpdate(SetHtml(informationDiv, Text("Get on with it, your oponent has already made their move")))
+    case Tie =>
+      partialUpdate(SetHtml(informationDiv, Text("Damn, it was a tie!")))
+    case Winner(who) =>
+      if(who eq this)
+        partialUpdate(SetHtml(informationDiv, Text("You are ze WINNER!!!")))
+      else
+        partialUpdate(SetHtml(informationDiv, Text("Better luck next time, looser!")))
+    case ResetGame => 
+      reRender(true)
   }
   
   def render = 
-    if(inGame_?)
-      "#information *" replaceWith "You're playing!"
+    if(!game.isEmpty)
+      "#information *" #> Text("You're now playing! Make your move...") &
+      ".line" #> List(Rock, Paper, Scissors).map(move => 
+        SHtml.ajaxButton(Text(move.toString), () => {
+          game.foreach(_ ! Make(move, this))
+          Noop
+        }))
     else 
-      "#information *" replaceWith "Waiting in the lobby for an opponent..."
+      "#game *" replaceWith "Waiting in the lobby for an opponent..."
   
-  def registerWith = GameServer
+  override def lifespan: Box[TimeSpan] = Full(2 minutes)
   
   override def localSetup(){
     askUserForNickname
     super.localSetup()  
   }
   override def localShutdown() {
-    registerWith ! RemovePlayer(this)
+    GameServer ! RemovePlayer(this)
     super.localShutdown()
   }
   
@@ -83,7 +155,7 @@ class RockPaperScissors extends CometActor {
       ask(new AskName, "What's your nickname?"){
         case s: String if (s.trim.length > 2) =>
           nickName = s.trim
-          registerWith ! AddPlayer(this)
+          GameServer ! AddPlayer(this)
           reRender(true)
         case _ =>
           askUserForNickname

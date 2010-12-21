@@ -28,7 +28,7 @@ final case object ResetGame
 final case object LeaveGame
 final case object Adjudicate
 
-object GameServer extends LiftActor {
+object Lobby extends LiftActor {
   private var games: List[Game] = Nil
   private var lobby: List[CometActor] = Nil
   
@@ -116,14 +116,14 @@ class RockPaperScissors extends CometActor {
       game = Full(g)
       reRender(true)
     case HurryUpAndMakeYourMove =>
-      partialUpdate(SetHtml(informationDiv, Text("Get on with it, your oponent has already made their move")))
+      partialUpdate(SetHtml(informationDiv, Text("Get on with it, your opponent has already made their move")))
     case Tie =>
       partialUpdate(SetHtml(informationDiv, Text("Damn, it was a tie!")))
     case Winner(who) =>
       if(who eq this)
-        partialUpdate(SetHtml(informationDiv, Text("You are ze WINNER!!!")))
+        partialUpdate(SetHtml(informationDiv, Text("You are the WINNER!!!")))
       else
-        partialUpdate(SetHtml(informationDiv, Text("Better luck next time, looser!")))
+        partialUpdate(SetHtml(informationDiv, Text("Better luck next time, loser!")))
     case ResetGame => 
       reRender(true)
   }
@@ -146,7 +146,7 @@ class RockPaperScissors extends CometActor {
     super.localSetup()  
   }
   override def localShutdown() {
-    GameServer ! RemovePlayer(this)
+    Lobby ! RemovePlayer(this)
     super.localShutdown()
   }
   
@@ -155,7 +155,7 @@ class RockPaperScissors extends CometActor {
       ask(new AskName, "What's your nickname?"){
         case s: String if (s.trim.length > 2) =>
           nickName = s.trim
-          GameServer ! AddPlayer(this)
+          Lobby ! AddPlayer(this)
           reRender(true)
         case _ =>
           askUserForNickname

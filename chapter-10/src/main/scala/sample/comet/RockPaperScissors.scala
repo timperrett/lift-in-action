@@ -7,7 +7,7 @@ import net.liftweb.actor.LiftActor
 import net.liftweb.util.ActorPing
 import net.liftweb.util.Helpers._
 import net.liftweb.http.{CometActor,SHtml}
-import net.liftweb.http.js.JsCmds.{SetHtml,Noop}
+import net.liftweb.http.js.JsCmds.{SetHtml,Run}
 
 sealed trait Move
 final case object Rock extends Move
@@ -109,32 +109,34 @@ class RockPaperScissors extends CometActor {
   
   private var nickName = ""
   private var game: Box[Game] = Empty
-  private lazy val informationDiv = "information"
+  
+  private def showInformation(msg: String) = 
+    partialUpdate(SetHtml("information", Text(msg)))
   
   override def mediumPriority = {
     case NowPlaying(g) => 
       game = Full(g)
       reRender(true)
     case HurryUpAndMakeYourMove =>
-      partialUpdate(SetHtml(informationDiv, Text("Get on with it, your opponent has already made their move")))
+      showInformation("Hurry up! Your opponent has already made their move!")
     case Tie =>
-      partialUpdate(SetHtml(informationDiv, Text("Damn, it was a tie!")))
+      showInformation("Damn, it was a tie!")
     case Winner(who) =>
       if(who eq this)
-        partialUpdate(SetHtml(informationDiv, Text("You are the WINNER!!!")))
+        showInformation("You are the WINNER!!!")
       else
-        partialUpdate(SetHtml(informationDiv, Text("Better luck next time, loser!")))
+        showInformation("Better luck next time, loser!")
     case ResetGame => 
       reRender(true)
   }
   
   def render = 
     if(!game.isEmpty)
-      "#information *" #> Text("You're now playing! Make your move...") &
+      "#information *" #> Text("Now you're playing! Make your move...") &
       ".line" #> List(Rock, Paper, Scissors).map(move => 
         SHtml.ajaxButton(Text(move.toString), () => {
           game.foreach(_ ! Make(move, this))
-          Noop
+          Run("$('button').attr('disabled',true);")
         }))
     else 
       "#game *" replaceWith "Waiting in the lobby for an opponent..."

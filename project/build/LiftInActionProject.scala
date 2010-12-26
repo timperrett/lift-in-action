@@ -15,6 +15,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   lazy val chpEight = project("chapter-8", "8", new ChapterEight(_))
   lazy val chpNine = project("chapter-9", "9", new ChapterNine(_))
   lazy val chpTen = project("chapter-10", "10", new ChapterTen(_))
+  lazy val chpEleven = project("chapter-11", "11", new ChapterEleven(_))
   lazy val chpThirteen = project("chapter-13", "13", new ChapterThirteen(_))
   lazy val chpFourteen = project("chapter-14", "14", new ChapterFourteen(_))
   
@@ -48,6 +49,10 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   class ChapterNine(info: ProjectInfo) extends ProjectDefaults(info)
   
   class ChapterTen(info: ProjectInfo) extends ProjectDefaults(info)
+  
+  class ChapterEleven(info: ProjectInfo) extends ProjectDefaults(info){
+    val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile->default"
+  }
   
   class ChapterThirteen(info: ProjectInfo) extends ChapterFour(info) with Native2AsciiPlugin
   

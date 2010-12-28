@@ -17,7 +17,6 @@ class Boot {
     // handle JNDI not being avalible
     if (!DB.jndiJdbcConnAvailable_?){
       DB.defineConnectionManager(DefaultConnectionIdentifier, Environment.database)
-      // make sure cyote unloads database connections before shutting down
       LiftRules.unloadHooks.append(() => Environment.database.closeAllConnections_!()) 
     }
     

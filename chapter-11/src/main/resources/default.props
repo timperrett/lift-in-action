@@ -1,0 +1,3 @@
+db.class=org.postgresql.Driver
+db.url=jdbc:postgresql://localhost/lia_chapter_11
+db.user=root

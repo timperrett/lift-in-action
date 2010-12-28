@@ -16,7 +16,7 @@ class Author extends LongKeyedMapper[Author] with CreatedUpdated with IdPK {
   object title extends MappedEnum(this, Titles)
   object firstName extends MappedString(this, 255)
   object lastName extends MappedText(this)
-  object publishedOn extends MappedDateTime(this)
+  object email extends MappedEmail(this)
 }
 
 object Titles extends Enumeration {

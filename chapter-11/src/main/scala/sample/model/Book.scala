@@ -15,5 +15,11 @@ class Book extends LongKeyedMapper[Book] with CreatedUpdated with IdPK {
   
   object title extends MappedString(this, 255)
   object blurb extends MappedText(this)
-  object publishedOn extends MappedDateTime(this)
+  object publishedOn extends MappedDate(this)
+  
+  // relationships
+  object publisher extends LongMappedMapper(this, Publisher){
+    override def dbColumnName = "publisher_id"
+  }
+  
 }

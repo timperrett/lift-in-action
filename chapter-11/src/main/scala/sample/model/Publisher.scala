@@ -10,9 +10,14 @@ object Publisher extends Publisher with LongKeyedMetaMapper[Publisher]{
   override def dbTableName = "publishers"
 }
 
-class Publisher extends LongKeyedMapper[Publisher] with CreatedUpdated with IdPK {
+class Publisher extends LongKeyedMapper[Publisher] 
+    with CreatedUpdated with IdPK with OneToMany[Long,Publisher] {
   def getSingleton = Publisher
   
   object name extends MappedString(this, 255)
   object description extends MappedText(this)
+  
+  // relationships
+  object books extends MappedOneToMany(Book, Book.publisher) 
+  
 }

@@ -4,7 +4,7 @@ import net.liftweb.util.{Helpers,Props}
 import net.liftweb.http.LiftRules
 import net.liftweb.sitemap.{SiteMap,Menu}
 import net.liftweb.mapper.{MapperRules,DefaultConnectionIdentifier,DB,Schemifier,StandardDBVendor}
-import sample.model.{Book,Author}//,Publisher}
+import sample.model.{Book,Author,Publisher,MappedTypesExample}
 
 class Boot {
   def boot {
@@ -22,7 +22,9 @@ class Boot {
     
     // automatically create the tables
     Schemifier.schemify(true, Schemifier.infoF _, 
-      Book, Author)
+      Book, Author, Publisher, MappedTypesExample)
+    
+    LiftRules.stripComments.default.set(() => false)
     
     // Build the application SiteMap
     def sitemap = SiteMap(Menu("Home") / "index")

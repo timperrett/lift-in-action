@@ -13,6 +13,6 @@ object Publisher extends Publisher with LongKeyedMetaMapper[Publisher]{
 class Publisher extends LongKeyedMapper[Publisher] with CreatedUpdated with IdPK {
   def getSingleton = Publisher
   
-  object name extends MappedString(this, Titles)
-  object description extends MappedText(this, 255)
+  object name extends MappedString(this, 255)
+  object description extends MappedText(this)
 }

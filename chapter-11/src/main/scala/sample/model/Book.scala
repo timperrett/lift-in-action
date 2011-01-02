@@ -10,7 +10,10 @@ object Book extends Book with LongKeyedMetaMapper[Book]{
   override def dbTableName = "books"
 }
 
-class Book extends LongKeyedMapper[Book] with CreatedUpdated with IdPK {
+class Book extends LongKeyedMapper[Book] 
+    with CreatedUpdated 
+    with IdPK
+    with ManyToMany {
   def getSingleton = Book
   
   object title extends MappedString(this, 255)
@@ -21,5 +24,7 @@ class Book extends LongKeyedMapper[Book] with CreatedUpdated with IdPK {
   object publisher extends LongMappedMapper(this, Publisher){
     override def dbColumnName = "publisher_id"
   }
+  object authors extends MappedManyToMany(BookAuthors, BookAuthors.book, BookAuthors.author, Author)
+  
   
 }

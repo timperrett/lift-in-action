@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>chapter-10/src/main/scala/bootstrap/liftweb/Boot.scala</string>
+	<string>chapter-11/src/main/scala/sample/model/Publisher.scala</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,20 +21,6 @@
 	<integer>336</integer>
 	<key>metaData</key>
 	<dict>
-		<key>chapter-10/src/main/scala/bootstrap/liftweb/Boot.scala</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>4</integer>
-				<key>line</key>
-				<integer>14</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
 		<key>chapter-11/src/main/scala/bootstrap/liftweb/Boot.scala</key>
 		<dict>
 			<key>caret</key>
@@ -54,9 +40,9 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>13</integer>
+				<integer>60</integer>
 				<key>line</key>
-				<integer>14</integer>
+				<integer>23</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -82,9 +68,9 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>2</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>20</integer>
+				<integer>12</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
@@ -95,24 +81,85 @@
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>93</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>20</integer>
+				<integer>24</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
-				<integer>2</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>20</integer>
+				<integer>12</integer>
+			</dict>
+		</dict>
+		<key>chapter-4/src/main/scala/example/travel/model/Order.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>18</integer>
+				<key>line</key>
+				<integer>21</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>13</integer>
+				<key>line</key>
+				<integer>21</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>18</integer>
+				<key>line</key>
+				<integer>21</integer>
+			</dict>
+		</dict>
+		<key>chapter-5/src/main/scala/example/travel/model/Supplier.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>25</integer>
+				<key>line</key>
+				<integer>38</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>10</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>38</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>39</integer>
 			</dict>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>chapter-11/src/main/scala/sample/model/Publisher.scala</string>
-		<string>chapter-10/src/main/scala/bootstrap/liftweb/Boot.scala</string>
+		<string>chapter-4/src/main/scala/example/travel/model/Order.scala</string>
 		<string>chapter-11/src/main/scala/sample/model/Book.scala</string>
+		<string>chapter-5/src/main/scala/example/travel/model/Supplier.scala</string>
 		<string>chapter-11/src/main/scala/bootstrap/liftweb/Boot.scala</string>
 		<string>chapter-11/src/main/scala/sample/model/MappedTypesExample.scala</string>
 	</array>

@@ -18,6 +18,7 @@ class Publisher extends LongKeyedMapper[Publisher]
   object description extends MappedText(this)
   
   // relationships
-  object books extends MappedOneToMany(Book, Book.publisher, OrderBy(Book.title, Ascending)) 
+  object books extends MappedOneToMany(Book, Book.publisher, 
+    OrderBy(Book.title, Ascending)) with Owned[Book] with Cascade[Book]
   
 }

@@ -23,7 +23,7 @@ class Book extends LongKeyedMapper[Book]
   // relationships
   object publisher extends LongMappedMapper(this, Publisher){
     override def dbColumnName = "publisher_id"
-  }
+  } 
   object authors extends MappedManyToMany(BookAuthors, BookAuthors.book, BookAuthors.author, Author)
   
   

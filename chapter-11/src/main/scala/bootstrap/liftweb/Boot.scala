@@ -4,7 +4,7 @@ import net.liftweb.util.{Helpers,Props}
 import net.liftweb.http.LiftRules
 import net.liftweb.sitemap.{SiteMap,Menu}
 import net.liftweb.mapper.{MapperRules,DefaultConnectionIdentifier,DB,Schemifier,StandardDBVendor}
-import sample.model.{Author,BookAuthors,Book,Publisher,MappedTypesExample}
+import sample.model._
 
 class Boot {
   def boot {
@@ -12,7 +12,7 @@ class Boot {
     LiftRules.addToPackages("sample")
     
     MapperRules.columnName = (_,name) => Helpers.snakify(name)
-    MapperRules.tableName =  (_,name) => Helpers.snakify(name)
+    MapperRules.tableName  = (_,name) => Helpers.snakify(name)
     
     // handle JNDI not being avalible
     if (!DB.jndiJdbcConnAvailable_?){
@@ -21,8 +21,9 @@ class Boot {
     }
     
     // automatically create the tables
-    Schemifier.schemify(true, Schemifier.infoF _, 
-      Author, BookAuthors, Book, Publisher, MappedTypesExample)
+    if(Props.devMode)
+      Schemifier.schemify(true, Schemifier.infoF _, 
+        Author, BookAuthors, Book, Publisher, MappedTypesExample, AggregationSample)
     
     LiftRules.stripComments.default.set(() => false)
     

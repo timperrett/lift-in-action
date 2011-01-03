@@ -3,7 +3,7 @@ import hoffrocket.YuiCompressorPlugin
 import eu.getintheloop.Native2AsciiPlugin
 
 class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
-  val liftVersion = "2.2-RC3"
+  val liftVersion = "2.2-RC6"
   val h2Version = "1.3.146"
   
   // implement the module definitions

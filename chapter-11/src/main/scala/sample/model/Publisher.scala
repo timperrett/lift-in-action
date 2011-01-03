@@ -14,10 +14,10 @@ class Publisher extends LongKeyedMapper[Publisher]
     with CreatedUpdated with IdPK with OneToMany[Long,Publisher] {
   def getSingleton = Publisher
   
-  object name extends MappedString(this, 255)
+  object name extends MappedString(this, 100)
   object description extends MappedText(this)
   
   // relationships
-  object books extends MappedOneToMany(Book, Book.publisher) 
+  object books extends MappedOneToMany(Book, Book.publisher, OrderBy(Book.title, Ascending)) 
   
 }

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>chapter-11/src/main/scala/sample/model/Publisher.scala</string>
+	<string>chapter-5/src/main/scala/example/travel/snippet/Checkout.scala</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -26,81 +26,37 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>83</integer>
+				<integer>45</integer>
 				<key>line</key>
-				<integer>25</integer>
+				<integer>37</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>chapter-11/src/main/scala/sample/model/Book.scala</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>60</integer>
-				<key>line</key>
-				<integer>23</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>chapter-11/src/main/scala/sample/model/MappedTypesExample.scala</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>2</integer>
-				<key>line</key>
-				<integer>90</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>63</integer>
+			<integer>13</integer>
 		</dict>
 		<key>chapter-11/src/main/scala/sample/model/Publisher.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>18</integer>
 				<key>line</key>
-				<integer>12</integer>
+				<integer>19</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>24</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>12</integer>
-			</dict>
 		</dict>
-		<key>chapter-4/src/main/scala/example/travel/model/Order.scala</key>
+		<key>chapter-11/src/main/scala/sample/snippet/LiftScreenSample.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>18</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>21</integer>
+				<integer>2</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
@@ -111,61 +67,164 @@
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>13</integer>
+				<integer>1</integer>
 				<key>line</key>
-				<integer>21</integer>
+				<integer>14</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
-				<integer>18</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>21</integer>
+				<integer>2</integer>
 			</dict>
 		</dict>
-		<key>chapter-5/src/main/scala/example/travel/model/Supplier.scala</key>
+		<key>chapter-11/src/main/scala/sample/snippet/ToFormSample.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>25</integer>
+				<integer>33</integer>
 				<key>line</key>
-				<integer>38</integer>
+				<integer>6</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>chapter-11/src/main/webapp/index.html</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>5</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>chapter-11/src/main/webapp/liftscreen.html</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>2</integer>
+				<key>line</key>
+				<integer>3</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>chapter-11/src/main/webapp/templates-hidden/default.html</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>41</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>chapter-11/src/main/webapp/toform.html</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>5</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>chapter-5/src/main/scala/example/travel/snippet/Checkout.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>23</integer>
+				<key>line</key>
+				<integer>9</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>10</integer>
+			<integer>0</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>38</integer>
+				<integer>9</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>39</integer>
+				<integer>10</integer>
 			</dict>
+		</dict>
+		<key>chapter-5/src/main/scala/example/travel/snippet/Details.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>41</integer>
+				<key>line</key>
+				<integer>44</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>17</integer>
+		</dict>
+		<key>chapter-5/src/main/scala/example/travel/snippet/OrderSummary.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>20</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>chapter-11/src/main/scala/sample/model/Publisher.scala</string>
-		<string>chapter-4/src/main/scala/example/travel/model/Order.scala</string>
-		<string>chapter-11/src/main/scala/sample/model/Book.scala</string>
-		<string>chapter-5/src/main/scala/example/travel/model/Supplier.scala</string>
+		<string>chapter-11/src/main/webapp/liftscreen.html</string>
+		<string>chapter-11/src/main/webapp/toform.html</string>
+		<string>chapter-11/src/main/webapp/index.html</string>
+		<string>chapter-11/src/main/webapp/templates-hidden/default.html</string>
 		<string>chapter-11/src/main/scala/bootstrap/liftweb/Boot.scala</string>
-		<string>chapter-11/src/main/scala/sample/model/MappedTypesExample.scala</string>
+		<string>chapter-11/src/main/scala/sample/snippet/ToFormSample.scala</string>
+		<string>chapter-11/src/main/scala/sample/snippet/LiftScreenSample.scala</string>
+		<string>chapter-5/src/main/scala/example/travel/snippet/OrderSummary.scala</string>
+		<string>chapter-5/src/main/scala/example/travel/snippet/Details.scala</string>
+		<string>chapter-5/src/main/scala/example/travel/snippet/Checkout.scala</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{751, 70}, {839, 683}}</string>
+	<string>{{552, 62}, {839, 683}}</string>
 </dict>
 </plist>

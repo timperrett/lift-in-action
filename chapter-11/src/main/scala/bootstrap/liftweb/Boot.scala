@@ -1,12 +1,16 @@
 package bootstrap.liftweb
 
+import net.liftweb.common.LazyLoggable
 import net.liftweb.util.{Helpers,Props}
-import net.liftweb.http.LiftRules
+import net.liftweb.http.{LiftRules,S}
 import net.liftweb.sitemap.{SiteMap,Menu}
-import net.liftweb.mapper.{MapperRules,DefaultConnectionIdentifier,DB,Schemifier,StandardDBVendor}
+import net.liftweb.mapper.{MapperRules,DefaultConnectionIdentifier,
+  DBLogEntry,DB,Schemifier,StandardDBVendor}
 import sample.model._
 
-class Boot {
+// object Log extends Logger
+
+class Boot extends LazyLoggable {
   def boot {
     // where to search snippet
     LiftRules.addToPackages("sample")
@@ -20,10 +24,20 @@ class Boot {
       LiftRules.unloadHooks.append(() => Environment.database.closeAllConnections_!()) 
     }
     
+    S.addAround(DB.buildLoanWrapper)
+        
+    // add a logging function
+    DB.addLogFunc((query, time) => {
+      logger.info("All queries took " + time + " milliseconds")
+      query.allEntries.foreach((entry: DBLogEntry) => 
+        logger.info(entry.statement + " took " + entry.duration + "ms"))
+    })
+    
     // automatically create the tables
     if(Props.devMode)
       Schemifier.schemify(true, Schemifier.infoF _, 
-        Author, BookAuthors, Book, Publisher, MappedTypesExample, AggregationSample)
+        Author, BookAuthors, Book, Publisher, Account,
+        MappedTypesExample, AggregationSample)
     
     LiftRules.stripComments.default.set(() => false)
     

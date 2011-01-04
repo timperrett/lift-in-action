@@ -28,14 +28,15 @@ class Boot {
     LiftRules.stripComments.default.set(() => false)
     
     // Build the application SiteMap
-    def sitemap = SiteMap(Menu("Home") / "index")
-    LiftRules.setSiteMap(sitemap)
+    LiftRules.setSiteMap(SiteMap(Environment.sitemap:_*))
   }
 }
 
 object Environment {
   lazy val sitemap = List(
-    Menu("Home") / "index"
+    Menu("Home") / "index",
+    Menu("LiftScreen Sample") / "liftscreen",
+    Menu("Mapper toForm Sample") / "toform"
   )
   
   val database = DBVendor

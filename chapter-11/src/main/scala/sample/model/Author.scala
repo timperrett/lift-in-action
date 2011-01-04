@@ -15,7 +15,10 @@ class Author extends LongKeyedMapper[Author]
   def getSingleton = Author
   
   object title extends MappedEnum(this, Titles)
-  object firstName extends MappedString(this, 255)
+  object firstName extends MappedString(this, 255){
+    override def validations = 
+      valMinLen(3, "First name must be at least 3 characters") _ :: Nil
+  }
   object lastName extends MappedText(this)
   object email extends MappedEmail(this, 150)
   

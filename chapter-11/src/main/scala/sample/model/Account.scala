@@ -16,9 +16,9 @@ class Account extends LongKeyedMapper[Account] with IdPK {
     override def validations = 
       AccountValidations.notLessThanZero(this) _ :: Nil
   }
-  def deposit(value: Long) = balance(balance.is + value).save
-  def withdraw(value: Long) = balance(balance.is - value).save
-  
+  def deposit(value: Long) = updateAndSave(value)
+  def withdraw(value: Long) = updateAndSave(-value)
+  def updateAndSave(value: Long) = balance(balance.is + value).save
 }
 
 import net.liftweb.util.{FieldIdentifier,FieldError}

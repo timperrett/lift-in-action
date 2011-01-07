@@ -57,7 +57,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   class ChapterThirteen(info: ProjectInfo) extends ChapterFour(info) with Native2AsciiPlugin
   
   class ChapterFourteen(info: ProjectInfo) extends ProjectDefaults(info){
-    val ostrich = "com.twitter" % "ostrich" % "2.3.1" % "compile->default"
+    val ostrich = "com.twitter" % "ostrich" % "2.3.5" % "compile->default"
     val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile->default"
   }
   

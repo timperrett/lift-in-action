@@ -3,7 +3,7 @@ import hoffrocket.YuiCompressorPlugin
 import eu.getintheloop.Native2AsciiPlugin
 
 class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
-  val liftVersion = "2.2-RC6"
+  val liftVersion = "2.2"
   val h2Version = "1.3.146"
   
   // implement the module definitions
@@ -16,7 +16,8 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   lazy val chpNine = project("chapter-9", "9", new ChapterNine(_))
   lazy val chpTen = project("chapter-10", "10", new ChapterTen(_))
   lazy val chpEleven = project("chapter-11", "11", new ChapterEleven(_))
-  lazy val chpThirteen = project("chapter-13", "13", new ChapterThirteen(_))
+  lazy val chpTwelve = project("chapter-12", "12", new ChapterTwelve(_))
+  // lazy val chpThirteen = project("chapter-13", "13", new ChapterThirteen(_))
   lazy val chpFourteen = project("chapter-14", "14", new ChapterFourteen(_))
   
   // define each module and any specific dependencies that it has
@@ -52,6 +53,11 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   
   class ChapterEleven(info: ProjectInfo) extends ProjectDefaults(info){
     val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile->default"
+  }
+  
+  class ChapterTwelve(info: ProjectInfo) extends ProjectDefaults(info){
+    val squeryl = "net.liftweb" %% "lift-squeryl-record" % liftVersion % "compile->default"
+    val mongo = "net.liftweb" %% "lift-mongodb-record" % liftVersion % "compile->default"
   }
   
   class ChapterThirteen(info: ProjectInfo) extends ChapterFour(info) with Native2AsciiPlugin
@@ -101,12 +107,12 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
         syncTask(sxrTestPath, sxrPublishPath / "test") dependsOn(testCompile)
       )
     
-    val mavenLocal = "Local Maven Repository" at "file://"+Path.userHome+"/.m2/repository"
-    val jbossRepo = "jboss-repo" at "http://repository.jboss.org/nexus/content/groups/public-jboss/"
-    val twitterRepo = "twitter-repo" at "http://maven.twttr.com/"
-    val scalaReleases = "scala-tools.snapshots" at "http://scala-tools.org/repo-releases/"
-    val scalaSnapshots = "scala-tools.snapshots" at "http://scala-tools.org/repo-snapshots/"
-    val sonatype = "oss.sonatype.org" at "http://oss.sonatype.org/content/groups/github/"
+    lazy val mavenLocal = "Local Maven Repository" at "file://"+Path.userHome+"/.m2/repository"
+    lazy val jbossRepo = "jboss.repo" at "http://repository.jboss.org/nexus/content/groups/public-jboss/"
+    lazy val twitterRepo = "twitter.repo" at "http://maven.twttr.com/"
+    lazy val scalaReleases = "scala-tools.releases" at "http://scala-tools.org/repo-releases/"
+    lazy val scalaSnapshots = "scala-tools.snapshots" at "http://scala-tools.org/repo-snapshots/"
+    lazy val sonatype = "oss.sonatype.org" at "http://oss.sonatype.org/content/groups/github/"
     
   }
 }

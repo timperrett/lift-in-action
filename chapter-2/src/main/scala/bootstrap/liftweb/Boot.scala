@@ -1,16 +1,9 @@
 package bootstrap.liftweb
 
-import _root_.net.liftweb.common._
-import _root_.net.liftweb.util._
-import _root_.net.liftweb.util.Helpers._
-import _root_.net.liftweb.http._
-import _root_.net.liftweb.sitemap._
-import _root_.net.liftweb.sitemap.Loc._
+import net.liftweb.util.NamedPF
+import net.liftweb.http.{LiftRules,NotFoundAsTemplate,ParsePath}
+import net.liftweb.sitemap.{SiteMap,Menu}
 
-/**
-  * A class that's instantiated early and run.  It allows the application
-  * to modify lift's environment
-  */
 class Boot {
   def boot {
     // where to search snippet
@@ -22,8 +15,7 @@ class Boot {
     })
     
     // Build the application SiteMap
-    def sitemap = SiteMap(Menu("Home") / "index")
-    LiftRules.setSiteMap(sitemap)
+    LiftRules.setSiteMap(SiteMap(Menu("Home") / "index"))
   }
 }
 

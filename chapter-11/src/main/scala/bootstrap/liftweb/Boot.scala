@@ -20,8 +20,8 @@ class Boot extends LazyLoggable {
     
     // handle JNDI not being avalible
     if (!DB.jndiJdbcConnAvailable_?){
-      DB.defineConnectionManager(DefaultConnectionIdentifier, Environment.database)
-      LiftRules.unloadHooks.append(() => Environment.database.closeAllConnections_!()) 
+      DB.defineConnectionManager(DefaultConnectionIdentifier, Database)
+      LiftRules.unloadHooks.append(() => Database.closeAllConnections_!()) 
     }
     
     S.addAround(DB.buildLoanWrapper)
@@ -42,19 +42,14 @@ class Boot extends LazyLoggable {
     LiftRules.stripComments.default.set(() => false)
     
     // Build the application SiteMap
-    LiftRules.setSiteMap(SiteMap(Environment.sitemap:_*))
+    LiftRules.setSiteMap(SiteMap(
+      Menu("Home") / "index",
+      Menu("LiftScreen Sample") / "liftscreen",
+      Menu("Mapper toForm Sample") / "toform"
+    ))
   }
-}
-
-object Environment {
-  lazy val sitemap = List(
-    Menu("Home") / "index",
-    Menu("LiftScreen Sample") / "liftscreen",
-    Menu("Mapper toForm Sample") / "toform"
-  )
   
-  val database = DBVendor
-  object DBVendor extends StandardDBVendor(
+  object Database extends StandardDBVendor(
     Props.get("db.class").openOr("org.h2.Driver"),
     Props.get("db.url").openOr("jdbc:h2:database/chapter_eleven;DB_CLOSE_DELAY=-1"),
     Props.get("db.user"),

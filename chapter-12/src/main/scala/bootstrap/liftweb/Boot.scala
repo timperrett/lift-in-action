@@ -48,11 +48,11 @@ class Boot extends Loggable {
     /**
      * Build the sitemap
      */
-    LiftRules.setSiteMap(SiteMap(List(
+    LiftRules.setSiteMap(SiteMap(
       Menu("Home") / "index",
       Menu("Squeryl Bookstore") / "squeryl" / "index",
       Menu("MongoDB Bookstore") / "mongo" / "index"
-    ):_*))
+    ))
   }
   
   object Database extends StandardDBVendor(

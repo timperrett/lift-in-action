@@ -26,9 +26,9 @@ class Boot extends Loggable {
     // handle JNDI not being avalible
     if (!DB.jndiJdbcConnAvailable_?){
       logger.error("No JNDI configured - using the default in-memory database.") 
-      DB.defineConnectionManager(DefaultConnectionIdentifier, Application.database)
+      DB.defineConnectionManager(DefaultConnectionIdentifier, Database)
       // make sure cyote unloads database connections before shutting down
-      LiftRules.unloadHooks.append(() => Application.database.closeAllConnections_!()) 
+      LiftRules.unloadHooks.append(() => Database.closeAllConnections_!()) 
     }
     
     // automatically create the tables
@@ -40,7 +40,16 @@ class Boot extends Loggable {
       case (req,failure) => NotFoundAsTemplate(ParsePath(List("404"),"html",false,false))
     })
     
-    LiftRules.setSiteMap(SiteMap(Application.sitemap: _*))
+    LiftRules.setSiteMap(SiteMap(List(
+      Menu("Home") / "index" >> LocGroup("public"),
+      Menu("Search") / "search" >> LocGroup("public"),
+      Menu("History") / "history" >> LocGroup("public"),
+      Menu("Auctions") / "auctions" >> LocGroup("public"),
+      Menu("Auction Detail") / "auction" >> LocGroup("public") >> Hidden,
+      Menu("Admin") / "admin" / "index" >> LocGroup("admin"),
+      Menu("Suppliers") / "admin" / "suppliers" >> LocGroup("admin") submenus(Supplier.menus : _*),
+      Menu("Auction Admin") / "admin" / "auctions" >> LocGroup("admin") submenus(Auction.menus : _*)
+    ) ::: Customer.menus: _*))
     
     // setup the load pattern
     S.addAround(DB.buildLoanWrapper)
@@ -48,30 +57,10 @@ class Boot extends Loggable {
     // make requests utf-8
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
   }
-}
-
-object Application {
-  val sitemap = List(
-    Menu("Home") / "index" >> LocGroup("public"),
-    Menu("Search") / "search" >> LocGroup("public"),
-    Menu("History") / "history" >> LocGroup("public"),
-    Menu("Auctions") / "auctions" >> LocGroup("public"),
-    Menu("Auction Detail") / "auction" >> LocGroup("public") >> Hidden,
-    // admin
-    Menu("Admin") / "admin" / "index" >> LocGroup("admin"),
-    Menu("Suppliers") / "admin" / "suppliers" >> LocGroup("admin") submenus(Supplier.menus : _*),
-    Menu("Auction Admin") / "admin" / "auctions" >> LocGroup("admin") submenus(Auction.menus : _*)
-  ) ::: Customer.menus
   
-  val database = DBVendor
-  
-  object DBVendor extends StandardDBVendor(
+  object Database extends StandardDBVendor(
     Props.get("db.class").openOr("org.h2.Driver"),
     Props.get("db.url").openOr("jdbc:h2:database/chapter_three;DB_CLOSE_DELAY=-1"),
     Props.get("db.user"),
     Props.get("db.pass"))
-  
 }
-
-
-

@@ -27,27 +27,26 @@ class Boot extends Loggable {
     
     AutoComplete.init
     
-    LiftRules.setSiteMap(SiteMap(sitemap:_*))
+    LiftRules.setSiteMap(SiteMap(
+      Menu("Home") / "index",
+      Menu("Listing 7.1 & 7.2") / "seven_dot_two",
+      Menu("Listing 7.3") / "seven_dot_three",
+      Menu("Embedding Example") / "embedding",
+      Menu("Tail Example") / "tail",
+      Menu("Resource ID Example") / "resource_ids",
+      Menu("Listing 7.9: Accessing snippet attributes") / "seven_dot_nine",
+      Menu("Listing 7.10: Class snippet and object singleton snippet") / "seven_dot_ten",
+      Menu("Listing 7.11: Stateful snippet count incrementing") / "seven_dot_eleven",
+      Menu("Listing 7.12: Wiring a () => NodeSeq into LiftRules.viewDispatch") / "seven_dot_tweleve" / "example",
+      Menu("Listing 7.13: Implementing LiftView sub-type") / "MyView" / "sample",
+      Menu("Listing 7.14: Implementing a RequestVar[Box[String]]") / "request_var",
+      Menu("Listing 7.15: Getting and setting a cookie value") / "seven_dot_fifteen",
+      Menu("Listing 7.16: Basic LiftScreen implementation") / "lift_screen_one",
+      Menu("Listing 7.17: Applying validation to LiftScreen sample (7.16)") / "lift_screen_two",
+      Menu("Listing 7.18: Building Wizard workflow") / "wizard_example",
+      Menu("Listing 7.19: Implementing the AutoComplete snippet helper") / "auto_complete",
+      Menu("Listing 7.20: The Gravatar Widget") / "gravatar_sample"
+    ))
   }
   
-  lazy val sitemap = List(
-    Menu("Home") / "index",
-    Menu("Listing 7.1 & 7.2") / "seven_dot_two",
-    Menu("Listing 7.3") / "seven_dot_three",
-    Menu("Embedding Example") / "embedding",
-    Menu("Tail Example") / "tail",
-    Menu("Resource ID Example") / "resource_ids",
-    Menu("Listing 7.9: Accessing snippet attributes") / "seven_dot_nine",
-    Menu("Listing 7.10: Class snippet and object singleton snippet") / "seven_dot_ten",
-    Menu("Listing 7.11: Stateful snippet count incrementing") / "seven_dot_eleven",
-    Menu("Listing 7.12: Wiring a () => NodeSeq into LiftRules.viewDispatch") / "seven_dot_tweleve" / "example",
-    Menu("Listing 7.13: Implementing LiftView sub-type") / "MyView" / "sample",
-    Menu("Listing 7.14: Implementing a RequestVar[Box[String]]") / "request_var",
-    Menu("Listing 7.15: Getting and setting a cookie value") / "seven_dot_fifteen",
-    Menu("Listing 7.16: Basic LiftScreen implementation") / "lift_screen_one",
-    Menu("Listing 7.17: Applying validation to LiftScreen sample (7.16)") / "lift_screen_two",
-    Menu("Listing 7.18: Building Wizard workflow") / "wizard_example",
-    Menu("Listing 7.19: Implementing the AutoComplete snippet helper") / "auto_complete",
-    Menu("Listing 7.20: The Gravatar Widget") / "gravatar_sample"
-  )
 }

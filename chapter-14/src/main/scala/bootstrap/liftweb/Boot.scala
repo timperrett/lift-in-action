@@ -21,12 +21,19 @@ class Boot extends LazyLoggable {
     // http
     LiftRules.addToPackages("sample")
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
-    LiftRules.setSiteMap(SiteMap(Application.sitemap:_*))
+    // sitemap
+    import Loc.ExtLink
+    LiftRules.setSiteMap(SiteMap(List(
+      Menu("Home") / "index",
+      Menu("Distributed Words") / "words",
+      Menu(Loc("ostrich.graphs", ExtLink("http://127.0.0.1:9990/graph/"), "Ostrich: Graphs")) 
+    ) ::: User.menus:_*))
     
+    // database
     DefaultConnectionIdentifier.jndiName = "jdbc/liftinaction"
     if (!DB.jndiJdbcConnAvailable_?){
-      DB.defineConnectionManager(DefaultConnectionIdentifier, Application.database)
-      LiftRules.unloadHooks.append(() => Application.database.closeAllConnections_!()) 
+      DB.defineConnectionManager(DefaultConnectionIdentifier, Database)
+      LiftRules.unloadHooks.append(() => Database.closeAllConnections_!()) 
     }
     
     logger.info("About to schemify...")
@@ -77,7 +84,14 @@ class Boot extends LazyLoggable {
       LiftSession.onEndServicing
     
   }
-
+  
+  object Database extends StandardDBVendor(
+    Props.get("db.class").openOr("org.h2.Driver"),
+    Props.get("db.url").openOr("jdbc:h2:mem:chapter_fourteen;DB_CLOSE_DELAY=-1"),
+    Props.get("db.user"),
+    Props.get("db.pass"))
+  
+  
 }
 
 object SessionMonitor extends LiftActor {
@@ -102,21 +116,3 @@ object RequestTimer extends Service {
   def shutdown(){}
   def quiesce(){}
 }
-
-object Application {
-  import Loc.ExtLink
-  val sitemap = List(
-    Menu("Home") / "index",
-    Menu("Distributed Words") / "words",
-    Menu(Loc("ostrich.graphs", ExtLink("http://127.0.0.1:9990/graph/"), "Ostrich: Graphs")) 
-  ) ::: User.menus
-  
-  lazy val database = DBVendor
-  object DBVendor extends StandardDBVendor(
-    Props.get("db.class").openOr("org.h2.Driver"),
-    Props.get("db.url").openOr("jdbc:h2:mem:chapter_fourteen;DB_CLOSE_DELAY=-1"),
-    Props.get("db.user"),
-    Props.get("db.pass"))
-}
-
-

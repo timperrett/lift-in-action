@@ -26,8 +26,8 @@ class Boot extends Loggable {
     // handle JNDI not being avalible
     if (!DB.jndiJdbcConnAvailable_?){
       logger.error("No JNDI configured - using the default H2 database.") 
-      DB.defineConnectionManager(DefaultConnectionIdentifier, Application.database)
-      LiftRules.unloadHooks.append(() => Application.database.closeAllConnections_!()) 
+      DB.defineConnectionManager(DefaultConnectionIdentifier, Database)
+      LiftRules.unloadHooks.append(() => Database.closeAllConnections_!()) 
     }
 
     // automatically create the tables
@@ -43,14 +43,21 @@ class Boot extends Loggable {
       } else false
     }
     
-    LiftRules.setSiteMap(SiteMap(Application.sitemap:_*))
+    LiftRules.setSiteMap(SiteMap(
+      Menu("Home") / "index",
+      Menu("Submenu Example") / "sample" submenus(
+        Menu("Another") / "sample" / "another",
+        Menu("Example") / "sample" / "example"
+      ),
+      Menu("Confidential Thing") / "confidential" / "thing" >> HttpAuthProtected(req => Full(AuthRole("admin"))),
+      Menu("Another") / "sample" / "withtitle" >> Title(x => Text("Some lovely title"))
+          >> TestAccess(() => LoggedIn.is.choice(x => Empty)(Full(RedirectResponse("login")))),
+      Menu("Example") / "sample" / "localhost-only" >> MySnippets >> Test(req => req.hostName == "localhost"),
+      Menu("Edit Something") / "edit" >> Hidden >> Unless(() => S.param("id").isEmpty, () => RedirectResponse("index")),
+      Menu(Wiki),
+      Menu("JSON Menu") / "json"
+    ))
   }
-}
-
-
-object LoggedIn extends SessionVar[Box[Long]](Empty)
-
-object Application {
   
   lazy val MySnippets = new DispatchLocSnippets {  
     val dispatch: PartialFunction[String, NodeSeq => NodeSeq] = {  
@@ -59,27 +66,12 @@ object Application {
     }
   }
   
-  val sitemap = List(
-    Menu("Home") / "index",
-    Menu("Submenu Example") / "sample" submenus(
-      Menu("Another") / "sample" / "another",
-      Menu("Example") / "sample" / "example"
-    ),
-    Menu("Confidential Thing") / "confidential" / "thing" >> HttpAuthProtected(req => Full(AuthRole("admin"))),
-    Menu("Another") / "sample" / "withtitle" >> Title(x => Text("Some lovely title"))
-        >> TestAccess(() => LoggedIn.is.choice(x => Empty)(Full(RedirectResponse("login")))),
-    Menu("Example") / "sample" / "localhost-only" >> MySnippets >> Test(req => req.hostName == "localhost"),
-    Menu("Edit Something") / "edit" >> Hidden >> Unless(() => S.param("id").isEmpty, () => RedirectResponse("index")),
-    Menu(Wiki),
-    Menu("JSON Menu") / "json"
-  )
-  
-  val database = DBVendor
-  
-  object DBVendor extends StandardDBVendor(
+  object Database extends StandardDBVendor(
     Props.get("db.class").openOr("org.h2.Driver"),
     Props.get("db.url").openOr("jdbc:h2:database/temp;DB_CLOSE_DELAY=-1"),
     Props.get("db.user"),
     Props.get("db.pass"))
-  
 }
+
+object LoggedIn extends SessionVar[Box[Long]](Empty)
+

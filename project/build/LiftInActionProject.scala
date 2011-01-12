@@ -87,8 +87,11 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
     val jetty6 = "org.mortbay.jetty" % "jetty" % "6.1.21" % "test"
     val servlet = "javax.servlet" % "servlet-api" % "2.5" % "provided"
     val log4j = "org.slf4j" % "slf4j-log4j12" % "1.6.1" % "compile->default"
-    //val h2 = "com.h2database" % "h2" % h2Version % "compile->default"
-    //val mysql = "mysql" % "mysql-connector-java" % "5.1.12" % "compile->default"
+    
+    // usually you would only use one database type, not three; this gives you
+    // options as to what you wan to use though.
+    val h2 = "com.h2database" % "h2" % h2Version % "compile->default"
+    val mysql = "mysql" % "mysql-connector-java" % "5.1.12" % "compile->default"
     val postgresql = "postgresql" % "postgresql" % "9.0-801.jdbc4" % "compile->default"
     
     // stax

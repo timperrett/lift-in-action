@@ -29,6 +29,7 @@ class Boot extends Loggable {
      * H2Adapter
      * MSSQLServer
      * MySQLAdapter
+     * PostgreSqlAdapter
      * OracleAdapter
      */
     SquerylRecord.init(() => new PostgreSqlAdapter)
@@ -44,6 +45,18 @@ class Boot extends Loggable {
      * Add the request wrapper for database connectivity
      */
     S.addAround(DB.buildLoanWrapper)
+    
+    /**
+     * CouchDB Setup
+     */
+    import net.liftweb.couchdb.{CouchDB, Database}
+    import dispatch.{Http, StatusCode}
+    // construct a Database (by default on localhost, port 5984),
+    val database = new Database("bookstore")
+    // creates the database "database_name" if it doesn't exist
+    database.createIfNotCreated(new Http())
+    // sets the default database for the application
+    CouchDB.defaultDatabase = database
     
     /**
      * Build the sitemap

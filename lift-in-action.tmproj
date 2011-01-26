@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>LICENSE.txt</string>
+	<string>project/build/LiftInActionProject.scala</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -26,29 +26,71 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>39</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>182</integer>
+				<integer>8</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>chapter-12/src/main/resources/props/default.props</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>7</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>chapter-12/src/main/scala/sample/model/ExampleRecord.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>11</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>chapter-12/src/main/scala/sample/model/couch/Book.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>13</integer>
+				<key>line</key>
+				<integer>10</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>166</integer>
+			<integer>0</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>8</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>10</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
-				<integer>30</integer>
+				<integer>23</integer>
 				<key>line</key>
-				<integer>201</integer>
+				<integer>10</integer>
 			</dict>
 		</dict>
 		<key>chapter-12/src/main/scala/sample/model/squeryl/Author.scala</key>
@@ -65,37 +107,7 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>chapter-12/src/main/scala/sample/model/squeryl/Book.scala</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>2</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>33</integer>
-				<key>line</key>
-				<integer>6</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>2</integer>
-			</dict>
-		</dict>
-		<key>chapter-12/src/main/scala/sample/model/squeryl/Publisher.scala</key>
+		<key>chapter-12/src/main/scala/sample/snippet/Sample.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
@@ -109,48 +121,49 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>chapter-9/src/main/scala/sample/lib/BasicDispatchUsage.scala</key>
+		<key>project/build/LiftInActionProject.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>32</integer>
 				<key>line</key>
-				<integer>4</integer>
+				<integer>60</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>41</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>9</integer>
+				<integer>60</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>4</integer>
+				<integer>61</integer>
 			</dict>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>chapter-12/src/main/scala/sample/model/squeryl/Book.scala</string>
-		<string>chapter-12/src/main/scala/sample/model/squeryl/Publisher.scala</string>
+		<string>chapter-12/src/main/scala/sample/model/couch/Book.scala</string>
 		<string>chapter-12/src/main/scala/sample/model/squeryl/Author.scala</string>
-		<string>chapter-9/src/main/scala/sample/lib/BasicDispatchUsage.scala</string>
-		<string>LICENSE.txt</string>
+		<string>chapter-12/src/main/scala/sample/snippet/Sample.scala</string>
+		<string>chapter-12/src/main/scala/sample/model/ExampleRecord.scala</string>
+		<string>project/build/LiftInActionProject.scala</string>
+		<string>chapter-12/src/main/resources/props/default.props</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{573, 104}, {839, 683}}</string>
+	<string>{{601, 195}, {839, 683}}</string>
 </dict>
 </plist>

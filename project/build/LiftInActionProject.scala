@@ -58,6 +58,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   class ChapterTwelve(info: ProjectInfo) extends ProjectDefaults(info){
     val squeryl = "net.liftweb" %% "lift-squeryl-record" % liftVersion % "compile->default"
     val mongo = "net.liftweb" %% "lift-mongodb-record" % liftVersion % "compile->default"
+    val couch = "net.liftweb" %% "lift-couchdb" % liftVersion % "compile->default"
   }
   
   class ChapterThirteen(info: ProjectInfo) extends ChapterFour(info) with Native2AsciiPlugin

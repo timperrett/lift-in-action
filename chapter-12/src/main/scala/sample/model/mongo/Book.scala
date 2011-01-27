@@ -15,7 +15,9 @@ class Book private () extends MongoRecord[Book] with MongoId[Book]{
     def defaultValue = Publisher("", "")
   }
   
-  object authors extends MongoListField[Book, Author](this)
+  object authors extends JsonObjectField[Book, Authors](this, Authors) {
+    def defaultValue = Authors(Nil)
+  }
 }
 
 object Book extends Book with MongoMetaRecord[Book]
@@ -25,6 +27,11 @@ case class Publisher(name: String, description: String) extends JsonObject[Publi
   def meta = Publisher
 }
 object Publisher extends JsonObjectMeta[Publisher]
+
+case class Authors(list: List[Author]) extends JsonObject[Authors]{
+  def meta = Authors
+}
+object Authors extends JsonObjectMeta[Authors]
 
 case class Author(firstName: String, lastName: String, email: String) 
       extends JsonObject[Author] {

@@ -49,14 +49,22 @@ class Boot extends Loggable {
     /**
      * CouchDB Setup
      */
-    import net.liftweb.couchdb.{CouchDB, Database}
-    import dispatch.{Http, StatusCode}
+    // import net.liftweb.couchdb.{CouchDB, Database}
+    // import dispatch.{Http, StatusCode}
     // construct a Database (by default on localhost, port 5984),
-    val database = new Database("bookstore")
+    // val database = new Database("bookstore")
     // creates the database "database_name" if it doesn't exist
-    database.createIfNotCreated(new Http())
+    // database.createIfNotCreated(new Http())
     // sets the default database for the application
-    CouchDB.defaultDatabase = database
+    // CouchDB.defaultDatabase = database
+    
+    /**
+     * MongoDB Setup
+     */
+    import net.liftweb.mongodb.{MongoDB, DefaultMongoIdentifier, MongoAddress, MongoHost}
+    MongoDB.defineDb(
+      DefaultMongoIdentifier, 
+      MongoAddress(MongoHost("127.0.0.1", 27017), "bookstore"))
     
     /**
      * Build the sitemap

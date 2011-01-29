@@ -17,7 +17,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   lazy val chpTen = project("chapter-10", "10", new ChapterTen(_))
   lazy val chpEleven = project("chapter-11", "11", new ChapterEleven(_))
   lazy val chpTwelve = project("chapter-12", "12", new ChapterTwelve(_))
-  // lazy val chpThirteen = project("chapter-13", "13", new ChapterThirteen(_))
+  lazy val chpThirteen = project("chapter-13", "13", new ChapterThirteen(_))
   lazy val chpFourteen = project("chapter-14", "14", new ChapterFourteen(_))
   
   // define each module and any specific dependencies that it has
@@ -25,15 +25,27 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   class ChapterTwo(info: ProjectInfo) extends ProjectDefaults(info)
   
   // chapter two requires mapper, as we'll be doing some database stuff
-  class ChapterThree(info: ProjectInfo) extends ChapterTwo(info){
+  class ChapterThree(info: ProjectInfo) 
+      extends ChapterTwo(info) 
+      with DatabaseDrivers
+      with DeployToStax 
+  {
     val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile->default"
   }
   
-  class ChapterFour(info: ProjectInfo) extends ChapterThree(info){
+  class ChapterFour(info: ProjectInfo) 
+      extends ChapterThree(info) 
+      with DatabaseDrivers 
+      with DeployToStax 
+  {
     val textile = "net.liftweb" %% "lift-textile" % liftVersion % "compile->default"
   }
   
-  class ChapterFive(info: ProjectInfo) extends ChapterFour(info){
+  class ChapterFive(info: ProjectInfo) 
+      extends ChapterFour(info) 
+      with DatabaseDrivers 
+      with DeployToStax 
+  {
     val machine = "net.liftweb" %% "lift-machine" % liftVersion % "compile->default"
     val paypal = "net.liftweb" %% "lift-paypal" % liftVersion % "compile->default"
   }
@@ -51,33 +63,71 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   
   class ChapterTen(info: ProjectInfo) extends ProjectDefaults(info)
   
-  class ChapterEleven(info: ProjectInfo) extends ProjectDefaults(info){
+  class ChapterEleven(info: ProjectInfo) 
+      extends ProjectDefaults(info) 
+      with DatabaseDrivers 
+  {
     val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile->default"
   }
   
-  class ChapterTwelve(info: ProjectInfo) extends ProjectDefaults(info){
+  class ChapterTwelve(info: ProjectInfo) 
+      extends ProjectDefaults(info) 
+      with DatabaseDrivers 
+  {
     val squeryl = "net.liftweb" %% "lift-squeryl-record" % liftVersion % "compile->default"
     val couch = "net.liftweb" %% "lift-couchdb" % liftVersion % "compile->default"
     val mongo = "net.liftweb" %% "lift-mongodb-record" % liftVersion % "compile->default"
     val rogue = "com.foursquare" %% "rogue" % "1.0.2" % "compile->default"
   }
   
-  class ChapterThirteen(info: ProjectInfo) extends ChapterFour(info) with Native2AsciiPlugin
+  class ChapterThirteen(info: ProjectInfo) 
+      extends ChapterFour(info) 
+      with Native2AsciiPlugin 
+      with DatabaseDrivers 
+  {
+    val akka = "se.scalablesolutions.akka" % "akka-actor" % "1.0-RC3" % "compile->default"
+    val jpa = "net.liftweb" %% "lift-jpa" % liftVersion % "compile->default"
+    val jta = "net.liftweb" %% "lift-jta" % liftVersion % "compile->default"
+    val geronimoejb = "geronimo-spec" % "geronimo-spec-ejb" % "2.1-rc4" % "compile->default"
+    val geronimojta = "geronimo-spec" % "geronimo-spec-jta" % "1.0.1B-rc4" % "provided->default"
+    // because we need to specifically exclude the JTA transative dependency for the entity
+    // manager, its nessicary to define the ivy xml directly as the DSL does not have a 
+    // grammer for exclusions
+    override def ivyXML =
+      <dependencies>
+        <dependency org="org.hibernate" name="hibernate-entitymanager" rev="3.4.0.GA">
+          <exclude org="javax.transaction" module="jta"/>
+        </dependency>
+      </dependencies>
+  }
   
-  class ChapterFourteen(info: ProjectInfo) extends ProjectDefaults(info){
+  class ChapterFourteen(info: ProjectInfo)
+      extends ProjectDefaults(info) 
+      with DatabaseDrivers 
+  {
     val ostrich = "com.twitter" % "ostrich" % "2.3.5" % "compile->default"
     val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile->default"
   }
   
+  trait DatabaseDrivers { _: DefaultWebProject => 
+    // usually you would only use one database type, not three; this gives you
+    // options as to what you wan to use though.
+    val h2 = "com.h2database" % "h2" % h2Version % "compile->default"
+    val mysql = "mysql" % "mysql-connector-java" % "5.1.12" % "compile->default"
+    val postgresql = "postgresql" % "postgresql" % "9.0-801.jdbc4" % "compile->default"
+  }
+  
+  trait DeployToStax extends stax.StaxPlugin { _: DefaultWebProject =>
+    override def staxApplicationId = "liftinaction"
+    override def staxUsername = "timperrett"
+  }
   
   // define some defaults
   abstract class ProjectDefaults(info: ProjectInfo) 
       extends DefaultWebProject(info) 
-      with AutoCompilerPlugins
-      with YuiCompressorPlugin
-      with stax.StaxPlugin {
+      with YuiCompressorPlugin {
     
-    override def compileOptions = Unchecked :: super.compileOptions.toList
+    override def compileOptions = Unchecked :: Deprecation :: super.compileOptions.toList
     
     // deployment
     override def managedStyle = ManagedStyle.Maven
@@ -90,34 +140,17 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
     val servlet = "javax.servlet" % "servlet-api" % "2.5" % "provided"
     val log4j = "org.slf4j" % "slf4j-log4j12" % "1.6.1" % "compile->default"
     
-    // usually you would only use one database type, not three; this gives you
-    // options as to what you wan to use though.
-    val h2 = "com.h2database" % "h2" % h2Version % "compile->default"
-    val mysql = "mysql" % "mysql-connector-java" % "5.1.12" % "compile->default"
-    val postgresql = "postgresql" % "postgresql" % "9.0-801.jdbc4" % "compile->default"
-    
-    // stax
-    override def staxApplicationId = "liftinaction"
-    override def staxUsername = "timperrett"
-    
     // testing frameworks
     val scalatest = "org.scala-tools.testing" % "scalatest" % "0.9.5" % "test->default"
     
-    // scala x-ray compiller plugin
-    def sxrMainPath = outputPath / "classes.sxr"
-    def sxrTestPath = outputPath / "test-classes.sxr"
-    def sxrPublishPath = normalizedName / version.toString
-    lazy val publishSxr = 
-      syncTask(sxrMainPath, sxrPublishPath / "main") dependsOn(
-        syncTask(sxrTestPath, sxrPublishPath / "test") dependsOn(testCompile)
-      )
-    
     lazy val mavenLocal = "Local Maven Repository" at "file://"+Path.userHome+"/.m2/repository"
+    lazy val mavenCentral = "Central Maven Repository" at "http://repo1.maven.org/maven2/"
     lazy val jbossRepo = "jboss.repo" at "http://repository.jboss.org/nexus/content/groups/public-jboss/"
     lazy val twitterRepo = "twitter.repo" at "http://maven.twttr.com/"
     lazy val scalaReleases = "scala-tools.releases" at "http://scala-tools.org/repo-releases/"
     lazy val scalaSnapshots = "scala-tools.snapshots" at "http://scala-tools.org/repo-snapshots/"
     lazy val sonatype = "oss.sonatype.org" at "http://oss.sonatype.org/content/groups/github/"
+    lazy val scalablesolutions = "akka.repo" at "http://www.scalablesolutions.se/akka/repository/"
     
   }
 }

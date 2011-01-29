@@ -66,7 +66,6 @@ abstract class MappedSplitName[T<:Mapper[T]](val fieldOwner: T, val maxLen: Int)
 
   override protected[mapper] def doneWithSave(){}
 
-
   protected def i_obscure_!(in : String) : String = ""
 
   override def _toForm: Box[Elem] = Empty
@@ -108,16 +107,16 @@ abstract class MappedSplitName[T<:Mapper[T]](val fieldOwner: T, val maxLen: Int)
 
   def buildSetActualValue(accessor: Method, inst: AnyRef, columnName: String): (T, AnyRef) => Unit =
   (inst, v) => doField(inst, accessor, {case f: MappedSplitName[T] => f.wholeSet(if (v eq null) null else v.toString)})
-
+  
   def buildSetLongValue(accessor: Method, columnName: String): (T, Long, Boolean) => Unit =
   (inst, v, isNull) => doField(inst, accessor, {case f: MappedSplitName[T] => f.wholeSet(if (isNull) null else v.toString)})
-
+  
   def buildSetStringValue(accessor: Method, columnName: String): (T, String) => Unit =
   (inst, v) => doField(inst, accessor, {case f: MappedSplitName[T] => f.wholeSet(if (v eq null) null else v)})
-
+  
   def buildSetDateValue(accessor: Method, columnName: String): (T, Date) => Unit =
   (inst, v) => doField(inst, accessor, {case f: MappedSplitName[T] => f.wholeSet(if (v eq null) null else v.toString)})
-
+  
   def buildSetBooleanValue(accessor: Method, columnName: String): (T, Boolean, Boolean) => Unit =
   (inst, v, isNull) => doField(inst, accessor, {case f: MappedSplitName[T] => f.wholeSet(if (isNull) null else v.toString)})
 

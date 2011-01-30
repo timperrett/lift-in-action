@@ -4,7 +4,8 @@ package bootstrap.liftweb
 import scala.xml.{Text,NodeSeq}
 import java.util.Locale
 import net.liftweb.common.{Box,Full,Empty,LazyLoggable}
-import net.liftweb.http.{LiftRules}
+import net.liftweb.util.Helpers.{tryo,randomString}
+import net.liftweb.http.{LiftRules,S,RequestMemoize}
 import net.liftweb.http.provider.HTTPRequest
 import net.liftweb.sitemap.{SiteMap,Menu}
 
@@ -26,18 +27,43 @@ class Boot extends LazyLoggable {
     
     /**
      * What stratagy should be used to determine the correct locale
-     * for this request.
+     * for this request. This sample simple determines it based upon
+     * the query string paramater "hl". /foo?hl=en_GB
      */
-    LiftRules.localeCalculator = (request: Box[HTTPRequest]) => {
-      println(request.flatMap(_.locale))
-      request.flatMap(_.locale).openOr(Locale.getDefault())
-    }
+    LiftRules.localeCalculator = (request: Box[HTTPRequest]) => 
+      localeMemo(request.hashCode, (for { 
+        r <- request
+        p <- tryo(r.param("hl").head.split(Array('_','-')))
+      } yield p match {
+        case Array(lang) => new Locale(lang)
+        case Array(lang,country) => new Locale(lang,country)
+      }).openOr(Locale.getDefault))
     
     /**
      * Build the sitemap
      */
     LiftRules.setSiteMap(SiteMap(
-      Menu("Home") / "index"
+      Menu("Home") / "index",
+      Menu("Localization") / "localization" / "index" submenus(
+        Menu("XML Bundles") / "localization" / "with-xml",
+        Menu("Properties Bundles") / "localization" / "with-properties",
+        Menu("Custom Bundles") / "localization" / "with-custom"
+      ),
+      Menu("Java Enterprise Integration") / "jee" submenus(
+        Menu("Lift JPA") / "jee" / "jpa",
+        Menu("Lift JTA") / "jee" / "jta"
+      ),
+      Menu("Messaging and Distribution") / "distributed" submenus(
+        Menu("Lift AMQP") / "distributed" / "amqp",
+        Menu("Leveraging Akka") / "distributed" / "akka"
+      )
     ))
+  }
+  
+  /**
+   * Memoization object for the locale calculator
+   */
+  object localeMemo extends RequestMemoize[Int, Locale] {
+    override protected def __nameSalt = randomString(20)
   }
 }

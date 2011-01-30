@@ -3,17 +3,18 @@ package bootstrap.liftweb
 // import _root_.net.liftweb.util._
 import scala.xml.{Text,NodeSeq}
 import java.util.Locale
-import net.liftweb.common.{Box,Full,Empty,Loggable}
-import net.liftweb.util.Props
-import net.liftweb.util.Helpers._
-import net.liftweb.http._
+import net.liftweb.common.{Box,Full,Empty,LazyLoggable}
+import net.liftweb.http.{LiftRules}
 import net.liftweb.http.provider.HTTPRequest
-import net.liftweb.mapper.{DefaultConnectionIdentifier,DB,Schemifier,StandardDBVendor,MapperRules}
+import net.liftweb.sitemap.{SiteMap,Menu}
 
-class Boot extends Loggable {
+class Boot extends LazyLoggable {
   def boot {
     LiftRules.addToPackages("sample")
     
+    /**
+     * Set the character encoding to utf-8 early in the pipline
+     */
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
     
     /**
@@ -23,28 +24,20 @@ class Boot extends Loggable {
      */
     LiftRules.resourceNames = "content" :: LiftRules.resourceNames
     
+    /**
+     * What stratagy should be used to determine the correct locale
+     * for this request.
+     */
     LiftRules.localeCalculator = (request: Box[HTTPRequest]) => {
       println(request.flatMap(_.locale))
       request.flatMap(_.locale).openOr(Locale.getDefault())
     }
     
-    LiftRules.statelessRewrite.prepend {
-      case RewriteRequest(ParsePath("sample" :: Nil, _, _,_), _, _) => 
-           RewriteResponse("index" :: Nil)
-    }
-
-    
-    //LiftRules.setSiteMap(SiteMap(Application.sitemap:_*))
+    /**
+     * Build the sitemap
+     */
+    LiftRules.setSiteMap(SiteMap(
+      Menu("Home") / "index"
+    ))
   }
-}
-
-object Application {
-  val database = DBVendor
-  
-  object DBVendor extends StandardDBVendor(
-    Props.get("db.class").openOr("org.h2.Driver"),
-    Props.get("db.url").openOr("jdbc:h2:database/temp;DB_CLOSE_DELAY=-1"),
-    Props.get("db.user"),
-    Props.get("db.pass"))
-  
 }

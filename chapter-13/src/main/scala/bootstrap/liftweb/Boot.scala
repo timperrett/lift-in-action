@@ -43,19 +43,19 @@ class Boot extends LazyLoggable {
      * Build the sitemap
      */
     LiftRules.setSiteMap(SiteMap(
-      Menu("Home") / "index",
-      Menu("Localization") / "localization" / "index" submenus(
-        Menu("XML Bundles") / "localization" / "with-xml",
-        Menu("Properties Bundles") / "localization" / "with-properties",
-        Menu("Custom Bundles") / "localization" / "with-custom"
+      Menu.i("Home") / "index",
+      Menu.i("Localization") / "localization" / "index" submenus(
+        Menu.i("XML Bundles") / "localization" / "with-xml",
+        Menu.i("Properties Bundles") / "localization" / "with-properties",
+        Menu.i("Custom Bundles") / "localization" / "with-custom"
       ),
-      Menu("Java Enterprise Integration") / "jee" submenus(
-        Menu("Lift JPA") / "jee" / "jpa",
-        Menu("Lift JTA") / "jee" / "jta"
+      Menu.i("Java Enterprise Integration") / "jee" submenus(
+        Menu.i("Lift JPA") / "jee" / "jpa",
+        Menu.i("Lift JTA") / "jee" / "jta"
       ),
-      Menu("Messaging and Distribution") / "distributed" submenus(
-        Menu("Lift AMQP") / "distributed" / "amqp",
-        Menu("Leveraging Akka") / "distributed" / "akka"
+      Menu.i("Messaging and Distribution") / "distributed" submenus(
+        Menu.i("Lift AMQP") / "distributed" / "amqp",
+        Menu.i("Leveraging Akka") / "distributed" / "akka"
       )
     ))
   }

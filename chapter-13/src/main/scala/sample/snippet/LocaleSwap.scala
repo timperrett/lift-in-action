@@ -10,7 +10,7 @@ class LocaleSwap extends DispatchSnippet {
     case _ => render _
   }
   def render(xhtml: NodeSeq): NodeSeq = Locale.getAvailableLocales.toList
-    .sortBy(_.getDisplayCountry(S.locale)).filter(_.getDisplayCountry(S.locale) != "").map { l => 
-      <option value={l.toString}>{l.getDisplayCountry(S.locale) + " ("+l.getDisplayLanguage(S.locale)+")"}</option>
+    .sortBy(l => l.getDisplayCountry(l)).filter(l => l.getDisplayCountry(l) != "").map { l => 
+      <option value={l.toString}>{l.getDisplayCountry(l) + " ("+l.getDisplayLanguage(l)+")"}</option>
     }
 }

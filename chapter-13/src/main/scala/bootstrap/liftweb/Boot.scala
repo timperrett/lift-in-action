@@ -46,8 +46,8 @@ class Boot extends LazyLoggable {
       Menu.i("Home") / "index",
       Menu.i("Localization") / "localization" / "index" submenus(
         Menu.i("XML Bundles") / "localization" / "with-xml",
-        Menu.i("Properties Bundles") / "localization" / "with-properties",
-        Menu.i("Custom Bundles") / "localization" / "with-custom"
+        Menu.i("Properties Bundles") / "localization" / "with-properties"
+        // Menu.i("Custom Bundles") / "localization" / "with-custom"
       ),
       Menu.i("Java Enterprise Integration") / "jee" submenus(
         Menu.i("Lift JPA") / "jee" / "jpa",

@@ -1,2 +1,1 @@
-index.greeting=Why hello there!
-index.quote=Men of authority and influence may promote good morals. Let them in their several stations encourage virtue... let them favour and take part in any plans which may be formed for the advancement of morality.
+quote=Men of authority and influence may promote good morals. Let them in their several stations encourage virtue... let them favour and take part in any plans which may be formed for the advancement of morality.

@@ -16,7 +16,7 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>334</integer>
+	<integer>348</integer>
 	<key>metaData</key>
 	<dict>
 		<key>LICENSE.txt</key>
@@ -37,6 +37,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{119, 195}, {839, 683}}</string>
+	<string>{{124, 82}, {839, 683}}</string>
 </dict>
 </plist>

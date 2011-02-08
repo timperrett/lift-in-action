@@ -88,6 +88,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
     val akka = "se.scalablesolutions.akka" % "akka-actor" % "1.0-RC3" % "compile->default"
     val jpa = "net.liftweb" %% "lift-jpa" % liftVersion % "compile->default"
     val jta = "net.liftweb" %% "lift-jta" % liftVersion % "compile->default"
+    val amqp = "net.liftweb" %% "lift-amqp" % liftVersion % "compile->default"
     val geronimoejb = "geronimo-spec" % "geronimo-spec-ejb" % "2.1-rc4" % "compile->default"
     val geronimojta = "geronimo-spec" % "geronimo-spec-jta" % "1.0.1B-rc4" % "provided->default"
     // because we need to specifically exclude the JTA transative dependency for the entity

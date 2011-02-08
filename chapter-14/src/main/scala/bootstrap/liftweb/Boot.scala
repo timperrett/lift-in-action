@@ -70,7 +70,7 @@ class Boot extends LazyLoggable {
     ServiceTracker.startAdmin(config, runtime)
     
     Stats.makeGauge("current_session_count"){ 
-      SessionMonitor.count.toDouble 
+      (SessionMonitor !? GimmehCount).asInstanceOf[Double]
     }
     
     // session gauge
@@ -94,12 +94,13 @@ class Boot extends LazyLoggable {
   
 }
 
+case object GimmehCount
 object SessionMonitor extends LiftActor {
   private var sessionSize = 0
   protected def messageHandler = {
     case SessionWatcherInfo(sessions) => sessionSize = sessions.size
+    case GimmehCount => sessionSize
   }
-  def count = sessionSize
 }
 
 object RequestTimer extends Service {

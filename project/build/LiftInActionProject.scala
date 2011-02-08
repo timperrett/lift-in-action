@@ -87,12 +87,13 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
       with Native2AsciiPlugin 
       with DatabaseDrivers 
   {
-    val akka = "se.scalablesolutions.akka" % "akka-actor" % "1.0-RC3" % "compile->default"
-    val jpa = "net.liftweb" %% "lift-jpa" % liftVersion % "compile->default"
-    val jta = "net.liftweb" %% "lift-jta" % liftVersion % "compile->default"
-    val amqp = "net.liftweb" %% "lift-amqp" % liftVersion % "compile->default"
-    val geronimoejb = "geronimo-spec" % "geronimo-spec-ejb" % "2.1-rc4" % "compile->default"
-    val geronimojta = "geronimo-spec" % "geronimo-spec-jta" % "1.0.1B-rc4" % "provided->default"
+    val akka = "se.scalablesolutions.akka" % "akka-actor" % "1.0-RC6" % "compile"
+    val remote = "se.scalablesolutions.akka" % "akka-remote" % "1.0-RC6" % "compile"
+    val jpa = "net.liftweb" %% "lift-jpa" % liftVersion % "compile"
+    val jta = "net.liftweb" %% "lift-jta" % liftVersion % "compile"
+    val amqp = "net.liftweb" %% "lift-amqp" % liftVersion % "compile"
+    val geronimoejb = "geronimo-spec" % "geronimo-spec-ejb" % "2.1-rc4" % "compile"
+    val geronimojta = "geronimo-spec" % "geronimo-spec-jta" % "1.0.1B-rc4" % "provided"
     // because we need to specifically exclude the JTA transative dependency for the entity
     // manager, its nessicary to define the ivy xml directly as the DSL does not have a 
     // grammer for exclusions
@@ -153,7 +154,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
     lazy val scalaReleases = "scala-tools.releases" at "http://scala-tools.org/repo-releases/"
     lazy val scalaSnapshots = "scala-tools.snapshots" at "http://scala-tools.org/repo-snapshots/"
     lazy val sonatype = "oss.sonatype.org" at "http://oss.sonatype.org/content/groups/github/"
-    lazy val scalablesolutions = "akka.repo" at "http://www.scalablesolutions.se/akka/repository/"
+    lazy val akkarepo = "akka.repo" at "http://akka.io/repository/"
     
   }
 }

@@ -5,9 +5,10 @@ import scala.xml.{Text,NodeSeq}
 import java.util.Locale
 import net.liftweb.common.{Box,Full,Empty,LazyLoggable}
 import net.liftweb.util.Helpers.{tryo,randomString}
-import net.liftweb.http.{LiftRules,S,RequestMemoize}
+import net.liftweb.http.{LiftRules,S,RequestMemoize,RedirectResponse}
 import net.liftweb.http.provider.HTTPRequest
 import net.liftweb.sitemap.{SiteMap,Menu}
+import net.liftweb.sitemap.Loc.{EarlyResponse,Hidden}
 
 class Boot extends LazyLoggable {
   def boot {
@@ -43,7 +44,7 @@ class Boot extends LazyLoggable {
      * Build the sitemap
      */
     LiftRules.setSiteMap(SiteMap(
-      Menu.i("Home") / "index",
+      Menu.i("Home") / "index" >> EarlyResponse(() => Full(RedirectResponse("/localization/"))) >> Hidden,
       Menu.i("Localization") / "localization" / "index" submenus(
         Menu.i("XML Bundles") / "localization" / "with-xml",
         Menu.i("Properties Bundles") / "localization" / "with-properties"
@@ -58,6 +59,13 @@ class Boot extends LazyLoggable {
         Menu.i("Leveraging Akka") / "distributed" / "akka"
       )
     ))
+    
+    /**
+     * Boot the akka remote actor service
+     */
+    import akka.actor.Actor.{remote,actorOf}
+    remote.start("localhost", 2552)
+    remote.register("hello-service", actorOf[sample.actors.HelloWorldActor])
   }
   
   /**

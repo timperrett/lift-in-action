@@ -69,8 +69,10 @@ class Boot extends LazyLoggable {
     ServiceTracker.register(RequestTimer)
     ServiceTracker.startAdmin(config, runtime)
     
+    // unfortunatly there is an issue with making a !? call here and 
+    // ostrich doesnt like it. I'll look into it.
     Stats.makeGauge("current_session_count"){ 
-      (SessionMonitor !? GimmehCount).asInstanceOf[Double]
+      SessionMonitor.count.toDouble
     }
     
     // session gauge
@@ -90,17 +92,16 @@ class Boot extends LazyLoggable {
     Props.get("db.url").openOr("jdbc:h2:mem:chapter_fourteen;DB_CLOSE_DELAY=-1"),
     Props.get("db.user"),
     Props.get("db.pass"))
-  
-  
 }
 
-case object GimmehCount
+// case object GimmehCount
 object SessionMonitor extends LiftActor {
   private var sessionSize = 0
   protected def messageHandler = {
     case SessionWatcherInfo(sessions) => sessionSize = sessions.size
-    case GimmehCount => sessionSize
+    //case GimmehCount => sessionSize
   }
+  def count = sessionSize
 }
 
 object RequestTimer extends Service {

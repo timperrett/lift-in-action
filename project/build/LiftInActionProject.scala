@@ -77,7 +77,9 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
     val squeryl = "net.liftweb" %% "lift-squeryl-record" % liftVersion % "compile->default"
     val couch = "net.liftweb" %% "lift-couchdb" % liftVersion % "compile->default"
     val mongo = "net.liftweb" %% "lift-mongodb-record" % liftVersion % "compile->default"
-    val rogue = "com.foursquare" %% "rogue" % "1.0.2" % "compile->default"
+    // statically supplied the 2.8.1 version as it does not currently exist in 
+    // any public repository
+    // val rogue = "com.foursquare" %% "rogue" % "1.0.2" % "compile->default"
   }
   
   class ChapterThirteen(info: ProjectInfo) 
@@ -106,7 +108,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
       extends ProjectDefaults(info) 
       with DatabaseDrivers 
   {
-    val ostrich = "com.twitter" % "ostrich" % "2.3.5" % "compile->default"
+    val ostrich = "com.twitter" % "ostrich" % "2.3.6" % "compile->default"
     val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile->default"
   }
   

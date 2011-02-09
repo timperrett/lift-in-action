@@ -48,15 +48,13 @@ class Boot extends LazyLoggable {
       Menu.i("Localization") / "localization" / "index" submenus(
         Menu.i("XML Bundles") / "localization" / "with-xml",
         Menu.i("Properties Bundles") / "localization" / "with-properties"
-        // Menu.i("Custom Bundles") / "localization" / "with-custom"
       ),
       Menu.i("Java Enterprise Integration") / "jee" submenus(
         Menu.i("Lift JPA") / "jee" / "jpa",
         Menu.i("Lift JTA") / "jee" / "jta"
       ),
-      Menu.i("Messaging and Distribution") / "distributed" submenus(
-        Menu.i("Lift AMQP") / "distributed" / "amqp",
-        Menu.i("Leveraging Akka") / "distributed" / "akka"
+      Menu.i("Messaging and Distribution") / "distributed" >> EarlyResponse(() => Full(RedirectResponse("/distributed/akka-calculator"))) submenus(
+        Menu.i("Comet Calculator") / "distributed" / "akka-calculator"
       )
     ))
     
@@ -69,7 +67,7 @@ class Boot extends LazyLoggable {
      */
     remote.start("localhost", 2552)
     remote.register("hello-service", actorOf[sample.actor.HelloWorldActor])
-    remote.register("int-service", actorOf[sample.actor.IntTransformer])
+    // remote.register("int-service", actorOf[sample.actor.IntTransformer])
     
     /**
      * Configure the supervisor heirarchy and determine the 
@@ -82,6 +80,9 @@ class Boot extends LazyLoggable {
           actorOf[sample.actor.IntTransformer],
           Permanent,
           true) ::
+        Supervise(
+          actorOf[sample.comet.Calculator],
+          Permanent) ::
         Nil))
     
   }

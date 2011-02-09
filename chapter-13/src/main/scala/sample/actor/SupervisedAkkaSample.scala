@@ -10,6 +10,6 @@ class IntTransformer extends Actor {
 
 object IntTransformerRemoteCaller {
   import akka.actor.Actor.remote
-  private val actor = remote.actorFor("int-service", "localhost", 2552)
+  private val actor = remote.actorFor("sample.actor.IntTransformer", "localhost", 2552)
   def send(msg: String) = actor ! msg
 }

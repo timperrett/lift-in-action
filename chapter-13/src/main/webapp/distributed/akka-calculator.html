@@ -1,0 +1,21 @@
+<lift:surround with="default" at="content">
+  <h2>Akka + Lift Comet Calculator</h2>
+  <div class="clear l:comet?type=CalculatorDisplay">
+    <div class="span-4">
+      <p>Calculate two numbers: </p>
+      <br />
+      <p>Result: XXXX</p>
+    </div>
+    <div class="prepend-1 span-2">
+      <input id="value_one" />
+      <select name="value_operation">
+        <option value="">+</option>
+        <option value="">*</option>
+        <option value="">/</option>
+      </select>
+      <input id="value_two" />
+      <input type="submit" />
+    </div>
+  </div>
+  
+</lift:surround>

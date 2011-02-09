@@ -64,8 +64,22 @@ class Boot extends LazyLoggable {
      * Boot the akka remote actor service
      */
     import akka.actor.Actor.{remote,actorOf}
+    import akka.actor.Supervisor
+    import akka.config.Supervision.{SupervisorConfig,OneForOneStrategy,Supervise,Permanent}
+    
     remote.start("localhost", 2552)
-    remote.register("hello-service", actorOf[sample.actors.HelloWorldActor])
+    remote.register("hello-service", actorOf[sample.actor.HelloWorldActor])
+    remote.register("int-service", actorOf[sample.actor.IntTransformer])
+    
+    Supervisor(
+      SupervisorConfig(
+        OneForOneStrategy(List(classOf[NumberFormatException]), 3, 1000),
+        Supervise(
+          actorOf[sample.actor.IntTransformer],
+          Permanent,
+          true) ::
+        Nil))
+    
   }
   
   /**

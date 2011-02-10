@@ -155,6 +155,8 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
     lazy val scalaSnapshots = "scala-tools.snapshots" at "http://scala-tools.org/repo-snapshots/"
     lazy val sonatype = "oss.sonatype.org" at "http://oss.sonatype.org/content/groups/github/"
     lazy val akkarepo = "akka.repo" at "http://akka.io/repository/"
+    lazy val guiceyFruitRepo = "GuiceyFruit Repo" at "http://guiceyfruit.googlecode.com/svn/repo/releases/"
+    
     
   }
 }

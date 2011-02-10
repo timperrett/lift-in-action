@@ -61,13 +61,20 @@ class Boot extends LazyLoggable {
     import akka.actor.Actor.{remote,actorOf}
     import akka.actor.Supervisor
     import akka.config.Supervision.{SupervisorConfig,OneForOneStrategy,Supervise,Permanent}
+    import sample.actor.{HelloWorldActor,IntTransformer}
     
     /**
      * Boot the akka remote actor service
      */
-    remote.start("localhost", 2552)
-    remote.register("hello-service", actorOf[sample.actor.HelloWorldActor])
-    // remote.register("int-service", actorOf[sample.actor.IntTransformer])
+    // remote.start("localhost", 2552)
+    // remote.register("hello-service", actorOf[HelloWorldActor])
+    
+    LiftRules.unloadHooks.append(() => {
+      println("Removing actors")
+      actorOf[HelloWorldActor].shutdownLinkedActors()
+      actorOf[IntTransformer].shutdownLinkedActors()
+      actorOf[sample.comet.Calculator].shutdownLinkedActors()
+    }) 
     
     /**
      * Configure the supervisor heirarchy and determine the 
@@ -75,7 +82,7 @@ class Boot extends LazyLoggable {
      */
     Supervisor(
       SupervisorConfig(
-        OneForOneStrategy(List(classOf[NumberFormatException]), 3, 1000),
+        OneForOneStrategy(List(classOf[Throwable]), 3, 1000),
         Supervise(
           actorOf[sample.actor.IntTransformer],
           Permanent,
@@ -84,7 +91,6 @@ class Boot extends LazyLoggable {
           actorOf[sample.comet.Calculator],
           Permanent) ::
         Nil))
-    
   }
   
   /**

@@ -70,21 +70,37 @@
 				<key>column</key>
 				<integer>2</integer>
 				<key>line</key>
-				<integer>47</integer>
+				<integer>48</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>34</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>51</integer>
+				<key>line</key>
+				<integer>50</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>2</integer>
+				<key>line</key>
+				<integer>48</integer>
+			</dict>
 		</dict>
 		<key>chapter-13/src/main/webapp/distributed/akka-calculator.html</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>17</integer>
+				<integer>4</integer>
 				<key>line</key>
-				<integer>3</integer>
+				<integer>2</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
@@ -95,16 +111,16 @@
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>14</integer>
+				<integer>11</integer>
 				<key>line</key>
-				<integer>3</integer>
+				<integer>18</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
-				<integer>24</integer>
+				<integer>4</integer>
 				<key>line</key>
-				<integer>3</integer>
+				<integer>2</integer>
 			</dict>
 		</dict>
 	</dict>
@@ -118,6 +134,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{3, 67}, {866, 811}}</string>
+	<string>{{1, 58}, {866, 811}}</string>
 </dict>
 </plist>

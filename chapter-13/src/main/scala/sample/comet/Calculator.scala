@@ -30,16 +30,21 @@ class CalculatorDisplay extends CometActor {
   private var one, two = 0D
   private var operation: Box[String] = Empty
   
+  def doubleInput(f: Double => Any) = 
+    SHtml.text("0.0", v => f(asDouble(v).openOr(0D)))
+  
   def render = 
-    "#value_one" #> SHtml.text(one.toString, a => one = asDouble(a).openOr(0D)) &
-    "#value_two" #> SHtml.text(two.toString, b => two = asDouble(b).openOr(0D)) &
-    "#operation" #> SHtml.select(Seq("+","/","*").map(x => (x -> x)), operation, v => operation = Full(v)) &
+    "#value_one" #> doubleInput(one = _) &
+    "#value_two" #> doubleInput(two = _) &
+    "#operation" #> SHtml.select(Seq("+","/","*").map(x => (x -> x)), 
+      operation, v => operation = Full(v)) &
     "type=submit" #> SHtml.ajaxSubmit("Submit", () => {
-      lazy val future: Future[Double] = registry.actorFor[Calculator].get !!! Compute(one,two,operation.openOr("+"))
+      val future: Future[Double] = 
+        registry.actorFor[Calculator].get !!! 
+          Compute(one,two,operation.openOr("+"))
       future.onComplete(f => this ! f.result)
       Noop
     }) andThen SHtml.makeFormsAjax
-    
   
   override def lowPriority = {
     case Some(value: Double) => 

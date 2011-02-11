@@ -30,7 +30,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
       with DatabaseDrivers
       with DeployToStax 
   {
-    val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile->default"
+    val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile"
   }
   
   class ChapterFour(info: ProjectInfo) 
@@ -38,7 +38,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
       with DatabaseDrivers 
       with DeployToStax 
   {
-    val textile = "net.liftweb" %% "lift-textile" % liftVersion % "compile->default"
+    val textile = "net.liftweb" %% "lift-textile" % liftVersion % "compile"
   }
   
   class ChapterFive(info: ProjectInfo) 
@@ -46,14 +46,14 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
       with DatabaseDrivers 
       with DeployToStax 
   {
-    val machine = "net.liftweb" %% "lift-machine" % liftVersion % "compile->default"
-    val paypal = "net.liftweb" %% "lift-paypal" % liftVersion % "compile->default"
+    val machine = "net.liftweb" %% "lift-machine" % liftVersion % "compile"
+    val paypal = "net.liftweb" %% "lift-paypal" % liftVersion % "compile"
   }
   
   class ChapterSeven(info: ProjectInfo) extends ProjectDefaults(info){
-    val wizard = "net.liftweb" %% "lift-wizard" % liftVersion % "compile->default"
-    val widgets = "net.liftweb" %% "lift-widgets" % liftVersion % "compile->default"
-    val scalate = "net.liftweb" %% "lift-scalate" % liftVersion % "compile->default"
+    val wizard = "net.liftweb" %% "lift-wizard" % liftVersion % "compile"
+    val widgets = "net.liftweb" %% "lift-widgets" % liftVersion % "compile"
+    val scalate = "net.liftweb" %% "lift-scalate" % liftVersion % "compile"
   }
   
   // we only need mapper and textile, so just extend chapter four
@@ -67,19 +67,19 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
       extends ProjectDefaults(info) 
       with DatabaseDrivers 
   {
-    val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile->default"
+    val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile"
   }
   
   class ChapterTwelve(info: ProjectInfo) 
       extends ProjectDefaults(info) 
       with DatabaseDrivers 
   {
-    val squeryl = "net.liftweb" %% "lift-squeryl-record" % liftVersion % "compile->default"
-    val couch = "net.liftweb" %% "lift-couchdb" % liftVersion % "compile->default"
-    val mongo = "net.liftweb" %% "lift-mongodb-record" % liftVersion % "compile->default"
+    val squeryl = "net.liftweb" %% "lift-squeryl-record" % liftVersion % "compile"
+    val couch = "net.liftweb" %% "lift-couchdb" % liftVersion % "compile"
+    val mongo = "net.liftweb" %% "lift-mongodb-record" % liftVersion % "compile"
     // statically supplied the 2.8.1 version as it does not currently exist in 
     // any public repository
-    // val rogue = "com.foursquare" %% "rogue" % "1.0.2" % "compile->default"
+    // val rogue = "com.foursquare" %% "rogue" % "1.0.2" % "compile"
   }
   
   class ChapterThirteen(info: ProjectInfo) 
@@ -109,16 +109,16 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
       extends ProjectDefaults(info) 
       with DatabaseDrivers 
   {
-    val ostrich = "com.twitter" % "ostrich" % "2.3.6" % "compile->default"
-    val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile->default"
+    val ostrich = "com.twitter" % "ostrich" % "2.3.6" % "compile"
+    val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile"
   }
   
   trait DatabaseDrivers { _: DefaultWebProject => 
     // usually you would only use one database type, not three; this gives you
     // options as to what you wan to use though.
-    val h2 = "com.h2database" % "h2" % h2Version % "compile->default"
-    val mysql = "mysql" % "mysql-connector-java" % "5.1.12" % "compile->default"
-    val postgresql = "postgresql" % "postgresql" % "9.0-801.jdbc4" % "compile->default"
+    val h2 = "com.h2database" % "h2" % h2Version % "compile"
+    val mysql = "mysql" % "mysql-connector-java" % "5.1.12" % "compile"
+    val postgresql = "postgresql" % "postgresql" % "9.0-801.jdbc4" % "compile"
   }
   
   trait DeployToStax extends stax.StaxPlugin { _: DefaultWebProject =>
@@ -139,10 +139,11 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
     override def scanDirectories = Nil 
     
     // every chapter will be using lift (of course!)
-    val webkit = "net.liftweb" %% "lift-webkit" % liftVersion % "compile->default"
+    val webkit = "net.liftweb" %% "lift-webkit" % liftVersion % "compile"
     val jetty6 = "org.mortbay.jetty" % "jetty" % "6.1.21" % "test"
     val servlet = "javax.servlet" % "servlet-api" % "2.5" % "provided"
-    val log4j = "org.slf4j" % "slf4j-log4j12" % "1.6.1" % "compile->default"
+    // val log4j = "org.slf4j" % "slf4j-log4j12" % "1.6.1" % "compile"
+    val logback = "ch.qos.logback" % "logback-classic" % "0.9.24" % "compile"
     
     // testing frameworks
     val scalatest = "org.scala-tools.testing" % "scalatest" % "0.9.5" % "test->default"

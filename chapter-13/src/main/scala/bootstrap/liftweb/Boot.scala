@@ -49,8 +49,11 @@ class Boot extends LazyLoggable {
         Menu.i("XML Bundles") / "localization" / "with-xml",
         Menu.i("Properties Bundles") / "localization" / "with-properties"
       ),
-      Menu.i("Java Enterprise Integration") / "jee" submenus(
-        Menu.i("Lift JPA") / "jee" / "jpa",
+      Menu.i("Java Enterprise Integration") / "jee" / "index" submenus(
+        Menu.i("Lift JPA") / "jee" / "authors" / "index",
+        Menu.i("Lift JPA") / "jee" / "authors" / "add",
+        Menu.i("Lift JPA") / "jee" / "books" / "index",
+        Menu.i("Lift JPA") / "jee" / "books" / "add",
         Menu.i("Lift JTA") / "jee" / "jta"
       ),
       Menu.i("Messaging and Distribution") / "distributed" >> EarlyResponse(() => Full(RedirectResponse("/distributed/akka-calculator"))) submenus(
@@ -65,6 +68,8 @@ class Boot extends LazyLoggable {
     
     /**
      * Boot the akka remote actor service
+     * I've disabled this during development as its sodding 
+     * annoying to keep having the ports occupied!
      */
     // remote.start("localhost", 2552)
     // remote.register("hello-service", actorOf[HelloWorldActor])

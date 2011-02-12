@@ -6,17 +6,14 @@
                       http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
 
   <package>sample.model</package>
-
-  <!-- <entity class="Book">
+  <entity class="Book">
     <named-query name="findBooksByAuthor">
       <query><![CDATA[from Book b where b.author.id = :id order by b.title]]></query>
     </named-query>
   </entity>
-
   <entity class="Author">
     <named-query name="findAllAuthors">
       <query><![CDATA[from Author a order by a.name]]></query>
     </named-query>
-  </entity> -->
-
+  </entity> 
 </entity-mappings>

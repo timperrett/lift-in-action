@@ -18,6 +18,18 @@ class Calculator extends Actor {
   }
 }
 
+import net.liftweb.common.SimpleActor
+import akka.actor.ActorRef
+
+trait AkkaProxy extends SimpleActor[Any] {
+  private val liftSelf = this
+  implicit val optionSelf:Option[ActorRef] = Some(Actor.actorOf(new Actor{
+    protected def receive = {
+      case a => liftSelf ! a
+    }
+  }).start)
+}
+
 import scala.xml.{NodeSeq,Text}
 import net.liftweb.common.{Box,Full,Empty}
 import net.liftweb.util.Helpers._
@@ -26,7 +38,7 @@ import net.liftweb.http.js.JsCmds.{SetHtml,Noop}
 import akka.actor.Actor.registry
 import akka.dispatch.Future
 
-class CalculatorDisplay extends CometActor {
+class CalculatorDisplay extends CometActor with AkkaProxy {
   private var one, two = 0D
   private var operation: Box[String] = Empty
   
@@ -39,15 +51,12 @@ class CalculatorDisplay extends CometActor {
     "#operation" #> SHtml.select(Seq("+","/","*").map(x => (x -> x)), 
       operation, v => operation = Full(v)) &
     "type=submit" #> SHtml.ajaxSubmit("Submit", () => {
-      val future: Future[Double] = 
-        registry.actorFor[Calculator].get !!! 
-          Compute(one,two,operation.openOr("+"))
-      future.onComplete(f => this ! f.result)
+      registry.actorFor[Calculator].get ! Compute(one,two,operation.openOr("+"))
       Noop
     }) andThen SHtml.makeFormsAjax
   
   override def lowPriority = {
-    case Some(value: Double) => 
+    case value: Double => 
       partialUpdate(SetHtml("result", Text(value.toString)))
   }
 }

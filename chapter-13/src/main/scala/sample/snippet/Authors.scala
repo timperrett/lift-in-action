@@ -8,8 +8,11 @@ import net.liftweb.util.Helpers._
 import net.liftweb.http.{RequestVar,SHtml,S}
 import sample.model.{Book,Author,Model}
 
-class Authors {
+object Authors {
   object authorVar extends RequestVar(new Author)
+}
+class Authors {
+  import Authors._
   def author = authorVar.is
   
   def list =

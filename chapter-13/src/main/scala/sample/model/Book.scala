@@ -2,6 +2,7 @@ package sample.model
 
 import java.util.Date
 import javax.persistence._
+import javax.validation.constraints.Size
 
 @Entity
 class Book {
@@ -9,6 +10,7 @@ class Book {
   @GeneratedValue(strategy = GenerationType.AUTO)
   var id : Long = _
   
+  @Size(min = 3, max = 60)
   @Column(unique = true, nullable = false)
   var title : String = ""
   

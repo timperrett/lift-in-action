@@ -25,7 +25,7 @@ class Boot extends Loggable {
 
     // handle JNDI not being avalible
     if (!DB.jndiJdbcConnAvailable_?){
-      logger.error("No JNDI configured - using the default H2 database.") 
+      logger.warn("No JNDI configured - making a direct application connection") 
       DB.defineConnectionManager(DefaultConnectionIdentifier, Database)
       LiftRules.unloadHooks.append(() => Database.closeAllConnections_!()) 
     }

@@ -50,11 +50,10 @@ class Boot extends LazyLoggable {
         Menu.i("Properties Bundles") / "localization" / "with-properties"
       ),
       Menu.i("Java Enterprise Integration") / "jee" / "index" submenus(
-        Menu.i("Lift JPA") / "jee" / "authors" / "index",
-        Menu.i("Lift JPA") / "jee" / "authors" / "add",
-        Menu.i("Lift JPA") / "jee" / "books" / "index",
-        Menu.i("Lift JPA") / "jee" / "books" / "add",
-        Menu.i("Lift JTA") / "jee" / "jta"
+        Menu.i("JPA: Authors: List") / "jee" / "authors" / "index",
+        Menu.i("JPA: Authors: Add") / "jee" / "authors" / "add",
+        Menu.i("JPA: Books: Add") / "jee" / "books" / "add",
+        Menu.i("JTA") / "jee" / "jta"
       ),
       Menu.i("Messaging and Distribution") / "distributed" >> EarlyResponse(() => Full(RedirectResponse("/distributed/akka-calculator"))) submenus(
         Menu.i("Comet Calculator") / "distributed" / "akka-calculator"
@@ -75,7 +74,6 @@ class Boot extends LazyLoggable {
     // remote.register("hello-service", actorOf[HelloWorldActor])
     
     LiftRules.unloadHooks.append(() => {
-      println("Removing actors")
       actorOf[HelloWorldActor].shutdownLinkedActors()
       actorOf[IntTransformer].shutdownLinkedActors()
       actorOf[sample.comet.Calculator].shutdownLinkedActors()

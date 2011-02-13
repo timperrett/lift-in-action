@@ -87,22 +87,25 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
       with Native2AsciiPlugin 
       with DatabaseDrivers 
   {
-    val akka = "se.scalablesolutions.akka" % "akka-actor" % "1.0-RC6" % "compile"
-    val remote = "se.scalablesolutions.akka" % "akka-remote" % "1.0-RC6" % "compile"
     val jpa = "net.liftweb" %% "lift-jpa" % liftVersion % "compile"
     val jta = "net.liftweb" %% "lift-jta" % liftVersion % "compile"
     val amqp = "net.liftweb" %% "lift-amqp" % liftVersion % "compile"
-    val geronimoejb = "geronimo-spec" % "geronimo-spec-ejb" % "2.1-rc4" % "compile"
-    val geronimojta = "geronimo-spec" % "geronimo-spec-jta" % "1.0.1B-rc4" % "provided"
+    val akka = "se.scalablesolutions.akka" % "akka-actor" % "1.0-RC6" % "compile"
+    val remote = "se.scalablesolutions.akka" % "akka-remote" % "1.0-RC6" % "compile"
+    val hibem = "org.hibernate" % "hibernate-entitymanager" % "3.6.0.Final" % "compile"
+    val hibval = "org.hibernate" % "hibernate-validator-annotation-processor" % "4.1.0.Final" % "compile"
+    // val geronimoejb = "geronimo-spec" % "geronimo-spec-ejb" % "2.1-rc4" % "compile"
+    // val geronimojta = "geronimo-spec" % "geronimo-spec-jta" % "1.0.1B-rc4" % "provided"
+    
     // because we need to specifically exclude the JTA transative dependency for the entity
     // manager, its nessicary to define the ivy xml directly as the DSL does not have a 
     // grammer for exclusions
-    override def ivyXML =
-      <dependencies>
-        <dependency org="org.hibernate" name="hibernate-entitymanager" rev="3.4.0.GA">
-          <exclude org="javax.transaction" module="jta"/>
-        </dependency>
-      </dependencies>
+    // override def ivyXML =
+    //   <dependencies>
+    //     <dependency org="org.hibernate" name="hibernate-entitymanager" rev="3.6.0.Final">
+    //       <exclude org="javax.transaction" module="jta"/>
+    //     </dependency>
+    //   </dependencies>
   }
   
   class ChapterFourteen(info: ProjectInfo)

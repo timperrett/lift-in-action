@@ -6,7 +6,7 @@
     </encoder>
   </appender>
   <appender name="R" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <File>./logs/akka.log</File>
+    <File>./logs/lia.log</File>
     <encoder>
       <pattern>[%4p] [%t] %c: %m%n</pattern>
     </encoder>
@@ -14,8 +14,8 @@
       <fileNamePattern>./logs/akka.log.%d{yyyy-MM-dd-HH}</fileNamePattern>
     </rollingPolicy>
   </appender>
-  <logger name="akka" level="TRACE"/>
-  <root level="TRACE">
+  <logger name="akka" level="INFO"/>
+  <root level="INFO">
     <appender-ref ref="stdout"/>
     <appender-ref ref="R"/>
   </root>

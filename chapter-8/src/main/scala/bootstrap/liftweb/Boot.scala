@@ -68,7 +68,7 @@ class Boot extends Loggable {
   
   object Database extends StandardDBVendor(
     Props.get("db.class").openOr("org.h2.Driver"),
-    Props.get("db.url").openOr("jdbc:h2:database/temp;DB_CLOSE_DELAY=-1"),
+    Props.get("db.url").openOr("jdbc:h2:database/chapter_8;FILE_LOCK=NO"),
     Props.get("db.user"),
     Props.get("db.pass"))
 }

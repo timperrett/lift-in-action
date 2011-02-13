@@ -1,0 +1,29 @@
+<lift:surround with="splash" at="content">
+  <div id="box1" class="topbg">
+    <h1>Today's top auctions</h1>
+    <p><lift:helloWorld.howdy /></p>
+    
+    <lift:listings.top>
+      <div style="clear: both;" class="auction_row">
+        <img src="images/homepage09.jpg" alt="" width="72" height="72" class="left" />
+        <p><strong><a:name /></strong>
+        <br />
+        <a:description /><a:link /></p>
+      </div>
+    </lift:listings.top>
+    <p style="clear:both;"><a href="/auctions">more auctions &gt; &gt;</a></p>
+  </div>
+  
+  <!-- this is the home page, so lets spash about a bit -->
+  <lift:bind-at name="splash">
+    <lift:embed what="_spash" />
+  </lift:bind-at>
+  
+  <lift:bind-at name="sidebar">
+    <lift:embed what="_dark_basket" />
+    <div id="box5">
+      <a href="#"><img src="/images/homepage07.jpg" alt="" width="214" height="183" /></a>
+    </div>
+  </lift:bind-at>
+  
+</lift:surround>

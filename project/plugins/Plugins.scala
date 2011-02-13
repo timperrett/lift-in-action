@@ -1,9 +1,11 @@
 import sbt._
 class Plugins(info: ProjectInfo) extends PluginDefinition(info) {
-  val stax = "eu.getintheloop" % "sbt-stax-plugin" % "0.1.1"
-  val n2a = "eu.getintheloop" % "sbt-native2ascii-plugin" % "0.1.0"
-  val sbtYui = "hoffrocket" % "sbt-yui" % "0.2"
+  lazy val stax = "eu.getintheloop" % "sbt-stax-plugin" % "0.1.1"
+  lazy val n2a = "eu.getintheloop" % "sbt-native2ascii-plugin" % "0.1.0"
+  lazy val sbtYui = "hoffrocket" % "sbt-yui" % "0.2"
+  lazy val scctPlugin = "reaktor" % "sbt-scct-for-2.8" % "0.1-SNAPSHOT"
   // repos
-  val staxReleases = "stax-release-repo" at "http://mvn.stax.net/content/repositories/public/"
-  val sonaTypeRepo = "Sonatype Repo" at "http://oss.sonatype.org/content/groups/github/"
+  val staxReleases = "stax.repo" at "http://mvn.stax.net/content/repositories/public/"
+  val sonaTypeRepo = "sonatype.repo" at "http://oss.sonatype.org/content/groups/github/"
+  val scctRepo = "scct.repo" at "http://mtkopone.github.com/scct/maven-repo/"
 }

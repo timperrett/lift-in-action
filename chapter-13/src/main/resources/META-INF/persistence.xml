@@ -4,7 +4,9 @@
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" 
    version="1.0">
-  <persistence-unit name="chp13" transaction-type="RESOURCE_LOCAL">
+  <persistence-unit name="LiftPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+    <!-- <provider>org.hibernate.ejb.HibernatePersistence</provider> -->
+    
     <properties>
       <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
       <property name="hibernate.connection.url" value="jdbc:h2:database/chapter_13;FILE_LOCK=NO"/>
@@ -14,6 +16,8 @@
       <property name="hibernate.max_fetch_depth" value="3"/>
       <property name="hibernate.show_sql" value="true"/>
       <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <!-- <property name="hibernate.transaction.manager_lookup_class"
+                value="net.liftweb.transaction.hibernate.LiftTransactionManagerLookup" /> -->
     </properties>
   </persistence-unit>
 </persistence>

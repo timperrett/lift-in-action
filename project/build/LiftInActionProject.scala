@@ -94,18 +94,9 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
     val remote = "se.scalablesolutions.akka" % "akka-remote" % "1.0-RC6" % "compile"
     val hibem = "org.hibernate" % "hibernate-entitymanager" % "3.6.0.Final" % "compile"
     val hibval = "org.hibernate" % "hibernate-validator-annotation-processor" % "4.1.0.Final" % "compile"
-    // val geronimoejb = "geronimo-spec" % "geronimo-spec-ejb" % "2.1-rc4" % "compile"
-    // val geronimojta = "geronimo-spec" % "geronimo-spec-jta" % "1.0.1B-rc4" % "provided"
-    
-    // because we need to specifically exclude the JTA transative dependency for the entity
-    // manager, its nessicary to define the ivy xml directly as the DSL does not have a 
-    // grammer for exclusions
-    // override def ivyXML =
-    //   <dependencies>
-    //     <dependency org="org.hibernate" name="hibernate-entitymanager" rev="3.6.0.Final">
-    //       <exclude org="javax.transaction" module="jta"/>
-    //     </dependency>
-    //   </dependencies>
+    val atomikos_api    = "com.atomikos" % "transactions-api" % "3.2.3" % "compile"
+    val atomikos_jta    = "com.atomikos" % "transactions-jta" % "3.2.3" % "compile"
+    val atomikos_txn    = "com.atomikos" % "transactions" % "3.2.3" % "compile"
   }
   
   class ChapterFourteen(info: ProjectInfo)

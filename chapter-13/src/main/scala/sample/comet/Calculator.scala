@@ -20,16 +20,6 @@ class Calculator extends Actor {
 
 import net.liftweb.common.SimpleActor
 import akka.actor.ActorRef
-
-trait AkkaProxy extends SimpleActor[Any] {
-  private val liftSelf = this
-  implicit val optionSelf:Option[ActorRef] = Some(Actor.actorOf(new Actor{
-    protected def receive = {
-      case a => liftSelf ! a
-    }
-  }).start)
-}
-
 import scala.xml.{NodeSeq,Text}
 import net.liftweb.common.{Box,Full,Empty}
 import net.liftweb.util.Helpers._
@@ -38,7 +28,23 @@ import net.liftweb.http.js.JsCmds.{SetHtml,Noop}
 import akka.actor.Actor.registry
 import akka.dispatch.Future
 
-class CalculatorDisplay extends CometActor with AkkaProxy {
+trait AkkaCometActor extends CometActor {
+  implicit val optionSelf:Option[ActorRef] = Some(Actor.actorOf(new Actor{
+    protected def receive = {
+      case a => AkkaCometActor.this ! a
+    }
+  }))
+  override def localSetup {
+    super.localSetup
+    optionSelf.foreach(_.start)
+  }
+  override def localShutdown {
+    super.localShutdown
+    optionSelf.foreach(_.stop)
+  }
+}
+
+class CalculatorDisplay extends AkkaCometActor {
   private var one, two = 0D
   private var operation: Box[String] = Empty
   

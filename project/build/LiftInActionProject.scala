@@ -11,6 +11,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
   lazy val chpThree = project("chapter-3", "3", new ChapterThree(_))
   lazy val chpFour = project("chapter-4", "4", new ChapterFour(_))
   lazy val chpFive = project("chapter-5", "5", new ChapterFive(_))
+  lazy val chpSix = project("chapter-6", "6", new ChapterSix(_))
   lazy val chpSeven = project("chapter-7", "7", new ChapterSeven(_))
   lazy val chpEight = project("chapter-8", "8", new ChapterEight(_))
   lazy val chpNine = project("chapter-9", "9", new ChapterNine(_))
@@ -49,6 +50,8 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
     val machine = "net.liftweb" %% "lift-machine" % liftVersion % "compile"
     val paypal = "net.liftweb" %% "lift-paypal" % liftVersion % "compile"
   }
+  
+  class ChapterSix(info: ProjectInfo) extends ChapterFive(info)
   
   class ChapterSeven(info: ProjectInfo) extends ProjectDefaults(info){
     val wizard = "net.liftweb" %% "lift-wizard" % liftVersion % "compile"
@@ -94,9 +97,9 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
     val remote = "se.scalablesolutions.akka" % "akka-remote" % "1.0-RC6" % "compile"
     val hibem = "org.hibernate" % "hibernate-entitymanager" % "3.6.0.Final" % "compile"
     val hibval = "org.hibernate" % "hibernate-validator-annotation-processor" % "4.1.0.Final" % "compile"
-    val atomikos_api    = "com.atomikos" % "transactions-api" % "3.2.3" % "compile"
-    val atomikos_jta    = "com.atomikos" % "transactions-jta" % "3.2.3" % "compile"
-    val atomikos_txn    = "com.atomikos" % "transactions" % "3.2.3" % "compile"
+    // val atomikos_api = "com.atomikos" % "transactions-api" % "3.2.3" % "compile"
+    // val atomikos_jta = "com.atomikos" % "transactions-jta" % "3.2.3" % "compile"
+    // val atomikos_txn = "com.atomikos" % "transactions" % "3.2.3" % "compile"
   }
   
   class ChapterFourteen(info: ProjectInfo)

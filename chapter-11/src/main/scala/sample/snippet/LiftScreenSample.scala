@@ -6,7 +6,7 @@ import sample.model.Book
 object BookScreen extends LiftScreen {
   object book extends ScreenVar(Book.find(1) openOr Book.create)
   
-  _register(() => book)
+  addFields(() => book)
   
   def finish(){
     if(book.save) S.notice("Saved!")

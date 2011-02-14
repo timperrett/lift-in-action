@@ -7,11 +7,11 @@ package snippet {
   object Checkout extends LiftScreen {
     object order extends ScreenVar(Customer.currentUser.flatMap(_.order) openOr Order.create)
     
-    _register(() => order.shippingAddressOne)
-    _register(() => order.shippingAddressTwo)
-    _register(() => order.shippingAddressCity)
-    _register(() => order.shippingAddressPostalCode)
-    _register(() => order.shippingAddressCounty)
+    addFields(() => order.shippingAddressOne)
+    addFields(() => order.shippingAddressTwo)
+    addFields(() => order.shippingAddressCity)
+    addFields(() => order.shippingAddressPostalCode)
+    addFields(() => order.shippingAddressCounty)
     
     def finish(){
       if(order.save){

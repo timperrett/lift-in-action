@@ -71,8 +71,8 @@ class Boot extends Loggable {
      */
     LiftRules.setSiteMap(SiteMap(
       Menu("Home") / "index",
-      Menu("Squeryl Bookstore") / "squeryl" / "index",
-      Menu("MongoDB Bookstore") / "mongo" / "index"
+      Menu("Squeryl: Bookstore") / "squeryl" / "index",
+      Menu("MongoDB: Lift Screen") / "mongo" / "index"
     ))
   }
   

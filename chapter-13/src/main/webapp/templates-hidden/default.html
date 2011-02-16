@@ -1,30 +1,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:lift="http://liftweb.net/">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <title>Lift in Action &ndash; Chapter 13</title>
-    <lift:css.blueprint />
-    <lift:css.fancyType />
-    <script id="jquery" src="/classpath/jquery.js" type="text/javascript" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <title>Lift in Action &ndash; Chapter 12</title>
+    <script id="jquery" src="/classpath/jquery.js" type="text/javascript"/>
   </head>
   <body>
-    <div class="container">
-
-      <div class="column span-14 last" style="text-align: right">
-        <h1 class="alt"><span class="lift:loc?locid=chapter13">Chapter 13:</span> <lift:menu.title /></h1>
-      </div>
-
-      <hr/>
-      
-      <lift:embed what="/templates-hidden/_sidebar" />
-      
-      <div class="column span-17 last">
-        <div id="content">
-          <lift:bind name="content" />
-        </div>
-      </div>
-
-      <hr />
-
-    </div>
+    
+    <lift:bind name="content" />
+    
+    <hr />
+    
   </body>
 </html>

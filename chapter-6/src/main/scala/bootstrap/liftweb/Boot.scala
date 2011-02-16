@@ -1,98 +1,52 @@
 package bootstrap.liftweb
 
-// framework imports
-import net.liftweb.common._
-import net.liftweb.util._
+import scala.xml.{Text,NodeSeq}
+import net.liftweb.common.{Box,Full,Empty,Loggable}
+import net.liftweb.util.Props
 import net.liftweb.util.Helpers._
-import net.liftweb.http._
+import net.liftweb.http.{LiftRules,S,RedirectResponse,SessionVar}
+import net.liftweb.http.auth.{HttpBasicAuthentication,AuthRole,userRoles}
 import net.liftweb.sitemap._
 import net.liftweb.sitemap.Loc._
-import net.liftweb.mapper.{DB,Schemifier,DefaultConnectionIdentifier,StandardDBVendor,MapperRules}
-import net.liftweb.paypal.PaypalRules
 
-// app imports
-import example.travel.model.{Auction,Supplier,Customer,Bid,Order,OrderAuction,AuctionMachine}
-import example.travel.lib.{PaypalHandler}
+import net.liftweb.widgets.autocomplete.AutoComplete
+
+import sample.snippet.RequestVarSample
 
 class Boot extends Loggable {
   def boot {
-    LiftRules.addToPackages("example.travel")
+    LiftRules.addToPackages("sample")
     
-    /**** database settings ****/
-    
-    MapperRules.columnName = (_,name) => StringHelpers.snakify(name)
-    MapperRules.tableName =  (_,name) => StringHelpers.snakify(name)
-    
-    // set the JNDI name that we'll be using
-    DefaultConnectionIdentifier.jndiName = "jdbc/liftinaction"
-
-    // handle JNDI not being avalible
-    if (!DB.jndiJdbcConnAvailable_?){
-      logger.warn("No JNDI configured - making a direct application connection") 
-      DB.defineConnectionManager(DefaultConnectionIdentifier, Database)
-      // make sure cyote unloads database connections before shutting down
-      LiftRules.unloadHooks.append(() => Database.closeAllConnections_!()) 
-    }
-
-    // automatically create the tables
-    Schemifier.schemify(true, Schemifier.infoF _, 
-      Bid, Auction, Supplier, Customer, Order, OrderAuction, AuctionMachine)
-
-    // setup the loan pattern
-    S.addAround(DB.buildLoanWrapper)
-
-    /**** user experience settings ****/
-
-    // set the time that notices should be displayed and then fadeout
-    LiftRules.noticesAutoFadeOut.default.set((notices: NoticeType.Value) => Full(2 seconds, 2 seconds))
-
-    LiftRules.loggedInTest = Full(() => Customer.loggedIn_?)
-    
-    /**** paypal settings ****/
-    
-    PaypalRules.init
-    
-    // wire up the various DispatchPFs for both PDT and IPN
-    PaypalHandler.dispatch.foreach(LiftRules.dispatch.append(_))
-    
-    /**** request settings ****/
-    
-    val MustBeLoggedIn = Customer.loginFirst
-    // set the application sitemap
-    LiftRules.setSiteMap(SiteMap(List(
-      Menu("Home") / "index" >> LocGroup("public"),
-      Menu("Auctions") / "auctions" >> LocGroup("public"),
-      Menu("Search") / "search" >> LocGroup("public") >> MustBeLoggedIn,
-      Menu("History") / "history" >> LocGroup("public") >> MustBeLoggedIn,
-      Menu("Auction Detail") / "auction" >> LocGroup("public") >> Hidden,
-      Menu("Checkout") / "checkout" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
-      Menu("Checkout Finalize") / "summary" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
-      Menu("Transaction Complete") / "paypal" / "success" >> LocGroup("public") >> Hidden,
-      Menu("Transaction Failure") / "paypal" / "failure" >> LocGroup("public") >> Hidden,
-      // admin
-      Menu("Admin") / "admin" / "index" >> LocGroup("admin"),
-      Menu("Suppliers") / "admin" / "suppliers" >> LocGroup("admin") submenus(Supplier.menus : _*),
-      Menu("Auction Admin") / "admin" / "auctions" >> LocGroup("admin") submenus(Auction.menus : _*)
-    ) ::: Customer.menus:_*))
-
-    // setup the 404 handler 
-    LiftRules.uriNotFound.prepend(NamedPF("404handler"){
-      case (req,failure) => NotFoundAsTemplate(ParsePath(List("404"),"html",false,false))
-    })
-
-    // make requests utf-8
-    LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
-
-    LiftRules.statelessRewrite.append {
-      case RewriteRequest(ParsePath("auction" :: key :: Nil,"",true,_),_,_) =>
-           RewriteResponse("auction" :: Nil, Map("id" -> key.split("-")(0)))
+    LiftRules.snippetDispatch.append {
+      case "request_var_sample" => RequestVarSample
     }
     
+    LiftRules.viewDispatch.append {
+      case "seven_dot_tweleve" :: "example" :: Nil => Left(() => Full(<h1>Manual Sample</h1>))
+    }
+    
+    AutoComplete.init
+    
+    LiftRules.setSiteMap(SiteMap(
+      Menu("Home") / "index",
+      Menu("Listing 6.1 & 6.2") / "seven_dot_two",
+      Menu("Listing 6.3") / "seven_dot_three",
+      Menu("Embedding Example") / "embedding",
+      Menu("Tail Example") / "tail",
+      Menu("Resource ID Example") / "resource_ids",
+      Menu("Listing 6.9: Accessing snippet attributes") / "seven_dot_nine",
+      Menu("Listing 6.10: Class snippet and object singleton snippet") / "seven_dot_ten",
+      Menu("Listing 6.11: Stateful snippet count incrementing") / "seven_dot_eleven",
+      Menu("Listing 6.12: Wiring a () => NodeSeq into LiftRules.viewDispatch") / "seven_dot_tweleve" / "example",
+      Menu("Listing 6.13: Implementing LiftView sub-type") / "MyView" / "sample",
+      Menu("Listing 6.14: Implementing a RequestVar[Box[String]]") / "request_var",
+      Menu("Listing 6.15: Getting and setting a cookie value") / "seven_dot_fifteen",
+      Menu("Listing 6.16: Basic LiftScreen implementation") / "lift_screen_one",
+      Menu("Listing 6.17: Applying validation to LiftScreen sample (7.16)") / "lift_screen_two",
+      Menu("Listing 6.18: Building Wizard workflow") / "wizard_example",
+      Menu("Listing 6.19: Implementing the AutoComplete snippet helper") / "auto_complete",
+      Menu("Listing 6.20: The Gravatar Widget") / "gravatar_sample"
+    ))
   }
   
-  object Database extends StandardDBVendor(
-    Props.get("db.class").openOr("org.h2.Driver"),
-    Props.get("db.url").openOr("jdbc:h2:database/chapter_6;FILE_LOCK=NO"),
-    Props.get("db.user"),
-    Props.get("db.pass"))
 }

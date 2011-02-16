@@ -1,37 +1,58 @@
 package bootstrap.liftweb
 
-import net.liftweb.common.{Full}
-import net.liftweb.http.LiftRules
-import net.liftweb.http.js.jquery.JQuery14Artifacts 
+import net.liftweb.common.LazyLoggable
+import net.liftweb.util.{Helpers,Props}
+import net.liftweb.http.{LiftRules,S}
 import net.liftweb.sitemap.{SiteMap,Menu}
+import net.liftweb.mapper.{MapperRules,DefaultConnectionIdentifier,
+  DBLogEntry,DB,Schemifier,StandardDBVendor}
+import sample.model._
 
-class Boot {
+// object Log extends Logger
+
+class Boot extends LazyLoggable {
   def boot {
     // where to search snippet
     LiftRules.addToPackages("sample")
     
-    // set the JSArtifacts
-    LiftRules.jsArtifacts = JQuery14Artifacts
+    MapperRules.columnName = (_,name) => Helpers.snakify(name)
+    MapperRules.tableName  = (_,name) => Helpers.snakify(name)
     
-    // make the furniture appear
-    LiftRules.ajaxStart =
-      Full(() => LiftRules.jsArtifacts.show("loading").cmd)
+    // handle JNDI not being avalible
+    if (!DB.jndiJdbcConnAvailable_?){
+      DB.defineConnectionManager(DefaultConnectionIdentifier, Database)
+      LiftRules.unloadHooks.append(() => Database.closeAllConnections_!()) 
+    }
     
-    // make the furniture go away when it ends
-    LiftRules.ajaxEnd =
-      Full(() => LiftRules.jsArtifacts.hide("loading").cmd)
+    S.addAround(DB.buildLoanWrapper)
+        
+    // add a logging function
+    DB.addLogFunc((query, time) => {
+      logger.info("All queries took " + time + " milliseconds")
+      query.allEntries.foreach((entry: DBLogEntry) => 
+        logger.info(entry.statement + " took " + entry.duration + "ms"))
+    })
     
-    // build the application SiteMap
-    def sitemap = SiteMap(
+    // automatically create the tables
+    if(Props.devMode)
+      Schemifier.schemify(true, Schemifier.infoF _, 
+        Author, BookAuthors, Book, Publisher, Account,
+        MappedTypesExample, AggregationSample)
+    
+    LiftRules.stripComments.default.set(() => false)
+    
+    // Build the application SiteMap
+    LiftRules.setSiteMap(SiteMap(
       Menu("Home") / "index",
-      Menu("Basic JavaScript") / "basic_javascript",
-      Menu("Basic AJAX") / "basic_ajax",
-      Menu("Sophisticated AJAX") / "more_ajax",
-      Menu("JSON Form") / "json_form",
-      Menu("Wiring: Basic") / "simple_wiring",
-      Menu("Comet: Rock, Paper, Scissors") / "rock_paper_scissors"
-    )
-    LiftRules.setSiteMap(sitemap)
+      Menu("LiftScreen Sample") / "liftscreen",
+      Menu("Mapper toForm Sample") / "toform"
+    ))
   }
+  
+  object Database extends StandardDBVendor(
+    Props.get("db.class").openOr("org.h2.Driver"),
+    Props.get("db.url").openOr("jdbc:h2:database/chapter_11;FILE_LOCK=NO"),
+    Props.get("db.user"),
+    Props.get("db.pass"))
+  
 }
-

@@ -1,58 +1,84 @@
 package bootstrap.liftweb
 
-import net.liftweb.common.LazyLoggable
-import net.liftweb.util.{Helpers,Props}
+import net.liftweb.common.{Box,Full,Empty,Loggable}
+import net.liftweb.util.Props
 import net.liftweb.http.{LiftRules,S}
 import net.liftweb.sitemap.{SiteMap,Menu}
-import net.liftweb.mapper.{MapperRules,DefaultConnectionIdentifier,
-  DBLogEntry,DB,Schemifier,StandardDBVendor}
-import sample.model._
+import net.liftweb.mapper.{DefaultConnectionIdentifier,DB,StandardDBVendor}
+// squeryl imports
+import net.liftweb.squerylrecord.SquerylRecord
+import org.squeryl.adapters.PostgreSqlAdapter
+// application imports
+import sample.model.squeryl.Bookstore
 
-// object Log extends Logger
-
-class Boot extends LazyLoggable {
+class Boot extends Loggable {
   def boot {
-    // where to search snippet
     LiftRules.addToPackages("sample")
     
-    MapperRules.columnName = (_,name) => Helpers.snakify(name)
-    MapperRules.tableName  = (_,name) => Helpers.snakify(name)
-    
-    // handle JNDI not being avalible
+    /**
+     * Database setup
+     */
     if (!DB.jndiJdbcConnAvailable_?){
       DB.defineConnectionManager(DefaultConnectionIdentifier, Database)
-      LiftRules.unloadHooks.append(() => Database.closeAllConnections_!()) 
+      LiftRules.unloadHooks.append(() => Database.closeAllConnections_!())
     }
     
-    S.addAround(DB.buildLoanWrapper)
-        
-    // add a logging function
-    DB.addLogFunc((query, time) => {
-      logger.info("All queries took " + time + " milliseconds")
-      query.allEntries.foreach((entry: DBLogEntry) => 
-        logger.info(entry.statement + " took " + entry.duration + "ms"))
-    })
+    /**
+     * Tell Squeryl what database adapter you want to use. Other options are:
+     * DB2Adapter
+     * H2Adapter
+     * MSSQLServer
+     * MySQLAdapter
+     * PostgreSqlAdapter
+     * OracleAdapter
+     */
+    SquerylRecord.init(() => new PostgreSqlAdapter)
     
-    // automatically create the tables
+    /**
+     * If this is development mode, then attempt to auto-generate the schema
+     */
     if(Props.devMode)
-      Schemifier.schemify(true, Schemifier.infoF _, 
-        Author, BookAuthors, Book, Publisher, Account,
-        MappedTypesExample, AggregationSample)
+      DB.use(DefaultConnectionIdentifier){ connection =>  Bookstore printDdl }
+      //DB.use(DefaultConnectionIdentifier){ connection => Bookstore.create }
     
-    LiftRules.stripComments.default.set(() => false)
+    /**
+     * Add the request wrapper for database connectivity
+     */
+    S.addAround(DB.buildLoanWrapper)
     
-    // Build the application SiteMap
+    /**
+     * CouchDB Setup
+     */
+    // import net.liftweb.couchdb.{CouchDB, Database}
+    // import dispatch.{Http, StatusCode}
+    // construct a Database (by default on localhost, port 5984),
+    // val database = new Database("bookstore")
+    // creates the database "database_name" if it doesn't exist
+    // database.createIfNotCreated(new Http())
+    // sets the default database for the application
+    // CouchDB.defaultDatabase = database
+    
+    /**
+     * MongoDB Setup
+     */
+    import net.liftweb.mongodb.{MongoDB, DefaultMongoIdentifier, MongoAddress, MongoHost}
+    MongoDB.defineDb(
+      DefaultMongoIdentifier, 
+      MongoAddress(MongoHost("127.0.0.1", 27017), "bookstore"))
+    
+    /**
+     * Build the sitemap
+     */
     LiftRules.setSiteMap(SiteMap(
       Menu("Home") / "index",
-      Menu("LiftScreen Sample") / "liftscreen",
-      Menu("Mapper toForm Sample") / "toform"
+      Menu("Squeryl: Bookstore") / "squeryl" / "index",
+      Menu("MongoDB: Lift Screen") / "mongo" / "index"
     ))
   }
   
   object Database extends StandardDBVendor(
     Props.get("db.class").openOr("org.h2.Driver"),
-    Props.get("db.url").openOr("jdbc:h2:database/chapter_11;FILE_LOCK=NO"),
+    Props.get("db.url").openOr("jdbc:h2:database/chapter_12;FILE_LOCK=NO"),
     Props.get("db.user"),
     Props.get("db.pass"))
-  
 }

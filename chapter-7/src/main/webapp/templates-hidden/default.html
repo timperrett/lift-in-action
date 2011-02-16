@@ -3,12 +3,22 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
-    <title>Lift in Action &ndash; Chapter 8</title>
+    <title>Chapter 7 &ndash; <lift:menu.title /></title>
     <script id="jquery" src="/classpath/jquery.js" type="text/javascript"/>
   </head>
   <body>
     
     <lift:bind name="content" />
+    
+    <hr />
+    
+    <lift:menu.builder 
+      ul:class="test"
+      level="0"
+      li:class="sample"
+      li_item:class="selectedMenu"
+      li_path:class="p" />
+
     
   </body>
 </html>

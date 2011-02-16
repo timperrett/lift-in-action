@@ -1,0 +1,7 @@
+#db.class=com.mysql.jdbc.Driver
+#db.url=jdbc:mysql://localhost:8889/lia_chapter_12
+#db.user=root
+#db.pass=root
+db.class=org.postgresql.Driver
+db.url=jdbc:postgresql://localhost/lia_chapter_12
+db.user=root

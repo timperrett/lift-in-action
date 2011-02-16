@@ -1,52 +1,77 @@
 package bootstrap.liftweb
 
+// import _root_.net.liftweb.util._
 import scala.xml.{Text,NodeSeq}
 import net.liftweb.common.{Box,Full,Empty,Loggable}
 import net.liftweb.util.Props
 import net.liftweb.util.Helpers._
 import net.liftweb.http.{LiftRules,S,RedirectResponse,SessionVar}
 import net.liftweb.http.auth.{HttpBasicAuthentication,AuthRole,userRoles}
+import net.liftweb.mapper.{DefaultConnectionIdentifier,DB,Schemifier,StandardDBVendor,MapperRules}
 import net.liftweb.sitemap._
 import net.liftweb.sitemap.Loc._
-
-import net.liftweb.widgets.autocomplete.AutoComplete
-
-import sample.snippet.RequestVarSample
+import sample.lib.Wiki
+import sample.model.WikiEntry
 
 class Boot extends Loggable {
   def boot {
-    LiftRules.addToPackages("sample")
+    LiftRules.addToPackages("sample.snippet")
     
-    LiftRules.snippetDispatch.append {
-      case "request_var_sample" => RequestVarSample
+    MapperRules.columnName = (_,name) => snakify(name)
+    MapperRules.tableName =  (_,name) => snakify(name)
+    
+    // set the JNDI name that we'll be using
+    DefaultConnectionIdentifier.jndiName = "jdbc/liftinaction"
+
+    // handle JNDI not being avalible
+    if (!DB.jndiJdbcConnAvailable_?){
+      logger.warn("No JNDI configured - making a direct application connection") 
+      DB.defineConnectionManager(DefaultConnectionIdentifier, Database)
+      LiftRules.unloadHooks.append(() => Database.closeAllConnections_!()) 
     }
+
+    // automatically create the tables
+    Schemifier.schemify(true, Schemifier.infoF _, WikiEntry)
+
+    // setup the loan pattern
+    S.addAround(DB.buildLoanWrapper)
     
-    LiftRules.viewDispatch.append {
-      case "seven_dot_tweleve" :: "example" :: Nil => Left(() => Full(<h1>Manual Sample</h1>))
+    
+    LiftRules.authentication = HttpBasicAuthentication("yourRealm"){
+      case (un, pwd, req) => if(un == "admin" && pwd == "password"){
+        userRoles(AuthRole("admin")); true
+      } else false
     }
-    
-    AutoComplete.init
     
     LiftRules.setSiteMap(SiteMap(
       Menu("Home") / "index",
-      Menu("Listing 7.1 & 7.2") / "seven_dot_two",
-      Menu("Listing 7.3") / "seven_dot_three",
-      Menu("Embedding Example") / "embedding",
-      Menu("Tail Example") / "tail",
-      Menu("Resource ID Example") / "resource_ids",
-      Menu("Listing 7.9: Accessing snippet attributes") / "seven_dot_nine",
-      Menu("Listing 7.10: Class snippet and object singleton snippet") / "seven_dot_ten",
-      Menu("Listing 7.11: Stateful snippet count incrementing") / "seven_dot_eleven",
-      Menu("Listing 7.12: Wiring a () => NodeSeq into LiftRules.viewDispatch") / "seven_dot_tweleve" / "example",
-      Menu("Listing 7.13: Implementing LiftView sub-type") / "MyView" / "sample",
-      Menu("Listing 7.14: Implementing a RequestVar[Box[String]]") / "request_var",
-      Menu("Listing 7.15: Getting and setting a cookie value") / "seven_dot_fifteen",
-      Menu("Listing 7.16: Basic LiftScreen implementation") / "lift_screen_one",
-      Menu("Listing 7.17: Applying validation to LiftScreen sample (7.16)") / "lift_screen_two",
-      Menu("Listing 7.18: Building Wizard workflow") / "wizard_example",
-      Menu("Listing 7.19: Implementing the AutoComplete snippet helper") / "auto_complete",
-      Menu("Listing 7.20: The Gravatar Widget") / "gravatar_sample"
+      Menu("Submenu Example") / "sample" submenus(
+        Menu("Another") / "sample" / "another",
+        Menu("Example") / "sample" / "example"
+      ),
+      Menu("Confidential Thing") / "confidential" / "thing" >> HttpAuthProtected(req => Full(AuthRole("admin"))),
+      Menu("Another") / "sample" / "withtitle" >> Title(x => Text("Some lovely title"))
+          >> TestAccess(() => LoggedIn.is.choice(x => Empty)(Full(RedirectResponse("login")))),
+      Menu("Example") / "sample" / "localhost-only" >> MySnippets >> Test(req => req.hostName == "localhost"),
+      Menu("Edit Something") / "edit" >> Hidden >> Unless(() => S.param("id").isEmpty, () => RedirectResponse("index")),
+      Menu(Wiki),
+      Menu("JSON Menu") / "json"
     ))
   }
   
+  lazy val MySnippets = new DispatchLocSnippets {  
+    val dispatch: PartialFunction[String, NodeSeq => NodeSeq] = {  
+      case "demo" => xhtml => bind("l",xhtml,"sample" -> "sample")
+      case "thing" => xhtml => bind("x",xhtml,"some" -> "example")
+    }
+  }
+  
+  object Database extends StandardDBVendor(
+    Props.get("db.class").openOr("org.h2.Driver"),
+    Props.get("db.url").openOr("jdbc:h2:database/chapter_8;FILE_LOCK=NO"),
+    Props.get("db.user"),
+    Props.get("db.pass"))
 }
+
+object LoggedIn extends SessionVar[Box[Long]](Empty)
+

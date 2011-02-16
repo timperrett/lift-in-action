@@ -1,77 +1,48 @@
 package bootstrap.liftweb
 
-// import _root_.net.liftweb.util._
-import scala.xml.{Text,NodeSeq}
-import net.liftweb.common.{Box,Full,Empty,Loggable}
-import net.liftweb.util.Props
-import net.liftweb.util.Helpers._
-import net.liftweb.http.{LiftRules,S,RedirectResponse,SessionVar}
-import net.liftweb.http.auth.{HttpBasicAuthentication,AuthRole,userRoles}
-import net.liftweb.mapper.{DefaultConnectionIdentifier,DB,Schemifier,StandardDBVendor,MapperRules}
-import net.liftweb.sitemap._
-import net.liftweb.sitemap.Loc._
-import sample.lib.Wiki
-import sample.model.WikiEntry
+import net.liftweb.common.{Box,Full,Empty}
+import net.liftweb.util.Helpers.AsInt
+import net.liftweb.http.{LiftRules,RewriteRequest,RewriteResponse,ParsePath,Req,GetRequest}
+import sample.lib.{BasicDispatchUsage,SecondDispatchUsage,
+  BookshopHttpServiceBasic,BookshopHttpServiceAdvanced}
 
-class Boot extends Loggable {
+class Boot {
   def boot {
     LiftRules.addToPackages("sample.snippet")
     
-    MapperRules.columnName = (_,name) => snakify(name)
-    MapperRules.tableName =  (_,name) => snakify(name)
+    LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
     
-    // set the JNDI name that we'll be using
-    DefaultConnectionIdentifier.jndiName = "jdbc/liftinaction"
-
-    // handle JNDI not being avalible
-    if (!DB.jndiJdbcConnAvailable_?){
-      logger.warn("No JNDI configured - making a direct application connection") 
-      DB.defineConnectionManager(DefaultConnectionIdentifier, Database)
-      LiftRules.unloadHooks.append(() => Database.closeAllConnections_!()) 
-    }
-
-    // automatically create the tables
-    Schemifier.schemify(true, Schemifier.infoF _, WikiEntry)
-
-    // setup the loan pattern
-    S.addAround(DB.buildLoanWrapper)
-    
-    
-    LiftRules.authentication = HttpBasicAuthentication("yourRealm"){
-      case (un, pwd, req) => if(un == "admin" && pwd == "password"){
-        userRoles(AuthRole("admin")); true
-      } else false
+    // listing 8.1
+    LiftRules.statelessRewrite.append {
+      case RewriteRequest(ParsePath("category" :: cid :: "product" :: pid :: Nil,"",true,_),_,_) =>
+           RewriteResponse("product" :: Nil, Map("pid" -> pid))
     }
     
-    LiftRules.setSiteMap(SiteMap(
-      Menu("Home") / "index",
-      Menu("Submenu Example") / "sample" submenus(
-        Menu("Another") / "sample" / "another",
-        Menu("Example") / "sample" / "example"
-      ),
-      Menu("Confidential Thing") / "confidential" / "thing" >> HttpAuthProtected(req => Full(AuthRole("admin"))),
-      Menu("Another") / "sample" / "withtitle" >> Title(x => Text("Some lovely title"))
-          >> TestAccess(() => LoggedIn.is.choice(x => Empty)(Full(RedirectResponse("login")))),
-      Menu("Example") / "sample" / "localhost-only" >> MySnippets >> Test(req => req.hostName == "localhost"),
-      Menu("Edit Something") / "edit" >> Hidden >> Unless(() => S.param("id").isEmpty, () => RedirectResponse("index")),
-      Menu(Wiki),
-      Menu("JSON Menu") / "json"
-    ))
+    // section 8.2.2
+    LiftRules.statelessRewrite.append {
+      case RewriteRequest(ParsePath("account" :: AsInt(aid) :: Nil,"",true,false),_,_) => {
+           RewriteResponse("account" :: Nil)
+      }
+    }
+    
+    // listing 8.2
+    LiftRules.dispatch.append(BasicDispatchUsage)
+    
+    // listing 8.3
+    LiftRules.dispatch.append(SecondDispatchUsage)
+    
+    LiftRules.urlDecorate.prepend {
+      case url => if(url.contains("?")) url + "&srv_id=001" else "?srv_id=001"
+    }
+    
+    LiftRules.liftRequest.append {
+      case Req("nolift" :: Nil,"xml",_) => false
+    }
+    
+    // section 8.3.2
+    LiftRules.dispatch.append(BookshopHttpServiceBasic)
+    
+    // section 8.3.3
+    LiftRules.dispatch.append(BookshopHttpServiceAdvanced)
   }
-  
-  lazy val MySnippets = new DispatchLocSnippets {  
-    val dispatch: PartialFunction[String, NodeSeq => NodeSeq] = {  
-      case "demo" => xhtml => bind("l",xhtml,"sample" -> "sample")
-      case "thing" => xhtml => bind("x",xhtml,"some" -> "example")
-    }
-  }
-  
-  object Database extends StandardDBVendor(
-    Props.get("db.class").openOr("org.h2.Driver"),
-    Props.get("db.url").openOr("jdbc:h2:database/chapter_8;FILE_LOCK=NO"),
-    Props.get("db.user"),
-    Props.get("db.pass"))
 }
-
-object LoggedIn extends SessionVar[Box[Long]](Empty)
-

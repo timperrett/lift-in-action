@@ -3,37 +3,12 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
-    <link href="/classpath/blueprint/screen.css" type="text/css" rel="stylesheet" media="screen, projection" />
-    <link href="/classpath/blueprint/print.css" type="text/css" rel="stylesheet" media="print" />
-    <link href="/classpath/blueprint/plugins/fancy-type/screen.css" type="text/css" rel="stylesheet" media="screen, projection" />
+    <title>Lift in Action &ndash; Chapter 10</title>
     <script src="/classpath/jquery.js" type="text/javascript"></script>
-    <script src="/classpath/json.js" type="text/javascript"></script>
-    <title>Lift in Action &ndash; Chapter 10 &ndash; <lift:menu.title /></title>
   </head>
   <body>
-    <div class="container">
-      <div class="column span-18 last" style="text-align: right">
-        <h1 class="alt">Chapter 10: AJAX, Wiring and Comet</h1>
-      </div>
-      
-      <hr/>
-      
-      <div class="column span-6 colborder sidebar">
-        <lift:menu.builder />
-        <div class="l:comet?type=Clock" style="text-align: left">
-          Current Time:<br /><span id="clock_time">Missing Clock</span>
-        </div>
-        <div class="clear" id="loading" style="display: none;">
-          <img src="/images/loading.gif" alt="" /> Loading...
-        </div>
-        <hr class="space" />
-      </div>
-      
-      <div class="column span-17 last">
-        <lift:bind name="content" />
-      </div>
-      
-      <hr />
-    </div>
+    <lift:bind name="content" />
+    <lift:Menu.builder />
+    <lift:msgs/>
   </body>
 </html>

@@ -48,52 +48,9 @@ class Boot extends LazyLoggable {
       Menu.i("Localization") / "localization" / "index" submenus(
         Menu.i("XML Bundles") / "localization" / "with-xml",
         Menu.i("Properties Bundles") / "localization" / "with-properties"
-      ),
-      Menu.i("Java Enterprise Integration") / "jee" / "index" submenus(
-        Menu.i("JPA: Authors: List") / "jee" / "authors" / "index",
-        Menu.i("JPA: Authors: Add") / "jee" / "authors" / "add",
-        Menu.i("JPA: Books: Add") / "jee" / "books" / "add",
-        Menu.i("JTA") / "jee" / "jta"
-      ),
-      Menu.i("Messaging and Distribution") / "distributed" >> EarlyResponse(() => Full(RedirectResponse("/distributed/akka-calculator"))) submenus(
-        Menu.i("Comet Calculator") / "distributed" / "akka-calculator"
       )
     ))
     
-    import akka.actor.Actor.{remote,actorOf}
-    import akka.actor.Supervisor
-    import akka.config.Supervision.{SupervisorConfig,OneForOneStrategy,Supervise,Permanent}
-    import sample.actor.{HelloWorldActor,IntTransformer}
-    
-    /**
-     * Boot the akka remote actor service
-     * I've disabled this during development as its sodding 
-     * annoying to keep having the ports occupied!
-     */
-    // remote.start("localhost", 2552)
-    // remote.register("hello-service", actorOf[HelloWorldActor])
-    
-    LiftRules.unloadHooks.append(() => {
-      actorOf[HelloWorldActor].shutdownLinkedActors()
-      actorOf[IntTransformer].shutdownLinkedActors()
-      actorOf[sample.comet.Calculator].shutdownLinkedActors()
-    }) 
-    
-    /**
-     * Configure the supervisor heirarchy and determine the 
-     * respective cases of failure.
-     */
-    Supervisor(
-      SupervisorConfig(
-        OneForOneStrategy(List(classOf[Throwable]), 3, 1000),
-        Supervise(
-          actorOf[sample.actor.IntTransformer],
-          Permanent,
-          true) ::
-        Supervise(
-          actorOf[sample.comet.Calculator],
-          Permanent) ::
-        Nil))
   }
   
   /**

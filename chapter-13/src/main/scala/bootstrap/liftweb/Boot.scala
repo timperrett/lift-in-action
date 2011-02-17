@@ -1,98 +1,73 @@
 package bootstrap.liftweb
 
-// framework imports
-import net.liftweb.common._
-import net.liftweb.util._
-import net.liftweb.util.Helpers._
-import net.liftweb.http._
-import net.liftweb.sitemap._
-import net.liftweb.sitemap.Loc._
-import net.liftweb.mapper.{DB,Schemifier,DefaultConnectionIdentifier,StandardDBVendor,MapperRules}
-import net.liftweb.paypal.PaypalRules
+// import _root_.net.liftweb.util._
+import scala.xml.{Text,NodeSeq}
+import java.util.Locale
+import net.liftweb.common.{Box,Full,Empty,LazyLoggable}
+import net.liftweb.util.Helpers.{tryo,randomString}
+import net.liftweb.http.{LiftRules,S,RequestMemoize,RedirectResponse}
+import net.liftweb.http.provider.HTTPRequest
+import net.liftweb.sitemap.{SiteMap,Menu}
+import net.liftweb.sitemap.Loc.{EarlyResponse,Hidden}
 
-// app imports
-import example.travel.model.{Auction,Supplier,Customer,Bid,Order,OrderAuction,AuctionMachine}
-import example.travel.lib.{PaypalHandler}
-
-class Boot extends Loggable {
+class Boot extends LazyLoggable {
   def boot {
-    LiftRules.addToPackages("example.travel")
+    LiftRules.addToPackages("sample")
     
-    /**** database settings ****/
-    
-    MapperRules.columnName = (_,name) => StringHelpers.snakify(name)
-    MapperRules.tableName =  (_,name) => StringHelpers.snakify(name)
-    
-    // set the JNDI name that we'll be using
-    DefaultConnectionIdentifier.jndiName = "jdbc/liftinaction"
-
-    // handle JNDI not being avalible
-    if (!DB.jndiJdbcConnAvailable_?){
-      logger.warn("No JNDI configured - making a direct application connection") 
-      DB.defineConnectionManager(DefaultConnectionIdentifier, Database)
-      // make sure cyote unloads database connections before shutting down
-      LiftRules.unloadHooks.append(() => Database.closeAllConnections_!()) 
-    }
-
-    // automatically create the tables
-    Schemifier.schemify(true, Schemifier.infoF _, 
-      Bid, Auction, Supplier, Customer, Order, OrderAuction, AuctionMachine)
-
-    // setup the loan pattern
-    S.addAround(DB.buildLoanWrapper)
-
-    /**** user experience settings ****/
-
-    // set the time that notices should be displayed and then fadeout
-    LiftRules.noticesAutoFadeOut.default.set((notices: NoticeType.Value) => Full(2 seconds, 2 seconds))
-
-    LiftRules.loggedInTest = Full(() => Customer.loggedIn_?)
-    
-    /**** paypal settings ****/
-    
-    PaypalRules.init
-    
-    // wire up the various DispatchPFs for both PDT and IPN
-    PaypalHandler.dispatch.foreach(LiftRules.dispatch.append(_))
-    
-    /**** request settings ****/
-    
-    val MustBeLoggedIn = Customer.loginFirst
-    // set the application sitemap
-    LiftRules.setSiteMap(SiteMap(List(
-      Menu("Home") / "index" >> LocGroup("public"),
-      Menu("Auctions") / "auctions" >> LocGroup("public"),
-      Menu("Search") / "search" >> LocGroup("public") >> MustBeLoggedIn,
-      Menu("History") / "history" >> LocGroup("public") >> MustBeLoggedIn,
-      Menu("Auction Detail") / "auction" >> LocGroup("public") >> Hidden,
-      Menu("Checkout") / "checkout" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
-      Menu("Checkout Finalize") / "summary" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
-      Menu("Transaction Complete") / "paypal" / "success" >> LocGroup("public") >> Hidden,
-      Menu("Transaction Failure") / "paypal" / "failure" >> LocGroup("public") >> Hidden,
-      // admin
-      Menu("Admin") / "admin" / "index" >> LocGroup("admin"),
-      Menu("Suppliers") / "admin" / "suppliers" >> LocGroup("admin") submenus(Supplier.menus : _*),
-      Menu("Auction Admin") / "admin" / "auctions" >> LocGroup("admin") submenus(Auction.menus : _*)
-    ) ::: Customer.menus:_*))
-
-    // setup the 404 handler 
-    LiftRules.uriNotFound.prepend(NamedPF("404handler"){
-      case (req,failure) => NotFoundAsTemplate(ParsePath(List("404"),"html",false,false))
-    })
-
-    // make requests utf-8
+    /**
+     * Set the character encoding to utf-8 early in the pipline
+     */
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
-
-    LiftRules.statelessRewrite.append {
-      case RewriteRequest(ParsePath("auction" :: key :: Nil,"",true,_),_,_) =>
-           RewriteResponse("auction" :: Nil, Map("id" -> key.split("-")(0)))
-    }
     
+    /**
+     * Build the sitemap
+     */
+    LiftRules.setSiteMap(SiteMap(
+      Menu("Home") / "index" >> EarlyResponse(() => Full(RedirectResponse("/localization/"))) >> Hidden,
+      Menu("Java Enterprise Integration") / "jee" / "index" submenus(
+        Menu("JPA: Authors: List") / "jee" / "authors" / "index",
+        Menu("JPA: Authors: Add") / "jee" / "authors" / "add",
+        Menu("JPA: Books: Add") / "jee" / "books" / "add",
+        Menu("JTA") / "jee" / "jta"
+      ),
+      Menu("Messaging and Distribution") / "distributed" >> EarlyResponse(() => Full(RedirectResponse("/distributed/akka-calculator"))) submenus(
+        Menu("Comet Calculator") / "distributed" / "akka-calculator"
+      )
+    ))
+    
+    import akka.actor.Actor.{remote,actorOf}
+    import akka.actor.Supervisor
+    import akka.config.Supervision.{SupervisorConfig,OneForOneStrategy,Supervise,Permanent}
+    import sample.actor.{HelloWorldActor,IntTransformer}
+    
+    /**
+     * Boot the akka remote actor service
+     * I've disabled this during development as its sodding 
+     * annoying to keep having the ports occupied!
+     */
+    // remote.start("localhost", 2552)
+    // remote.register("hello-service", actorOf[HelloWorldActor])
+    
+    LiftRules.unloadHooks.append(() => {
+      actorOf[HelloWorldActor].shutdownLinkedActors()
+      actorOf[IntTransformer].shutdownLinkedActors()
+      actorOf[sample.comet.Calculator].shutdownLinkedActors()
+    }) 
+    
+    /**
+     * Configure the supervisor heirarchy and determine the 
+     * respective cases of failure.
+     */
+    Supervisor(
+      SupervisorConfig(
+        OneForOneStrategy(List(classOf[Throwable]), 3, 1000),
+        Supervise(
+          actorOf[sample.actor.IntTransformer],
+          Permanent,
+          true) ::
+        Supervise(
+          actorOf[sample.comet.Calculator],
+          Permanent) ::
+        Nil))
   }
-  
-  object Database extends StandardDBVendor(
-    Props.get("db.class").openOr("org.h2.Driver"),
-    Props.get("db.url").openOr("jdbc:h2:database/chapter_6;FILE_LOCK=NO"),
-    Props.get("db.user"),
-    Props.get("db.pass"))
 }

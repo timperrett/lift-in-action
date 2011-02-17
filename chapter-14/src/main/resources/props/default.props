@@ -1,0 +1,2 @@
+db.class=org.h2.Driver
+db.url=jdbc:h2:database/chapter_5;FILE_LOCK=NO

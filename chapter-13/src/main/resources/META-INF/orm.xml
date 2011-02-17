@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entity-mappings version="1.0"
+  xmlns="http://java.sun.com/xml/ns/persistence/orm"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm 
+                      http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+
+  <package>sample.model</package>
+  <entity class="Account">
+    <named-query name="findAccountById">
+      <query><![CDATA[from Account a where a.id = :id]]></query>
+    </named-query>
+  </entity>
+  <entity class="Book">
+    <named-query name="findBooksByAuthor">
+      <query><![CDATA[from Book b where b.author.id = :id order by b.title]]></query>
+    </named-query>
+  </entity>
+  <entity class="Author">
+    <named-query name="findAllAuthors">
+      <query><![CDATA[from Author a order by a.name]]></query>
+    </named-query>
+  </entity> 
+</entity-mappings>

@@ -1,120 +1,98 @@
 package bootstrap.liftweb
 
-import scala.xml.{Text,NodeSeq}
-import net.liftweb.common.{LazyLoggable,Box,Full}
-import net.liftweb.actor.LiftActor
-import net.liftweb.util.{Helpers,Props}
-import net.liftweb.http.{LiftRules,S,Req,GetRequest,LiftSession,
-  SessionMaster,SessionWatcherInfo,RequestVar,LiftResponse,RedirectResponse}
-import net.liftweb.sitemap.{SiteMap,Menu,Loc}
+// framework imports
+import net.liftweb.common._
+import net.liftweb.util._
+import net.liftweb.util.Helpers._
+import net.liftweb.http._
+import net.liftweb.sitemap._
+import net.liftweb.sitemap.Loc._
+import net.liftweb.mapper.{DB,Schemifier,DefaultConnectionIdentifier,StandardDBVendor,MapperRules}
+import net.liftweb.paypal.PaypalRules
 
-// extended sessions
-import net.liftweb.mapper.{StandardDBVendor,MapperRules,DefaultConnectionIdentifier,DB,Schemifier}
-import sample.model.{User,ExtendedSession}
+// app imports
+import example.travel.model.{Auction,Supplier,Customer,Bid,Order,OrderAuction,AuctionMachine}
+import example.travel.lib.{PaypalHandler}
 
-// jmx monitoring
-import com.twitter.ostrich.{RuntimeEnvironment, ServiceTracker, Stats, StatsMBean, Service}
-import net.lag.configgy.Config
-
-class Boot extends LazyLoggable {
+class Boot extends Loggable {
   def boot {
-    // http
-    LiftRules.addToPackages("sample")
-    LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
-    // sitemap
-    import Loc.ExtLink
-    LiftRules.setSiteMap(SiteMap(List(
-      Menu("Home") / "index",
-      Menu("Distributed Words") / "words",
-      Menu(Loc("ostrich.graphs", ExtLink("http://127.0.0.1:9990/graph/"), "Ostrich: Graphs")) 
-    ) ::: User.menus:_*))
+    LiftRules.addToPackages("example.travel")
     
-    // database
+    /**** database settings ****/
+    
+    MapperRules.columnName = (_,name) => StringHelpers.snakify(name)
+    MapperRules.tableName =  (_,name) => StringHelpers.snakify(name)
+    
+    // set the JNDI name that we'll be using
     DefaultConnectionIdentifier.jndiName = "jdbc/liftinaction"
+
+    // handle JNDI not being avalible
     if (!DB.jndiJdbcConnAvailable_?){
+      logger.warn("No JNDI configured - making a direct application connection") 
       DB.defineConnectionManager(DefaultConnectionIdentifier, Database)
+      // make sure cyote unloads database connections before shutting down
       LiftRules.unloadHooks.append(() => Database.closeAllConnections_!()) 
     }
-    
-    logger.info("About to schemify...")
-    Schemifier.schemify(true, Schemifier.infoF _, User, ExtendedSession)
+
+    // automatically create the tables
+    Schemifier.schemify(true, Schemifier.infoF _, 
+      Bid, Auction, Supplier, Customer, Order, OrderAuction, AuctionMachine)
+
+    // setup the loan pattern
     S.addAround(DB.buildLoanWrapper)
+
+    /**** user experience settings ****/
+
+    // set the time that notices should be displayed and then fadeout
+    LiftRules.noticesAutoFadeOut.default.set((notices: NoticeType.Value) => Full(2 seconds, 2 seconds))
+
+    LiftRules.loggedInTest = Full(() => Customer.loggedIn_?)
     
-    // extended sessions
-    S.addAround(ExtendedSession.requestLoans)
-    LiftRules.liftRequest.append { 
-      case Req("classpath" :: _, _, _) => true
-      case Req("favicon" :: Nil, "ico", GetRequest) => false
-      case Req(_, "css", GetRequest) => false 
-      case Req(_, "js", GetRequest) => false 
+    /**** paypal settings ****/
+    
+    PaypalRules.init
+    
+    // wire up the various DispatchPFs for both PDT and IPN
+    PaypalHandler.dispatch.foreach(LiftRules.dispatch.append(_))
+    
+    /**** request settings ****/
+    
+    val MustBeLoggedIn = Customer.loginFirst
+    // set the application sitemap
+    LiftRules.setSiteMap(SiteMap(List(
+      Menu("Home") / "index" >> LocGroup("public"),
+      Menu("Auctions") / "auctions" >> LocGroup("public"),
+      Menu("Search") / "search" >> LocGroup("public") >> MustBeLoggedIn,
+      Menu("History") / "history" >> LocGroup("public") >> MustBeLoggedIn,
+      Menu("Auction Detail") / "auction" >> LocGroup("public") >> Hidden,
+      Menu("Checkout") / "checkout" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
+      Menu("Checkout Finalize") / "summary" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
+      Menu("Transaction Complete") / "paypal" / "success" >> LocGroup("public") >> Hidden,
+      Menu("Transaction Failure") / "paypal" / "failure" >> LocGroup("public") >> Hidden,
+      // admin
+      Menu("Admin") / "admin" / "index" >> LocGroup("admin"),
+      Menu("Suppliers") / "admin" / "suppliers" >> LocGroup("admin") submenus(Supplier.menus : _*),
+      Menu("Auction Admin") / "admin" / "auctions" >> LocGroup("admin") submenus(Auction.menus : _*)
+    ) ::: Customer.menus:_*))
+
+    // setup the 404 handler 
+    LiftRules.uriNotFound.prepend(NamedPF("404handler"){
+      case (req,failure) => NotFoundAsTemplate(ParsePath(List("404"),"html",false,false))
+    })
+
+    // make requests utf-8
+    LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
+
+    LiftRules.statelessRewrite.append {
+      case RewriteRequest(ParsePath("auction" :: key :: Nil,"",true,_),_,_) =>
+           RewriteResponse("auction" :: Nil, Map("id" -> key.split("-")(0)))
     }
-    
-    // comet configuration
-    // import net.liftweb.http.provider.servlet.containers.Jetty7AsyncProvider
-    // LiftRules.servletAsyncProvider = new Jetty7AsyncProvider(_)
-    
-    // exception handler
-    LiftRules.exceptionHandler.prepend {
-      case (Props.RunModes.Production, _, exception) => RedirectResponse("/error")
-    }
-    
-    StatsMBean("manning.lia.sample")
-    
-    // jmx monitoring
-    //if (Props.getBool("jmx.enable", false))
-    logger.info("Booting Ostrich...")
-    val runtime = new RuntimeEnvironment(getClass)
-    var config = new Config
-    config("admin_http_port") = 9990
-    ServiceTracker.register(RequestTimer)
-    ServiceTracker.startAdmin(config, runtime)
-    
-    // unfortunatly there is an issue with making a !? call here and 
-    // ostrich doesnt like it. I'll look into it.
-    Stats.makeGauge("current_session_count"){ 
-      SessionMonitor.count.toDouble
-    }
-    
-    // session gauge
-    SessionMaster.sessionWatchers = SessionMonitor :: SessionMaster.sessionWatchers
-    
-    // request timer
-    LiftSession.onBeginServicing = RequestTimer.beginServicing _ ::
-      LiftSession.onBeginServicing
-    
-    LiftSession.onEndServicing = RequestTimer.endServicing _ ::
-      LiftSession.onEndServicing
     
   }
   
   object Database extends StandardDBVendor(
     Props.get("db.class").openOr("org.h2.Driver"),
-    Props.get("db.url").openOr("jdbc:h2:mem:chapter_fourteen;DB_CLOSE_DELAY=-1"),
+    Props.get("db.url").openOr("jdbc:h2:database/chapter_6;FILE_LOCK=NO"),
     Props.get("db.user"),
     Props.get("db.pass"))
-}
-
-// case object GimmehCount
-object SessionMonitor extends LiftActor {
-  private var sessionSize = 0
-  protected def messageHandler = {
-    case SessionWatcherInfo(sessions) => sessionSize = sessions.size
-    //case GimmehCount => sessionSize
-  }
-  def count = sessionSize
-}
-
-object RequestTimer extends Service {
-  object startTime extends RequestVar(0L)
-  
-  def beginServicing(session: LiftSession, req: Req){
-    startTime(Helpers.millis)
-  }
-  
-  def endServicing(session: LiftSession, req: Req, response: Box[LiftResponse]) {
-    val delta = Helpers.millis - startTime.is
-    Stats.addTiming("request_duration", delta.toInt)
-  }
-  def shutdown(){}
-  def quiesce(){}
 }

@@ -2,7 +2,7 @@ import sbt._
 import hoffrocket.YuiCompressorPlugin
 import eu.getintheloop.Native2AsciiPlugin
 
-class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
+class LiftInActionProject(info: ProjectInfo) extends ParentProject(info) with IdeaProject {
   val liftVersion = "2.3-M1"
   val h2Version = "1.3.146"
   
@@ -124,7 +124,6 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
     val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile"
     val testkit = "net.liftweb" %% "lift-testkit" % liftVersion % "test"
     val scalatest = "org.scala-tools.testing" % "scalatest" % "0.9.5" % "test"
-    val jetty6 = "org.mortbay.jetty" % "jetty" % "6.1.21" % "test"
   }
   
   class ChapterFifteen(info: ProjectInfo)
@@ -165,6 +164,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info){
     val webkit = "net.liftweb" %% "lift-webkit" % liftVersion % "compile"
     val logback = "ch.qos.logback" % "logback-classic" % "0.9.24" % "compile"
     val servlet = "javax.servlet" % "servlet-api" % "2.5" % "provided"
+    val jetty6 = "org.mortbay.jetty" % "jetty" % "6.1.21" % "test"
     // val log4j = "org.slf4j" % "slf4j-log4j12" % "1.6.1" % "compile"
     
     // repositories

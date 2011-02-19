@@ -50,7 +50,7 @@ class Boot extends LazyLoggable {
         Menu.i("Properties Bundles") / "localization" / "with-properties"
       )
     ))
-    
+
   }
   
   /**

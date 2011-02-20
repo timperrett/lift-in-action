@@ -40,6 +40,10 @@ class Boot extends LazyLoggable {
     // set the application sitemap
     LiftRules.setSiteMap(SiteMap(
       Menu("Home") / "index"
+      Menu("Testing Frameworks") / "frameworks" / "index",
+      Menu("Writing Testable Code") / "practices" / "index" submenus(
+        
+      )
     ))
   }
   

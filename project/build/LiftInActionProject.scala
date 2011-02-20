@@ -1,6 +1,7 @@
 import sbt._
 import hoffrocket.YuiCompressorPlugin
 import eu.getintheloop.Native2AsciiPlugin
+import reaktor.scct.ScctProject
 
 class LiftInActionProject(info: ProjectInfo) extends ParentProject(info) with IdeaProject {
   val liftVersion = "2.3-M1"
@@ -98,11 +99,12 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info) with Id
     // val rogue = "com.foursquare" %% "rogue" % "1.0.2" % "compile"
   }
   
-  class ChapterTwelve(info: ProjectInfo) extends ProjectDefaults(info) 
+  class ChapterTwelve(info: ProjectInfo) 
+      extends ProjectDefaults(info) 
+      with Native2AsciiPlugin 
   
   class ChapterThirteen(info: ProjectInfo) 
       extends ChapterFour(info) 
-      with Native2AsciiPlugin 
       with DatabaseDrivers 
   {
     val jpa = "net.liftweb" %% "lift-jpa" % liftVersion % "compile"
@@ -120,10 +122,14 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info) with Id
   class ChapterFourteen(info: ProjectInfo) 
       extends ProjectDefaults(info)
       with DatabaseDrivers
+      with ScctProject
   {
     val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile"
     val testkit = "net.liftweb" %% "lift-testkit" % liftVersion % "test"
     val scalatest = "org.scala-tools.testing" % "scalatest" % "0.9.5" % "test"
+    
+    // configure the testing classpath
+    override def testClasspath  = super.testClasspath +++ ("src" / "main" / "webapp")
   }
   
   class ChapterFifteen(info: ProjectInfo)

@@ -35,20 +35,6 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>chapter-14/src/main/scala/sample/snippet/ExampleOne.scala</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>17</integer>
-				<key>line</key>
-				<integer>11</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
 		<key>chapter-14/src/test/scala/ExampleOneSpec.scala</key>
 		<dict>
 			<key>caret</key>
@@ -98,14 +84,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>7</integer>
 				<key>line</key>
-				<integer>14</integer>
+				<integer>39</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>7</integer>
 		</dict>
 		<key>project/build/LiftInActionProject.scala</key>
 		<dict>
@@ -124,7 +110,6 @@
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>chapter-14/src/main/scala/sample/snippet/ExampleOne.scala</string>
 		<string>chapter-14/src/test/scala/ExampleOneSpec.scala</string>
 		<string>chapter-14/src/test/scala/ScalaTestExample.scala</string>
 		<string>chapter-14/src/test/scala/SpecsExample.scala</string>
@@ -133,6 +118,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{69, 161}, {1014, 706}}</string>
+	<string>{{34, 73}, {1014, 706}}</string>
 </dict>
 </plist>

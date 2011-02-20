@@ -9,7 +9,7 @@ import net.liftweb.mapper.{DB,Schemifier,DefaultConnectionIdentifier,StandardDBV
 
 class Boot extends LazyLoggable {
   def boot {
-    LiftRules.addToPackages("example.travel")
+    LiftRules.addToPackages("sample.snippet")
     
     // make requests utf-8
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))

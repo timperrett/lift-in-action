@@ -6,8 +6,8 @@ import net.liftweb.http.DispatchSnippet
 
 class ExampleOne extends DispatchSnippet {
   def dispatch = {
-    case "render" => _
+    case "render" => render _
   }
   def render(xhtml: NodeSeq): NodeSeq = 
-    ""
+    NodeSeq.Empty
 }

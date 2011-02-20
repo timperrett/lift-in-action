@@ -2,9 +2,9 @@ package bootstrap.liftweb
 
 // framework imports
 import net.liftweb.common.LazyLoggable
-import net.liftweb.util.{Helpers}
+import net.liftweb.util.{Helpers,Props}
 import net.liftweb.http.{S,LiftRules}
-import net.liftweb.sitemap.{SiteMap,Loc}
+import net.liftweb.sitemap.{SiteMap,Loc,Menu}
 import net.liftweb.mapper.{DB,Schemifier,DefaultConnectionIdentifier,StandardDBVendor,MapperRules}
 
 class Boot extends LazyLoggable {
@@ -39,7 +39,7 @@ class Boot extends LazyLoggable {
     
     // set the application sitemap
     LiftRules.setSiteMap(SiteMap(
-      Menu("Home") / "index"
+      Menu("Home") / "index",
       Menu("Testing Frameworks") / "frameworks" / "index",
       Menu("Writing Testable Code") / "practices" / "index" submenus(
         

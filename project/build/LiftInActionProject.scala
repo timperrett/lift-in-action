@@ -126,8 +126,9 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info) with Id
   {
     val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile"
     val testkit = "net.liftweb" %% "lift-testkit" % liftVersion % "test"
-    val scalatest = "org.scala-tools.testing" % "scalatest" % "0.9.5" % "test"
-    
+    val scalatest = "org.scalatest" % "scalatest" % "1.3" % "test"
+    val specs = "org.scala-tools.testing" %% "specs" % "1.6.7.2" % "test"
+    val scalacheck = "org.scala-tools.testing" %% "scalacheck" % "1.8" % "test"
     // configure the testing classpath
     override def testClasspath  = super.testClasspath +++ ("src" / "main" / "webapp")
   }

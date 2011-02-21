@@ -1,15 +1,15 @@
 package bootstrap.liftweb
 
 // framework imports
-import net.liftweb.common.LazyLoggable
+import net.liftweb.common.{LazyLoggable,Full}
 import net.liftweb.util.{Helpers,Props}
-import net.liftweb.http.{S,LiftRules}
+import net.liftweb.http.{S,LiftRules,RedirectResponse}
 import net.liftweb.sitemap.{SiteMap,Loc,Menu}
 import net.liftweb.mapper.{DB,Schemifier,DefaultConnectionIdentifier,StandardDBVendor,MapperRules}
 
 class Boot extends LazyLoggable {
   def boot {
-    LiftRules.addToPackages("sample.snippet")
+    LiftRules.addToPackages("sample")
     
     // make requests utf-8
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
@@ -37,10 +37,15 @@ class Boot extends LazyLoggable {
     
     /**** user experience settings ****/
     
+    import Loc.EarlyResponse
+    
     // set the application sitemap
     LiftRules.setSiteMap(SiteMap(
       Menu("Home") / "index",
       Menu("Testing Frameworks") / "frameworks" / "index",
+      Menu("TestKit Examples") / "testkit" / "index" >> EarlyResponse(() => Full(RedirectResponse("/testkit/stateful-integration"))) submenus(
+        Menu("Stateful Integration") / "testkit" / "stateful-integration"
+      ),
       Menu("Writing Testable Code") / "practices" / "index" submenus(
         
       )

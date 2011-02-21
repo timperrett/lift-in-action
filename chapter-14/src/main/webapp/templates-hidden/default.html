@@ -3,14 +3,37 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
-    <title>Lift in Action &ndash; Chapter 12</title>
+    <lift:css.blueprint />
+    <lift:css.fancyType />
     <script id="jquery" src="/classpath/jquery.js" type="text/javascript"/>
+    <title>Lift in Action &ndash; Chapter 12</title>
   </head>
   <body>
-    
-    <lift:bind name="content" />
-    
-    <hr />
-    
+    <div class="container">
+      
+      <div class="column span-14 last" style="text-align: right">
+        <h1 class="alt">Chapter 14: <lift:menu.title /></h1>
+      </div>
+      
+      <hr/>
+      
+      <div class="column span-6 colborder sidebar">
+        <hr class="space" />
+        <span class="lift:Menu.builder" />
+        <div>
+          <span class="lift:Msgs?showAll=true"/>
+          <hr class="space" />
+        </div>
+      </div>
+            
+      <div class="column span-17 last">
+        <div id="content">
+          <lift:bind name="content" />
+        </div>
+      </div>
+
+      <hr />
+
+    </div>
   </body>
 </html>

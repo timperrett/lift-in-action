@@ -43,8 +43,8 @@ class Boot extends LazyLoggable {
     LiftRules.setSiteMap(SiteMap(
       Menu("Home") / "index",
       Menu("Testing Frameworks") / "frameworks" / "index",
-      Menu("TestKit Examples") / "testkit" / "index" >> EarlyResponse(() => Full(RedirectResponse("/testkit/stateful-integration"))) submenus(
-        Menu("Stateful Integration") / "testkit" / "stateful-integration"
+      Menu("TestKit Examples") / "testkit" / "index" >> EarlyResponse(() => Full(RedirectResponse("/testkit/cookies"))) submenus(
+        Menu("Stateful Integration") / "testkit" / "cookies"
       ),
       Menu("Writing Testable Code") / "practices" / "index" submenus(
         

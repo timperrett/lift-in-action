@@ -37,7 +37,7 @@ class ScalaCheckExample extends Specification with ScalaCheck {
     "Start with" in { 
       forAll {
         (a: String, b: String) => (a + b).startsWith(a)
-      } must_== true
+      } must pass
     }
   }
 }

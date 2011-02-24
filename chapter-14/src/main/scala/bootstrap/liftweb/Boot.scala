@@ -27,7 +27,7 @@ class Boot extends LazyLoggable {
       // make sure cyote unloads database connections before shutting down
       LiftRules.unloadHooks.append(() => Database.closeAllConnections_!()) 
     }
-
+    
     // automatically create the tables
     // Schemifier.schemify(true, Schemifier.infoF _, 
       // Bid, Auction, Supplier, Customer, Order, OrderAuction, AuctionMachine)

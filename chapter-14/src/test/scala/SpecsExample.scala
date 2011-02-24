@@ -13,13 +13,6 @@ class SpecsExample extends Specification {
   }
 }
 
-trait SetupAndTearDown {
-  def construcEnvironment() = 
-    println("Construcing the environment!")
-  def tearDownEnvironment() = 
-    println("Tearing down the environment!")
-}
-
 class AnotherExample extends Specification with SetupAndTearDown {
   construcEnvironment().beforeSpec
   "An Option" should {

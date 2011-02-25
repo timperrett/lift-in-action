@@ -6,13 +6,21 @@ import net.liftweb.util.{Helpers,Props}
 import net.liftweb.http.{S,LiftRules,RedirectResponse}
 import net.liftweb.sitemap.{SiteMap,Loc,Menu}
 import net.liftweb.mapper.{DB,Schemifier,DefaultConnectionIdentifier,StandardDBVendor,MapperRules}
+import sample.env.{Environment,Development,Production}
 
 class Boot extends LazyLoggable {
   def boot {
-    LiftRules.addToPackages("sample")
-    
     // make requests utf-8
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
+    
+    val environment: Environment = Props.mode match {
+      case Props.RunModes.Production => Production
+      case _ => Development
+    }
+    
+    LiftRules.snippetDispatch.append {
+      case "service" => environment.serviceSnippet
+    }
     
     MapperRules.columnName = (_,name) => Helpers.snakify(name)
     MapperRules.tableName =  (_,name) => Helpers.snakify(name)

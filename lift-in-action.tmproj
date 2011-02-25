@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>chapter-14/src/test/scala/CookieListSpec.scala</string>
+	<string>chapter-14/src/main/scala/bootstrap/liftweb/Boot.scala</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -40,14 +40,102 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>5</integer>
+				<integer>38</integer>
 				<key>line</key>
-				<integer>28</integer>
+				<integer>20</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>15</integer>
+			<integer>0</integer>
+		</dict>
+		<key>chapter-14/src/main/scala/sample/env/Environment.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>19</integer>
+				<key>line</key>
+				<integer>9</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>chapter-14/src/main/scala/sample/snippet/CookieList.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>14</integer>
+				<key>line</key>
+				<integer>6</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>chapter-14/src/main/scala/sample/snippet/Service.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>2</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>43</integer>
+				<key>line</key>
+				<integer>3</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>2</integer>
+			</dict>
+		</dict>
+		<key>chapter-14/src/main/webapp/testkit/cookies.html</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>17</integer>
+				<key>line</key>
+				<integer>5</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>10</integer>
+				<key>line</key>
+				<integer>5</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>21</integer>
+				<key>line</key>
+				<integer>5</integer>
+			</dict>
 		</dict>
 		<key>chapter-14/src/test/scala/Common.scala</key>
 		<dict>
@@ -63,102 +151,15 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>chapter-14/src/test/scala/CookieListSpec.scala</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>4</integer>
-				<key>line</key>
-				<integer>15</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>chapter-14/src/test/scala/ExampleOneSpec.scala</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>36</integer>
-				<key>line</key>
-				<integer>29</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>5</integer>
-				<key>line</key>
-				<integer>29</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>36</integer>
-				<key>line</key>
-				<integer>29</integer>
-			</dict>
-		</dict>
-		<key>chapter-14/src/test/scala/ScalaTestExample.scala</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>41</integer>
-				<key>line</key>
-				<integer>8</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>chapter-14/src/test/scala/SpecsExample.scala</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>15</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>chapter-5/src/main/scala/bootstrap/liftweb/Boot.scala</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>38</integer>
-				<key>line</key>
-				<integer>33</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>15</integer>
-		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>chapter-14/src/test/scala/CookieListSpec.scala</string>
-		<string>chapter-5/src/main/scala/bootstrap/liftweb/Boot.scala</string>
-		<string>chapter-14/src/test/scala/Common.scala</string>
-		<string>chapter-14/src/test/scala/ExampleOneSpec.scala</string>
-		<string>chapter-14/src/test/scala/ScalaTestExample.scala</string>
-		<string>chapter-14/src/test/scala/SpecsExample.scala</string>
+		<string>chapter-14/src/main/scala/sample/env/Environment.scala</string>
+		<string>chapter-14/src/main/scala/sample/snippet/Service.scala</string>
 		<string>chapter-14/src/main/scala/bootstrap/liftweb/Boot.scala</string>
+		<string>chapter-14/src/main/webapp/testkit/cookies.html</string>
+		<string>chapter-14/src/test/scala/Common.scala</string>
+		<string>chapter-14/src/main/scala/sample/snippet/CookieList.scala</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>

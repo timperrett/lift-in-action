@@ -3,7 +3,6 @@ package sample.test
 import org.mortbay.jetty.Server
 import org.mortbay.jetty.servlet.ServletHolder
 import org.mortbay.jetty.webapp.WebAppContext
-// import org.mortbay.jetty.nio.SelectChannelConnector
 
 object JettyTestServer {
   private val port = System.getProperty("jetty.test.port", "8989").toInt

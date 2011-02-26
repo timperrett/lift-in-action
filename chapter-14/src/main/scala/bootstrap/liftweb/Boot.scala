@@ -23,6 +23,8 @@ class Boot extends LazyLoggable {
       case "cookie_list" => environment.cookieList
     }
     
+    LiftRules.dispatch.append(sample.dispatch.Example)
+    
     MapperRules.columnName = (_,name) => Helpers.snakify(name)
     MapperRules.tableName =  (_,name) => Helpers.snakify(name)
     

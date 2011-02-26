@@ -14,13 +14,13 @@ class SpecsExample extends Specification {
 }
 
 class AnotherExample extends Specification with SetupAndTearDown {
-  construcEnvironment().beforeSpec
+  setup().beforeSpec
   "An Option" should {
     "Be None if supplied a null value" in {
       Option(null) must_== None
     }
   }
-  tearDownEnvironment().afterSpec
+  destroy().afterSpec
 }
 
 import org.scalacheck.Prop._

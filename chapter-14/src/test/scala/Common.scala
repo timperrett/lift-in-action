@@ -6,7 +6,6 @@ object BootManager {
   private var hasBooted = false
   def boot(){
     if(!hasBooted){
-      println("************************* BOOTING")
       hasBooted = true
       new bootstrap.liftweb.Boot().boot
     }
@@ -35,3 +34,24 @@ trait JettySetupAndTearDown extends SetupAndDestroy { _: Specification =>
   def setup() = JettyTestServer.start()
   def destroy() = JettyTestServer.stop()
 }
+
+trait SeleniumSetupAndTearDown extends JettySetupAndTearDown { _: Specification => 
+  override def setup(){
+    println("************************* STARTING")
+    super.setup()
+    SeleniumTestServer.start()
+    Thread.sleep(1000)
+    SeleniumTestClient.start()
+  }
+  override def destroy(){
+    SeleniumTestClient.stop()
+    Thread.sleep(1000)
+    SeleniumTestServer.stop()
+    super.destroy()
+    println("******** SHUTTING DOWN")
+  }
+} 
+
+
+
+

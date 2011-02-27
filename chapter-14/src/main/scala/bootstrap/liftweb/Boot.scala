@@ -7,6 +7,7 @@ import net.liftweb.http.{S,LiftRules,RedirectResponse}
 import net.liftweb.sitemap.{SiteMap,Loc,Menu}
 import net.liftweb.mapper.{DB,Schemifier,DefaultConnectionIdentifier,StandardDBVendor,MapperRules}
 import sample.env.{Environment,Development,Production}
+import sample.model.Book
 
 class Boot extends LazyLoggable {
   def boot {
@@ -21,6 +22,8 @@ class Boot extends LazyLoggable {
     LiftRules.snippetDispatch.append {
       case "service" => environment.serviceSnippet
       case "cookie_list" => environment.cookieList
+      case "ajax_sample" => environment.ajaxSample
+      case "form_sample" => environment.formSample
     }
     
     LiftRules.dispatch.append(sample.dispatch.Example)
@@ -30,18 +33,17 @@ class Boot extends LazyLoggable {
     
     // set the JNDI name that we'll be using
     DefaultConnectionIdentifier.jndiName = "jdbc/liftinaction"
-
+    
     // handle JNDI not being avalible
     if (!DB.jndiJdbcConnAvailable_?){
       logger.warn("No JNDI configured - making a direct application connection") 
       DB.defineConnectionManager(DefaultConnectionIdentifier, Database)
-      // make sure cyote unloads database connections before shutting down
+      // make sure server unloads database connections before shutting down
       LiftRules.unloadHooks.append(() => Database.closeAllConnections_!()) 
     }
     
     // automatically create the tables
-    // Schemifier.schemify(true, Schemifier.infoF _, 
-      // Bid, Auction, Supplier, Customer, Order, OrderAuction, AuctionMachine)
+    Schemifier.schemify(true, Schemifier.infoF _, Book)
     
     // setup the loan pattern
     S.addAround(DB.buildLoanWrapper)
@@ -55,7 +57,10 @@ class Boot extends LazyLoggable {
       Menu("Home") / "index",
       Menu("Testing Frameworks") / "frameworks" / "index",
       Menu("TestKit Examples") / "testkit" / "index" >> EarlyResponse(() => Full(RedirectResponse("/testkit/cookies"))) submenus(
-        Menu("Stateful Integration") / "testkit" / "cookies"
+        Menu("Stateful Integration") / "testkit" / "cookies",
+        Menu("Forms") / "testkit" / "form",
+        Menu("AJAX") / "testkit" / "ajax",
+        Menu("Comet") / "testkit" / "comet"
       ),
       Menu("Writing Testable Code") / "practices" / "index" submenus(
         

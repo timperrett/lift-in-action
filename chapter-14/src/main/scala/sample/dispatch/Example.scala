@@ -13,7 +13,7 @@ object Example extends RestHelper {
     case "testkit" :: "services" :: "login" :: Nil Post _ =>
       Authenticated(true); OkResponse()
     case "testkit" :: "services" :: "secret" :: Nil Get _ => 
-      if(Authenticated.is) OkResponse() else ForbiddenResponse("Its secret!")
+      if(Authenticated.is == true) OkResponse() else ForbiddenResponse("Its secret!")
   }
 }
 

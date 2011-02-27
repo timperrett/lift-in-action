@@ -6,8 +6,7 @@ import net.liftweb.http.S
 import net.liftweb.mockweb.WebSpec
 import net.liftweb.mocks.MockHttpServletRequest
 
-object CookieListSpec extends WebSpec with SetupAndTearDown {
-  setup().beforeSpec
+object CookieListSpec extends WebSpec with BootSetupAndTearDown {
   "CookieList Snippet" should {
     val cookieName = "thing"
     val r = new MockHttpServletRequest("/")
@@ -18,5 +17,4 @@ object CookieListSpec extends WebSpec with SetupAndTearDown {
       xml must \\(<div id="output">thing<br></br></div>)
     }
   }
-  destroy().afterSpec
 }

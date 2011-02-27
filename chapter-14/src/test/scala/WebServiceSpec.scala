@@ -1,19 +1,17 @@
 package sample.test
 
 import org.specs.Specification
-import net.liftweb.http.testing.ReportFailure
-import net.liftweb.http.testing.TestKit
+import net.liftweb.http.testing.{TestKit,ReportFailure,HttpResponse}
 
 class WebServiceSpec extends Specification with JettySetupAndTearDown with TestKit {
   
   implicit val reportError = new ReportFailure {
-    def fail(msg: String): Nothing = WebServiceSpec.this.fail(msg)
+    def fail(msg: String): Nothing = {
+      WebServiceSpec.this.fail(msg)
+    }
   }
   
   val baseUrl = JettyTestServer.baseUrl
-  
-  setup().beforeSpec
-  destroy().afterSpec
   
   "Example web service" should {
     "List the days of the week in order" in {
@@ -30,6 +28,22 @@ class WebServiceSpec extends Specification with JettySetupAndTearDown with TestK
         </days>)
       }
     }
+    
+    "Not have access to secret stuff if not authenticated" in {
+      get("/testkit/services/secret") ! (
+        403, "Access should fail with unauthorized status"
+      ) must haveClass[HttpResponse]
+    }
+    
+    "Gain access to secret stuff if they are loggedin" in {
+      for {
+        auth <- post("/testkit/services/login") !@ "Unable to login!"
+        resp <- auth.get("/testkit/services/secret") !@ "Not properly authenticated"
+      }{
+        resp must haveClass[HttpResponse]
+      }
+    }
+    
   }
   
 }

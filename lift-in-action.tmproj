@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>chapter-14/src/test/scala/SeleniumExampleSpec.scala</string>
+	<string>chapter-13/src/main/scala/sample/comet/Calculator.scala</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -35,6 +35,20 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
+		<key>chapter-13/src/main/scala/sample/comet/Calculator.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>2</integer>
+				<key>line</key>
+				<integer>53</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>38</integer>
+		</dict>
 		<key>chapter-14/src/test/scala/BootManager.scala</key>
 		<dict>
 			<key>caret</key>
@@ -54,9 +68,9 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>36</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>12</integer>
+				<integer>20</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -107,17 +121,33 @@
 			<key>firstVisibleLine</key>
 			<integer>7</integer>
 		</dict>
+		<key>project/build/LiftInActionProject.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>79</integer>
+				<key>line</key>
+				<integer>118</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>94</integer>
+		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>chapter-14/src/test/scala/BootManager.scala</string>
 		<string>chapter-14/src/test/scala/SeleniumExampleSpec.scala</string>
+		<string>project/build/LiftInActionProject.scala</string>
+		<string>chapter-13/src/main/scala/sample/comet/Calculator.scala</string>
 		<string>chapter-14/src/test/scala/WebServiceSpec.scala</string>
 		<string>chapter-14/src/test/scala/SpecsExample.scala</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{59, 45}, {1001, 799}}</string>
+	<string>{{59, 176}, {913, 689}}</string>
 </dict>
 </plist>

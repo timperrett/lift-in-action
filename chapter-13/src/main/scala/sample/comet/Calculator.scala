@@ -27,20 +27,21 @@ import net.liftweb.http.{CometActor,SHtml}
 import net.liftweb.http.js.JsCmds.{SetHtml,Noop}
 import akka.actor.Actor.registry
 import akka.dispatch.Future
+import akka.AkkaException
 
 trait AkkaCometActor extends CometActor {
-  implicit val optionSelf:Option[ActorRef] = Some(Actor.actorOf(new Actor{
+  implicit val akkaProxy: Option[ActorRef] = Some(Actor.actorOf(new Actor{
     protected def receive = {
       case a => AkkaCometActor.this ! a
     }
   }))
   override def localSetup {
     super.localSetup
-    optionSelf.foreach(_.start)
+    akkaProxy.foreach(_.start)
   }
   override def localShutdown {
     super.localShutdown
-    optionSelf.foreach(_.stop)
+    akkaProxy.foreach(_.stop)
   }
 }
 
@@ -57,7 +58,9 @@ class CalculatorDisplay extends AkkaCometActor {
     "#operation" #> SHtml.select(Seq("+","/","*").map(x => (x -> x)), 
       operation, v => operation = Full(v)) &
     "type=submit" #> SHtml.ajaxSubmit("Submit", () => {
-      registry.actorFor[Calculator].get ! Compute(one,two,operation.openOr("+"))
+      registry.actorFor[Calculator].map {
+        _ ! Compute(one,two,operation.openOr("+"))
+      }
       Noop
     }) andThen SHtml.makeFormsAjax
   

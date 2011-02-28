@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>chapter-14/src/test/scala/WebServiceSpec.scala</string>
+	<string>chapter-14/src/test/scala/SeleniumExampleSpec.scala</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -35,28 +35,28 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>chapter-14/src/test/scala/Common.scala</key>
+		<key>chapter-14/src/test/scala/BootManager.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>16</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>13</integer>
+				<integer>12</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>chapter-14/src/test/scala/JettyTestServer.scala</key>
+		<key>chapter-14/src/test/scala/SeleniumExampleSpec.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>36</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>12</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -68,40 +68,56 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>6</integer>
+				<integer>4</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>33</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>4</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>4</integer>
+				<key>line</key>
+				<integer>33</integer>
+			</dict>
 		</dict>
 		<key>chapter-14/src/test/scala/WebServiceSpec.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>5</integer>
+				<integer>9</integer>
 				<key>line</key>
-				<integer>35</integer>
+				<integer>20</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>21</integer>
+			<integer>7</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
+		<string>chapter-14/src/test/scala/BootManager.scala</string>
+		<string>chapter-14/src/test/scala/SeleniumExampleSpec.scala</string>
 		<string>chapter-14/src/test/scala/WebServiceSpec.scala</string>
-		<string>chapter-14/src/test/scala/JettyTestServer.scala</string>
-		<string>chapter-14/src/test/scala/Common.scala</string>
 		<string>chapter-14/src/test/scala/SpecsExample.scala</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{38, 250}, {1028, 568}}</string>
+	<string>{{59, 45}, {1001, 799}}</string>
 </dict>
 </plist>

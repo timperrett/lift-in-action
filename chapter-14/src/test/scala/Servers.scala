@@ -1,22 +1,29 @@
 package sample.test
 
-import org.mortbay.jetty.Server
+import org.mortbay.jetty.{Server,Connector}
 import org.mortbay.jetty.servlet.ServletHolder
 import org.mortbay.jetty.webapp.WebAppContext
+import org.mortbay.jetty.nio.SelectChannelConnector
 
 object JettyTestServer {
-  private val port = System.getProperty("jetty.test.port", "8989").toInt
-  val url = "http://localhost:" + port
-
+  
   private val server: Server = {
-    val svr = new Server(port)
-    val context = new WebAppContext()
+    val svr = new Server
+    val connector = new SelectChannelConnector
+    connector.setMaxIdleTime(30000);
+    
+    val context = new WebAppContext
     context.setServer(svr)
     context.setContextPath("/")
     context.setWar("chapter-14/src/main/webapp")
+    
+    svr.setConnectors(Array(connector));
     svr.addHandler(context)
     svr
   }
+  
+  lazy val port = server.getConnectors.head.getLocalPort
+  lazy val url = "http://localhost:" + port
   
   def baseUrl = url
   
@@ -32,32 +39,20 @@ object JettyTestServer {
 
 import org.openqa.selenium.server.RemoteControlConfiguration
 import org.openqa.selenium.server.SeleniumServer
-import com.thoughtworks.selenium.DefaultSelenium
 
 object SeleniumTestServer {
   private val rc = new RemoteControlConfiguration()
+  rc.setPort(port)
+  
   private val seleniumserver = new SeleniumServer(rc)
-  val port = System.getProperty("selenium.server.port", "4444").toInt
+  lazy val port = System.getProperty("selenium.server.port", "4444").toInt
   
   def start(){
-    rc.setPort(port)
     seleniumserver.boot()
     seleniumserver.start()
     seleniumserver.getPort()
   }
   def stop(){
     seleniumserver.stop()
-  }
-}
-
-object SeleniumTestClient {
-  lazy val browser = new DefaultSelenium("localhost", SeleniumTestServer.port, 
-    "*firefox", JettyTestServer.url+"/")
-  
-  def start(){
-    browser.start()
-  }
-  def stop(){
-    browser.stop()
   }
 }

@@ -1,22 +1,7 @@
 package sample.test
 
-import net.liftweb.http.LiftRules
-
-object BootManager {
-  private var hasBooted = false
-  def boot(){
-    if(!hasBooted){
-      hasBooted = true
-      new bootstrap.liftweb.Boot().boot
-    }
-  }
-  def cleanup(){
-    if(hasBooted)
-      LiftRules.unloadHooks.toList.foreach(_())
-  }
-}
-
 import org.specs.Specification
+import net.liftweb.http.BootManager
 
 trait SetupAndDestroy { _: Specification => 
   def setup(): Unit
@@ -35,9 +20,10 @@ trait JettySetupAndTearDown extends SetupAndDestroy { _: Specification =>
   def destroy() = JettyTestServer.stop()
 }
 
+import com.thoughtworks.selenium.DefaultSelenium
+
 trait SeleniumSetupAndTearDown extends JettySetupAndTearDown { _: Specification => 
   override def setup(){
-    println("************************* STARTING")
     super.setup()
     SeleniumTestServer.start()
     Thread.sleep(1000)
@@ -48,7 +34,18 @@ trait SeleniumSetupAndTearDown extends JettySetupAndTearDown { _: Specification 
     Thread.sleep(1000)
     SeleniumTestServer.stop()
     super.destroy()
-    println("******** SHUTTING DOWN")
+  }
+  
+  object SeleniumTestClient {
+    lazy val browser = new DefaultSelenium("localhost", SeleniumTestServer.port, 
+      "*firefox", JettyTestServer.url+"/")
+
+    def start(){
+      browser.start()
+    }
+    def stop(){
+      browser.stop()
+    }
   }
 } 
 

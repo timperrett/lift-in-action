@@ -40,9 +40,9 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>31</integer>
+				<integer>1</integer>
 				<key>line</key>
-				<integer>21</integer>
+				<integer>9</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -57,6 +57,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{10, 186}, {913, 689}}</string>
+	<string>{{527, 173}, {913, 689}}</string>
 </dict>
 </plist>

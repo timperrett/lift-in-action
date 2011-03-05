@@ -4,14 +4,14 @@ import scala.xml.{Text,NodeSeq}
 import net.liftweb.common.{Box,Full,Empty,Loggable}
 import net.liftweb.util.Props
 import net.liftweb.util.Helpers._
-import net.liftweb.http.{LiftRules,S,RedirectResponse,SessionVar}
+import net.liftweb.http.{LiftRules,S,RedirectResponse,SessionVar,SHtml}
 import net.liftweb.http.auth.{HttpBasicAuthentication,AuthRole,userRoles}
 import net.liftweb.sitemap._
 import net.liftweb.sitemap.Loc._
 
 import net.liftweb.widgets.autocomplete.AutoComplete
 
-import sample.snippet.RequestVarSample
+import sample.snippet.{RequestVarSample,Book}
 
 class Boot extends Loggable {
   def boot {
@@ -24,6 +24,11 @@ class Boot extends Loggable {
     LiftRules.viewDispatch.append {
       case "seven_dot_tweleve" :: "example" :: Nil => Left(() => Full(<h1>Manual Sample</h1>))
     }
+    
+    import net.liftweb.util.FormBuilderLocator
+    LiftRules.appendGlobalFormBuilder(FormBuilderLocator[List[Book]](
+      (books,setter) => SHtml.select(books.map(b => (b.reference.toString, b.title)), Empty, v => println(v))
+    ))
     
     AutoComplete.init
     
@@ -43,6 +48,7 @@ class Boot extends Loggable {
       Menu("Listing 6.15: Getting and setting a cookie value") / "seven_dot_fifteen",
       Menu("Listing 6.16: Basic LiftScreen implementation") / "lift_screen_one",
       Menu("Listing 6.17: Applying validation to LiftScreen sample (7.16)") / "lift_screen_two",
+      Menu("LiftScreen custom field types") / "lift_screen_custom",
       Menu("Listing 6.18: Building Wizard workflow") / "wizard_example",
       Menu("Listing 6.19: Implementing the AutoComplete snippet helper") / "auto_complete",
       Menu("Listing 6.20: The Gravatar Widget") / "gravatar_sample"

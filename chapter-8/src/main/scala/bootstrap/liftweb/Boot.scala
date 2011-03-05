@@ -39,8 +39,15 @@ class Boot {
       case Req("nolift" :: Nil,"xml",_) => false
     }
     
+    import net.liftweb.util.Helpers._
+    import java.util.Calendar
+    
+    val onMondays: PartialFunction[Req, Unit] = { 
+      case _ if day(now) == Calendar.MONDAY => 
+    }
+    
     // section 8.3.2
-    LiftRules.dispatch.append(BookshopHttpServiceBasic)
+    LiftRules.dispatch.append(onMondays guard BookshopHttpServiceBasic)
     
     // section 8.3.3
     LiftRules.dispatch.append(BookshopHttpServiceAdvanced)

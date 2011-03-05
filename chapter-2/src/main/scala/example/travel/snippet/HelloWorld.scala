@@ -1,14 +1,8 @@
-package example.travel {
-package snippet {
+package example.travel.snippet
 
-import _root_.scala.xml.NodeSeq
-import _root_.net.liftweb.util.Helpers._
+import scala.xml.{NodeSeq}
+import net.liftweb.util.Helpers._
 
 class HelloWorld {
-  def howdy(xhtml: NodeSeq): NodeSeq =
-    bind("b", xhtml,
-      "time" -> (new _root_.java.util.Date).toString
-    )
+  def howdy = "*" #> <strong>hello world!</strong>
 }
-
-}}

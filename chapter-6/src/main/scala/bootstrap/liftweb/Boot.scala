@@ -1,19 +1,14 @@
 package bootstrap.liftweb
 
-import scala.xml.{Text,NodeSeq}
 import net.liftweb.common.{Box,Full,Empty,Loggable}
-import net.liftweb.util.Props
+import net.liftweb.util.{Props,FormBuilderLocator}
 import net.liftweb.util.Helpers._
-import net.liftweb.http.{LiftRules,S,RedirectResponse,SessionVar,SHtml}
-import net.liftweb.http.auth.{HttpBasicAuthentication,AuthRole,userRoles}
-import net.liftweb.sitemap._
-import net.liftweb.sitemap.Loc._
-
+import net.liftweb.http.{LiftRules,SHtml,Req,XHtmlInHtml5OutProperties}
+import net.liftweb.sitemap.{SiteMap,Menu}
 import net.liftweb.widgets.autocomplete.AutoComplete
-
 import sample.snippet.{RequestVarSample,Book}
 
-class Boot extends Loggable {
+class Boot {
   def boot {
     LiftRules.addToPackages("sample")
     
@@ -25,12 +20,21 @@ class Boot extends Loggable {
       case "viewthing" :: "example" :: Nil => Left(() => Full(<h1>Manual Sample</h1>))
     }
     
-    import net.liftweb.util.FormBuilderLocator
     LiftRules.appendGlobalFormBuilder(FormBuilderLocator[List[Book]](
       (books,setter) => SHtml.select(books.map(b => (b.reference.toString, b.title)), Empty, v => println(v))
     ))
     
     AutoComplete.init
+    
+    LiftRules.ajaxStart =
+      Full(() => LiftRules.jsArtifacts.show("ajax-loader").cmd)
+    
+    LiftRules.ajaxEnd =
+      Full(() => LiftRules.jsArtifacts.hide("ajax-loader").cmd)
+    
+    LiftRules.htmlProperties.default.set((r: Req) => 
+      new XHtmlInHtml5OutProperties(r.userAgent)) 
+    
     
     LiftRules.setSiteMap(SiteMap(
       Menu("Home") / "index",
@@ -48,6 +52,7 @@ class Boot extends Loggable {
         Menu("Accessing snippet attributes") / "snippets" / "snippet_attributes",
         Menu("Class snippet vs Singleton snippet") / "snippets" / "classes_vs_singletons",
         Menu("Stateful snippet count incrementing") / "snippets" / "stateful_snippet_count",
+        Menu("Lazy Loading Snippets") / "snippets" / "lazy_loading",
         Menu("Wiring a () => NodeSeq into LiftRules.viewDispatch") / "viewthing" / "example",
         Menu("Implementing LiftView sub-type") / "MyView" / "sample"
       ),

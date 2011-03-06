@@ -1,14 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" 
-  "http://www.w3.org/TR/html4/strict.dtd">
-<html xmlns:lift="http://liftweb.net" xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
   <script type="text/javascript" src="/classpath/jquery.js"></script>
   <title>My Application</title>
 </head>
 <body>
-  <lift:msgs />
   <hr />
-  
+  <div id="ajax-loader" style="display: none;"><img src="/images/ajax-loader.gif" alt="" /></div>
   <lift:bind name="content" />
   <hr />
   <lift:menu.builder />

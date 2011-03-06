@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>chapter-6/src/main/scala/sample/snippet/CSSTransformerExamples.scala</string>
+	<string>chapter-6/src/main/webapp/snippets/lazy_loading.html</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -40,69 +40,38 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>83</integer>
+				<integer>66</integer>
 				<key>line</key>
-				<integer>46</integer>
+				<integer>54</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>22</integer>
+			<integer>30</integer>
 		</dict>
-		<key>chapter-6/src/main/scala/sample/snippet/CSSTransformerExamples.scala</key>
+		<key>chapter-6/src/main/webapp/snippets/lazy_loading.html</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>4</integer>
+				<integer>29</integer>
 				<key>line</key>
-				<integer>46</integer>
+				<integer>5</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>2</integer>
-		</dict>
-		<key>chapter-6/src/main/webapp/snippets/intermediate_example.html</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>3</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
 			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>7</integer>
-				<key>line</key>
-				<integer>9</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>3</integer>
-			</dict>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>chapter-6/src/main/scala/sample/snippet/CSSTransformerExamples.scala</string>
-		<string>chapter-6/src/main/webapp/snippets/intermediate_example.html</string>
 		<string>chapter-6/src/main/scala/bootstrap/liftweb/Boot.scala</string>
+		<string>chapter-6/src/main/webapp/snippets/lazy_loading.html</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{760, 124}, {805, 934}}</string>
+	<string>{{635, 58}, {805, 820}}</string>
 </dict>
 </plist>

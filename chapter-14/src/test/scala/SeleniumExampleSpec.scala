@@ -2,7 +2,8 @@ package sample.test
 
 import org.specs._
 
-class SeleniumExampleSpec extends Specification with SeleniumSetupAndTearDown {
+trait SeleniumExampleSpec { _: Specification with SeleniumSetupAndTearDown => 
+  //extends Specification with SeleniumSetupAndTearDown {
   "/testkit/ajax" should {
     import SeleniumTestClient._
     "replace the button with text when clicked" in {

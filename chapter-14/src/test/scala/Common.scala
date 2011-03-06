@@ -1,18 +1,13 @@
 package sample.test
 
-import org.specs.Specification
-import net.liftweb.http.BootManager
+import org.specs.{Specification,ScalaCheck}
+// import net.liftweb.http.BootManager
 
 trait SetupAndDestroy { _: Specification => 
   def setup(): Unit
   def destroy(): Unit
   setup().beforeSpec
   destroy().afterSpec
-}
-
-trait BootSetupAndTearDown extends SetupAndDestroy { _: Specification => 
-  def setup() = BootManager.boot
-  def destroy() = BootManager.cleanup
 }
 
 trait JettySetupAndTearDown extends SetupAndDestroy { _: Specification => 
@@ -49,6 +44,15 @@ trait SeleniumSetupAndTearDown extends JettySetupAndTearDown { _: Specification 
   }
 } 
 
+import net.liftweb.http.testing.TestKit
+import net.liftweb.mockweb.WebSpec
 
-
-
+class AllTests extends WebSpec with ScalaCheck with SeleniumSetupAndTearDown
+  with SpecsExample 
+  with TestKit
+  with CookieListSpec 
+  with WebServiceSpec
+  with SeleniumExampleSpec {
+    setSequential()
+  }
+  

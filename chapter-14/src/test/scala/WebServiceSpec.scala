@@ -3,7 +3,8 @@ package sample.test
 import org.specs.Specification
 import net.liftweb.http.testing.{TestKit,ReportFailure,HttpResponse}
 
-class WebServiceSpec extends Specification with JettySetupAndTearDown with TestKit {
+trait WebServiceSpec { _: Specification with JettySetupAndTearDown with TestKit =>
+// class WebServiceSpec extends Specification with JettySetupAndTearDown with TestKit {
   
   implicit val reportError = new ReportFailure {
     def fail(msg: String): Nothing = {
@@ -11,7 +12,7 @@ class WebServiceSpec extends Specification with JettySetupAndTearDown with TestK
     }
   }
   
-  val baseUrl = JettyTestServer.baseUrl
+  lazy val baseUrl = JettyTestServer.baseUrl
   
   "Example web service" should {
     "List the days of the week in order" in {

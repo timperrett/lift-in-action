@@ -11,7 +11,7 @@
       <pattern>[%4p] [%t] %c: %m%n</pattern>
     </encoder>
   </appender>
-  <root level="DEBUG">
+  <root level="INFO">
     <appender-ref ref="stdout"/>
   </root>
 </configuration>

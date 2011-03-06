@@ -42,12 +42,13 @@ class Boot extends Loggable {
         Menu("Resource ID Example") / "templating" / "resource_ids"
       ),
       Menu("Snippets & Views") / "snippets" / "index" submenus(
+        Menu("Basic Snippet Example") / "snippets" / "basic_example",
+        Menu("CSS Transformers") / "snippets" / "css_transformers",
         Menu("Accessing snippet attributes") / "snippets" / "snippet_attributes",
         Menu("Class snippet vs Singleton snippet") / "snippets" / "classes_vs_singletons",
         Menu("Stateful snippet count incrementing") / "snippets" / "stateful_snippet_count",
         Menu("Wiring a () => NodeSeq into LiftRules.viewDispatch") / "viewthing" / "example",
-        Menu("Listing 6.13: Implementing LiftView sub-type") / "MyView" / "sample"
-        
+        Menu("Implementing LiftView sub-type") / "MyView" / "sample"
       ),
       Menu("Requests, Sessions & Cookies") / "state" / "index" submenus(
         Menu("Implementing a RequestVar[Box[String]]") / "wizard" / "request_var",

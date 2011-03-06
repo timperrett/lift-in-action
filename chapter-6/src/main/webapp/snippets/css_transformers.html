@@ -1,0 +1,57 @@
+<lift:surround with="single_bind" at="content">
+  
+  <h2>CSS Selector Examples</h2>
+  <lift:selector_demo.render>
+    
+    <h4>Selection by ID</h4>
+    <div id="thing">Ignored and replaced</div>
+    
+    <hr />
+    
+    <h4>Selection by class</h4>
+    <div class="amazing">Dummy</div>
+    
+    <hr />
+    
+    <h4>Attribute selection</h4>
+    <p>
+      <input type="text" /><br />
+      <input type="text" />
+    </p>
+    
+    <hr />
+    
+    <h4>Name selection</h4>
+    <form name="signup">
+      <p><input type="text" /></p>
+    </form>
+    
+    <hr />
+    
+    <h4>Specilised selection</h4>
+    <p><input type="button" /></p>
+    
+    <h4>Attribute appending</h4>
+    <div class="foo">Content</div>
+    
+    <hr />
+    
+    <h4>Replace element subordinates</h4>
+    <ul>
+      <li>Example</li>
+    </ul>
+    
+    <hr />
+    
+    <h4>Append element subordinates</h4>
+    <div id="append_target">Welcome, </div>
+    
+    <hr />
+    
+    <h4>Lift element to root</h4>
+    <div id="hats">
+      <p>Sample</p>
+    </div>
+    
+  </lift:selector_demo.render>
+</lift:surround>

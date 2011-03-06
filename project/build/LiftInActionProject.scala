@@ -4,7 +4,7 @@ import eu.getintheloop.Native2AsciiPlugin
 import reaktor.scct.ScctProject
 
 class LiftInActionProject(info: ProjectInfo) extends ParentProject(info) with IdeaProject {
-  val liftVersion = "2.3-M1"
+  val liftVersion = "2.3-SNAPSHOT"
   val h2Version = "1.3.146"
   
   // implement the module definitions
@@ -193,7 +193,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info) with Id
     import Repositories._
     // module Configurations
     lazy val localMavenRepo           = MavenLocal
-    lazy val liftModuleConfig         = ModuleConfiguration("net.liftweb", ScalaToolsReleases)
+    lazy val liftModuleConfig         = ModuleConfiguration("net.liftweb", ScalaToolsSnapshots)
     lazy val scalaTestModuleConfig    = ModuleConfiguration("org.scalatest", ScalaToolsReleases)
     lazy val specsModuleConfig        = ModuleConfiguration("org.scala-tools.testing", ScalaToolsReleases)
     lazy val akkaModuleConfig         = ModuleConfiguration("se.scalablesolutions.akka", AkkaRepo)

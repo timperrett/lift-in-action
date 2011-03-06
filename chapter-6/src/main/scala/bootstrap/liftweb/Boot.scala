@@ -22,7 +22,7 @@ class Boot extends Loggable {
     }
     
     LiftRules.viewDispatch.append {
-      case "seven_dot_tweleve" :: "example" :: Nil => Left(() => Full(<h1>Manual Sample</h1>))
+      case "viewthing" :: "example" :: Nil => Left(() => Full(<h1>Manual Sample</h1>))
     }
     
     import net.liftweb.util.FormBuilderLocator
@@ -34,24 +34,35 @@ class Boot extends Loggable {
     
     LiftRules.setSiteMap(SiteMap(
       Menu("Home") / "index",
-      Menu("Listing 6.1 & 6.2") / "seven_dot_two",
-      Menu("Listing 6.3") / "seven_dot_three",
-      Menu("Embedding Example") / "embedding",
-      Menu("Tail Example") / "tail",
-      Menu("Resource ID Example") / "resource_ids",
-      Menu("Listing 6.9: Accessing snippet attributes") / "seven_dot_nine",
-      Menu("Listing 6.10: Class snippet and object singleton snippet") / "seven_dot_ten",
-      Menu("Listing 6.11: Stateful snippet count incrementing") / "seven_dot_eleven",
-      Menu("Listing 6.12: Wiring a () => NodeSeq into LiftRules.viewDispatch") / "seven_dot_tweleve" / "example",
-      Menu("Listing 6.13: Implementing LiftView sub-type") / "MyView" / "sample",
-      Menu("Listing 6.14: Implementing a RequestVar[Box[String]]") / "request_var",
-      Menu("Listing 6.15: Getting and setting a cookie value") / "seven_dot_fifteen",
-      Menu("Listing 6.16: Basic LiftScreen implementation") / "lift_screen_one",
-      Menu("Listing 6.17: Applying validation to LiftScreen sample (7.16)") / "lift_screen_two",
-      Menu("LiftScreen custom field types") / "lift_screen_custom",
-      Menu("Listing 6.18: Building Wizard workflow") / "wizard_example",
-      Menu("Listing 6.19: Implementing the AutoComplete snippet helper") / "auto_complete",
-      Menu("Listing 6.20: The Gravatar Widget") / "gravatar_sample"
+      Menu("Templating") / "templating" / "index" submenus(
+        Menu("Single Bind Point") / "templating" / "single_bind_point",
+        Menu("Multiple Bind Points") / "templating" / "multiple_bind_points",
+        Menu("Embedding Example") / "templating" / "embedding",
+        Menu("Tail Example") / "templating" / "tail",
+        Menu("Resource ID Example") / "templating" / "resource_ids"
+      ),
+      Menu("Snippets & Views") / "snippets" / "index" submenus(
+        Menu("Accessing snippet attributes") / "snippets" / "snippet_attributes",
+        Menu("Class snippet vs Singleton snippet") / "snippets" / "classes_vs_singletons",
+        Menu("Stateful snippet count incrementing") / "snippets" / "stateful_snippet_count",
+        Menu("Wiring a () => NodeSeq into LiftRules.viewDispatch") / "viewthing" / "example",
+        Menu("Listing 6.13: Implementing LiftView sub-type") / "MyView" / "sample"
+        
+      ),
+      Menu("Requests, Sessions & Cookies") / "state" / "index" submenus(
+        Menu("Implementing a RequestVar[Box[String]]") / "wizard" / "request_var",
+        Menu("Getting and setting a cookie value") / "wizard" / "cookie_handling"
+      ),
+      Menu("LiftScreen and Wizard") / "wizard" / "index" submenus(
+        Menu("Basic LiftScreen implementation") / "wizard" / "lift_screen_one",
+        Menu("Applying validation to LiftScreen sample") / "wizard" / "lift_screen_two",
+        Menu("LiftScreen custom field types") / "wizard" / "lift_screen_custom",
+        Menu("Building Wizard workflow") / "wizard" / "wizard_example"
+      ),
+      Menu("Widgets") / "widgets" / "index" submenus(
+        Menu("Implementing the AutoComplete snippet helper") / "widgets" / "auto_complete",
+        Menu("The Gravatar Widget") / "widgets" / "gravatar_sample"
+      )
     ))
   }
   

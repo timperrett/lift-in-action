@@ -44,6 +44,7 @@ class Boot extends Loggable {
       Menu("Snippets & Views") / "snippets" / "index" submenus(
         Menu("Basic Snippet Example") / "snippets" / "basic_example",
         Menu("CSS Transformers") / "snippets" / "css_transformers",
+        Menu("Intermediate Snippet Example") / "snippets" / "intermediate_example",
         Menu("Accessing snippet attributes") / "snippets" / "snippet_attributes",
         Menu("Class snippet vs Singleton snippet") / "snippets" / "classes_vs_singletons",
         Menu("Stateful snippet count incrementing") / "snippets" / "stateful_snippet_count",

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>chapter-8/src/main/scala/bootstrap/liftweb/Boot.scala</string>
+	<string>chapter-6/src/main/scala/sample/snippet/CSSTransformerExamples.scala</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -18,7 +18,7 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>344</integer>
+	<integer>338</integer>
 	<key>metaData</key>
 	<dict>
 		<key>LICENSE.txt</key>
@@ -35,59 +35,74 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>chapter-14/src/test/scala/WebServiceSpec.scala</key>
+		<key>chapter-6/src/main/scala/bootstrap/liftweb/Boot.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>9</integer>
+				<integer>83</integer>
 				<key>line</key>
-				<integer>20</integer>
+				<integer>46</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>22</integer>
 		</dict>
-		<key>chapter-8/src/main/scala/bootstrap/liftweb/Boot.scala</key>
+		<key>chapter-6/src/main/scala/sample/snippet/CSSTransformerExamples.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>4</integer>
+				<key>line</key>
+				<integer>46</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>2</integer>
+		</dict>
+		<key>chapter-6/src/main/webapp/snippets/intermediate_example.html</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>41</integer>
+				<integer>3</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>32</integer>
+			<integer>0</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>29</integer>
+				<integer>7</integer>
 				<key>line</key>
-				<integer>42</integer>
+				<integer>9</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>41</integer>
+				<integer>3</integer>
 			</dict>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>chapter-14/src/test/scala/WebServiceSpec.scala</string>
-		<string>chapter-8/src/main/scala/bootstrap/liftweb/Boot.scala</string>
+		<string>chapter-6/src/main/scala/sample/snippet/CSSTransformerExamples.scala</string>
+		<string>chapter-6/src/main/webapp/snippets/intermediate_example.html</string>
+		<string>chapter-6/src/main/scala/bootstrap/liftweb/Boot.scala</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{71, 379}, {904, 477}}</string>
+	<string>{{760, 124}, {805, 934}}</string>
 </dict>
 </plist>

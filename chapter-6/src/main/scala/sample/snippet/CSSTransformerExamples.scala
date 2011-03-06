@@ -30,3 +30,22 @@ class SelectorDemo {
     // "#hats ^*" #> NodeSeq.Empty
   }
 }
+
+object Library {
+  case class Book(name: String)
+  case class Author(name: String, books: List[Book])
+  val books = List(
+    Author("JK Rowling", List(
+      Book("Harry Potter and the Deathly Hallows"),
+      Book("Harry Potter and the Goblet of Fire"))
+    ),
+    Author("Joshua Suereth", List(Book("Scala in Depth"))))
+}
+
+class IntermediateExample {
+  def list = 
+    "ul" #> Library.books.map { author =>
+      ".name" #> author.name &
+      ".books *" #> author.books.map(_.name)
+    }
+}

@@ -1,8 +1,12 @@
-h1. Lift In Action
+h1. Lift In Action Source Code
 
-The group of code is to accompany the Lift in Action book authored by Timothy Perrett and being published on Manning. 
+Lift in Action is a step-by-step exploration of the Lift web framework. It opens by presenting the core of the Lift framework, along with enough Scala to get you started. You'll move quickly, but the carefully crafted, well-explained, progressive examples make you comfortable from the start. You're through Hello World in no time, and ready to build something real. 
 
-The code in this repo uses a multi-project SBT build.
+The code in this repository accompanies the Lift in Action book:
+
+!http://blog.getintheloop.eu/wp-content/uploads/2010/11/lift-in-action-cover-e1290939889801.jpg!
+
+The code in this repo uses a multi-module SBT project to conduct its build process. See the next section for information on how to actually build the code.
 
 h1. Usage
 

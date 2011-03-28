@@ -4,7 +4,7 @@ Lift in Action is a step-by-step exploration of the Lift web framework. It opens
 
 The code in this repository accompanies the Lift in Action book:
 
-!http://blog.getintheloop.eu/wp-content/uploads/2010/11/lift-in-action-cover-e1290939889801.jpg!
+!http://www.manning.com/perrett/perrett_cover150.jpg!:http://affiliate.manning.com/idevaffiliate.php?id=1138_235
 
 The code in this repo uses a multi-module SBT project to conduct its build process. See the next section for information on how to actually build the code.
 

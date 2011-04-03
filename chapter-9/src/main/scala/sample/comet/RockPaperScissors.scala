@@ -4,7 +4,7 @@ import scala.xml.Text
 import scala.collection.mutable.Map
 import net.liftweb.common.{Box,Full,Empty}
 import net.liftweb.actor.LiftActor
-import net.liftweb.util.ActorPing
+import net.liftweb.util.Schedule
 import net.liftweb.util.Helpers._
 import net.liftweb.http.{CometActor,SHtml}
 import net.liftweb.http.js.JsCmds.{SetHtml,Run}
@@ -81,7 +81,7 @@ class Game(playerOne: CometActor, playerTwo: CometActor) extends LiftActor {
             sendToAllPlayers(Winner(playerTwo))
         }
       }
-      ActorPing.schedule(this, ResetGame, 5 seconds)
+      Schedule.schedule(this, ResetGame, 5 seconds)
     }
       
     case Make(move, from) => {

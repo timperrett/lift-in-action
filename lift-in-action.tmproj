@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>project/build/LiftInActionProject.scala</string>
+	<string>chapter-14/src/main/scala/sample/lib/DependencyInjection.scala</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -35,58 +35,73 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>chapter-6/src/main/scala/bootstrap/liftweb/Boot.scala</key>
+		<key>chapter-13/src/main/scala/sample/actor/RemoteAkkaSample.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>66</integer>
+				<integer>15</integer>
 				<key>line</key>
-				<integer>54</integer>
+				<integer>4</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>30</integer>
+			<integer>0</integer>
 		</dict>
-		<key>chapter-6/src/main/webapp/snippets/lazy_loading.html</key>
+		<key>chapter-13/src/main/scala/sample/rabbit/BasicStringSender.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>29</integer>
+				<integer>0</integer>
 				<key>line</key>
+				<integer>31</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>chapter-14/src/main/scala/sample/lib/DependencyInjection.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
 				<integer>5</integer>
+				<key>line</key>
+				<integer>78</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>project/build/LiftInActionProject.scala</key>
+		<key>chapter-14/src/main/scala/sample/snippet/Service.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>2</integer>
+				<integer>1</integer>
 				<key>line</key>
-				<integer>70</integer>
+				<integer>18</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>62</integer>
+			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>chapter-6/src/main/scala/bootstrap/liftweb/Boot.scala</string>
-		<string>chapter-6/src/main/webapp/snippets/lazy_loading.html</string>
-		<string>project/build/LiftInActionProject.scala</string>
+		<string>chapter-14/src/main/scala/sample/snippet/Service.scala</string>
+		<string>chapter-14/src/main/scala/sample/lib/DependencyInjection.scala</string>
+		<string>chapter-13/src/main/scala/sample/rabbit/BasicStringSender.scala</string>
+		<string>chapter-13/src/main/scala/sample/actor/RemoteAkkaSample.scala</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{635, 58}, {805, 820}}</string>
+	<string>{{272, 58}, {805, 820}}</string>
 </dict>
 </plist>

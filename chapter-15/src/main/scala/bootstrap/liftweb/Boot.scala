@@ -41,17 +41,7 @@ class Boot extends LazyLoggable {
     S.addAround(DB.buildLoanWrapper)
     
     // extended sessions
-    S.addAround(ExtendedSession.requestLoans)
-    LiftRules.liftRequest.append { 
-      case Req("classpath" :: _, _, _) => true
-      case Req("favicon" :: Nil, "ico", GetRequest) => false
-      case Req(_, "css", GetRequest) => false 
-      case Req(_, "js", GetRequest) => false 
-    }
-    
-    // comet configuration
-    // import net.liftweb.http.provider.servlet.containers.Jetty7AsyncProvider
-    // LiftRules.servletAsyncProvider = new Jetty7AsyncProvider(_)
+    LiftRules.earlyInStateful.append(ExtendedSession.testCookieEarlyInStateful)
     
     // exception handler
     LiftRules.exceptionHandler.prepend {
@@ -89,7 +79,7 @@ class Boot extends LazyLoggable {
   
   object Database extends StandardDBVendor(
     Props.get("db.class").openOr("org.h2.Driver"),
-    Props.get("db.url").openOr("jdbc:h2:mem:chapter_fourteen;DB_CLOSE_DELAY=-1"),
+    Props.get("db.url").openOr("jdbc:h2:mem:chapter_fifteen;DB_CLOSE_DELAY=-1"),
     Props.get("db.user"),
     Props.get("db.pass"))
 }

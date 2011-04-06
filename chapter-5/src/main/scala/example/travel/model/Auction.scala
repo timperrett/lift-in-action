@@ -4,7 +4,6 @@ import net.liftweb.common.{Full,Box,Empty,Failure}
 import net.liftweb.sitemap.Loc._
 import scala.xml.NodeSeq
 import net.liftweb.mapper._
-//import example.travel.lib.CurrentOrder
 import net.liftweb.util.Helpers._
 
 object Auction

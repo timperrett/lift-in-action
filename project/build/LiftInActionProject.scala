@@ -4,7 +4,7 @@ import eu.getintheloop.Native2AsciiPlugin
 import reaktor.scct.ScctProject
 
 class LiftInActionProject(info: ProjectInfo) extends ParentProject(info) with IdeaProject {
-  val liftVersion = "2.3-RC5"
+  val liftVersion = "2.3"
   val h2Version = "1.3.146"
   
   // implement the module definitions

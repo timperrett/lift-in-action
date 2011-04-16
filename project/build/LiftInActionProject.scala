@@ -74,6 +74,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info) with Id
       with DatabaseDrivers 
   {
     val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile"
+    val textile = "net.liftweb" %% "lift-textile" % liftVersion % "compile"
   }
   
   class ChapterEight(info: ProjectInfo) extends ProjectDefaults(info)

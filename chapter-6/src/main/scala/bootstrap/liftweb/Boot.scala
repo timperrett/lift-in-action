@@ -57,8 +57,8 @@ class Boot {
         Menu("Implementing LiftView sub-type") / "MyView" / "sample"
       ),
       Menu("Requests, Sessions & Cookies") / "state" / "index" submenus(
-        Menu("Implementing a RequestVar[Box[String]]") / "wizard" / "request_var",
-        Menu("Getting and setting a cookie value") / "wizard" / "cookie_handling"
+        Menu("Implementing a RequestVar[Box[String]]") / "state" / "request_var",
+        Menu("Getting and setting a cookie value") / "state" / "cookie_handling"
       ),
       Menu("LiftScreen and Wizard") / "wizard" / "index" submenus(
         Menu("Basic LiftScreen implementation") / "wizard" / "lift_screen_one",

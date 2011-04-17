@@ -9,10 +9,12 @@ object sample extends RequestVar[Box[String]](Empty)
 
 object RequestVarSample extends DispatchSnippet {
   def dispatch = {
-    case _ => render _
+    case _ => render 
   }
-  def render(xhtml: NodeSeq): NodeSeq = bind("f",xhtml,
-    "value" -> SHtml.text(sample.is.openOr(""), v => sample(Box.!!(v))),
-    "submit" -> SHtml.submit("Submit", () => println(sample.is))
-  )
+  def render = {
+    "type=text" #> SHtml.text(
+      sample.is.openOr(""), 
+      v => sample(Box.!!(v))) &
+    "type=submit" #> SHtml.onSubmitUnit(() => println(sample.is))
+  }
 }

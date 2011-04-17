@@ -6,31 +6,26 @@ import net.liftweb.util.Helpers._
 import net.liftweb.http.{DispatchSnippet,S,SHtml}
 import net.liftweb.http.provider.HTTPCookie
 
-// listing 6.15
+// listing 6.13
 class CookieSample extends DispatchSnippet {
   override def dispatch = {
-    case "add" => add _
-    case "delete" => delete _
+    case "add" => add 
+    case "delete" => delete 
     case _ => display _
   }
   
   private val cookieName = "liftinaction.sample"
   
-  private def action(does: String, using: () => Any, xhtml: NodeSeq) = 
-    bind("c",xhtml, 
-    "button" -> SHtml.submit(does, 
-      () => {using(); S.redirectTo(S.uri)}))
+  private def action(does: String, using: () => Any) = 
+    "*" #>  SHtml.submit(does, () => {using(); S.redirectTo(S.uri)})
   
-  def delete(xhtml: NodeSeq): NodeSeq = 
-    action("Delete Cookie", () => S.deleteCookie(cookieName), xhtml)
+  def delete = action("Delete Cookie", 
+    () => S.deleteCookie(cookieName))
   
-  def add(xhtml: NodeSeq): NodeSeq = 
-    action("Create Cookie", () => S.addCookie(
-      HTTPCookie(cookieName,"I love cookies")), xhtml)
+  def add = action("Create Cookie", () => S.addCookie(
+      HTTPCookie(cookieName,"I love cookies")))
   
-  def display(xhtml: NodeSeq): NodeSeq = 
-    S.findCookie(cookieName).map { cookie => 
+  def display(xhtml: NodeSeq) = S.findCookie(cookieName).map { cookie => 
       Text("Cookie found!: %s".format(cookie))
     } openOr Text("No cookie set.")
-  
 }

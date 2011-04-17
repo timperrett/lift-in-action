@@ -3,8 +3,7 @@
   <p>Well, thats just fantastic. See the form below if you want to update this value.</p>
   
   <h2>Update</h2>
-  <lift:words.update form="post">
-    <p>Word to distribute: <f:word /> <f:submit /></p>
-  </lift:words.update>
-  
+  <form lift="words.update?form=post">
+    <p>Word to distribute: <input type="text" /> <input type="submit" /></p>
+  </form>
 </lift:surround>

@@ -142,7 +142,7 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info) with Id
       extends ProjectDefaults(info) 
       with DatabaseDrivers 
   {
-    val ostrich = "com.twitter" % "ostrich" % "2.3.6" % "compile"
+    val ostrich = "com.twitter" % "ostrich" % "4.1.0" % "compile"
     val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile"
   }
   
@@ -194,6 +194,8 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info) with Id
     import Repositories._
     // module Configurations
     lazy val localMavenRepo           = MavenLocal
+    lazy val avalonModuleConfig       = ModuleConfiguration("avalon-framework", MavenCentral)
+    lazy val logkitModuleConfig       = ModuleConfiguration("logkit", MavenCentral)
     lazy val liftModuleConfig         = ModuleConfiguration("net.liftweb", ScalaToolsReleases)
     lazy val scalaTestModuleConfig    = ModuleConfiguration("org.scalatest", ScalaToolsReleases)
     lazy val specsModuleConfig        = ModuleConfiguration("org.scala-tools.testing", ScalaToolsReleases)

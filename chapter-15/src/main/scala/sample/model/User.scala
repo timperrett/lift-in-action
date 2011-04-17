@@ -4,7 +4,7 @@ import scala.xml.{NodeSeq,Node}
 import net.liftweb.common.{Full,Box,Empty,Failure,Loggable}
 import net.liftweb.sitemap.Loc._
 import net.liftweb.mapper._
-import com.twitter.ostrich.Stats
+import com.twitter.ostrich.stats.Stats
 
 object User extends User 
     with KeyedMetaMapper[Long, User]

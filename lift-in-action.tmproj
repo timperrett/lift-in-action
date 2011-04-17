@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>chapter-8/src/main/scala/sample/lib/BasicDispatchUsage.scala</string>
+	<string>chapter-6/src/main/webapp/snippets/lazy_loading.html</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -35,51 +35,7 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>chapter-6/src/main/scala/bootstrap/liftweb/Boot.scala</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>48</integer>
-				<key>line</key>
-				<integer>5</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>45</integer>
-				<key>line</key>
-				<integer>5</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>70</integer>
-				<key>line</key>
-				<integer>5</integer>
-			</dict>
-		</dict>
-		<key>chapter-6/src/main/webapp/index.html</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>45</integer>
-				<key>line</key>
-				<integer>1</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>chapter-6/src/main/webapp/templates-hidden/single_bind.html</key>
+		<key>chapter-6/src/main/scala/sample/snippet/LazyLoading.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
@@ -93,14 +49,28 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>chapter-8/src/main/scala/sample/lib/BasicDispatchUsage.scala</key>
+		<key>chapter-6/src/main/webapp/snippets/intermediate_example.html</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>9</integer>
+				<integer>3</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>chapter-6/src/main/webapp/snippets/lazy_loading.html</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>16</integer>
+				<key>line</key>
+				<integer>11</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -119,35 +89,64 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>2</integer>
+			<integer>0</integer>
 		</dict>
-		<key>chapter-9/src/main/scala/sample/snippet/BasicAJAX.scala</key>
+		<key>chapter-9/src/main/scala/bootstrap/liftweb/Boot.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>23</integer>
+				<integer>4</integer>
 				<key>line</key>
-				<integer>16</integer>
+				<integer>11</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
+		<key>chapter-9/src/main/scala/sample/comet/Clock.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>22</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>chapter-9/src/main/scala/sample/comet/RockPaperScissors.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>40</integer>
+				<key>line</key>
+				<integer>137</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>112</integer>
+		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>chapter-6/src/main/scala/bootstrap/liftweb/Boot.scala</string>
-		<string>chapter-6/src/main/webapp/index.html</string>
-		<string>chapter-6/src/main/webapp/templates-hidden/single_bind.html</string>
-		<string>chapter-9/src/main/scala/sample/snippet/BasicAJAX.scala</string>
-		<string>chapter-8/src/main/scala/sample/lib/BasicDispatchUsage.scala</string>
 		<string>chapter-8/src/main/scala/sample/lib/RestExampleAdvanced.scala</string>
+		<string>chapter-9/src/main/scala/bootstrap/liftweb/Boot.scala</string>
+		<string>chapter-9/src/main/scala/sample/comet/Clock.scala</string>
+		<string>chapter-9/src/main/scala/sample/comet/RockPaperScissors.scala</string>
+		<string>chapter-6/src/main/scala/sample/snippet/LazyLoading.scala</string>
+		<string>chapter-6/src/main/webapp/snippets/lazy_loading.html</string>
+		<string>chapter-6/src/main/webapp/snippets/intermediate_example.html</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{620, 58}, {805, 820}}</string>
+	<string>{{348, 181}, {876, 673}}</string>
 </dict>
 </plist>

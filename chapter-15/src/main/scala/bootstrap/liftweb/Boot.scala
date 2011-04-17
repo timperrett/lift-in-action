@@ -13,8 +13,8 @@ import net.liftweb.mapper.{StandardDBVendor,MapperRules,DefaultConnectionIdentif
 import sample.model.{User,ExtendedSession}
 
 // jmx monitoring
-import com.twitter.ostrich.{RuntimeEnvironment, ServiceTracker, Stats, StatsMBean, Service}
-import net.lag.configgy.Config
+// import com.twitter.ostrich.{RuntimeEnvironment, ServiceTracker, Stats, StatsMBean, Service}
+// import net.lag.configgy.Config
 
 class Boot extends LazyLoggable {
   def boot {
@@ -48,20 +48,24 @@ class Boot extends LazyLoggable {
       case (Props.RunModes.Production, _, exception) => RedirectResponse("/error")
     }
     
-    StatsMBean("manning.lia.sample")
+    /**
+     * Startup and shutdown the Ostrich server
+     * when the application cycles
+     */
+    OstrichWebAdmin.service
     
-    // jmx monitoring
-    //if (Props.getBool("jmx.enable", false))
-    logger.info("Booting Ostrich...")
-    val runtime = new RuntimeEnvironment(getClass)
-    var config = new Config
-    config("admin_http_port") = 9990
+    LiftRules.unloadHooks.append(
+      () => OstrichWebAdmin.service.foreach(_.shutdown))
+    
+    import com.twitter.ostrich._,
+      admin.ServiceTracker,
+      stats.Stats
+    
     ServiceTracker.register(RequestTimer)
-    ServiceTracker.startAdmin(config, runtime)
     
     // unfortunatly there is an issue with making a !? call here and 
     // ostrich doesnt like it. I'll look into it.
-    Stats.makeGauge("current_session_count"){ 
+    Stats.addGauge("current_session_count"){ 
       SessionMonitor.count.toDouble
     }
     
@@ -82,17 +86,34 @@ class Boot extends LazyLoggable {
     Props.get("db.url").openOr("jdbc:h2:mem:chapter_fifteen;DB_CLOSE_DELAY=-1"),
     Props.get("db.user"),
     Props.get("db.pass"))
+  
+  import com.twitter.ostrich._, 
+    admin.{RuntimeEnvironment},
+    admin.config.{StatsConfig,AdminServiceConfig,TimeSeriesCollectorConfig}
+  
+  object OstrichWebAdmin extends AdminServiceConfig { 
+    httpPort = 9990 
+    statsNodes = new StatsConfig {
+      reporters = new TimeSeriesCollectorConfig
+    }
+    lazy val service = 
+      super.apply()(new RuntimeEnvironment(this))
+  }
 }
 
-// case object GimmehCount
+// final case object GimmehCount
 object SessionMonitor extends LiftActor {
   private var sessionSize = 0
   protected def messageHandler = {
     case SessionWatcherInfo(sessions) => sessionSize = sessions.size
-    //case GimmehCount => sessionSize
+    // case GimmehCount => sessionSize.toDouble
   }
   def count = sessionSize
 }
+
+import com.twitter.ostrich._, 
+  stats.Stats,
+  admin.Service
 
 object RequestTimer extends Service {
   object startTime extends RequestVar(0L)
@@ -103,8 +124,9 @@ object RequestTimer extends Service {
   
   def endServicing(session: LiftSession, req: Req, response: Box[LiftResponse]) {
     val delta = Helpers.millis - startTime.is
-    Stats.addTiming("request_duration", delta.toInt)
+    Stats.addMetric("request_duration", delta.toInt)
   }
-  def shutdown(){}
-  def quiesce(){}
+  override def start(){}
+  override def shutdown(){}
+  override def quiesce(){}
 }

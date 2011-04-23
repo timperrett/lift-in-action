@@ -44,8 +44,10 @@ trait AuctionInstanceHelpers extends AuctionHelpers {
  */
 trait AuctionHelpers extends Loggable {
   
-  protected def many(auctions: List[Auction], xhtml: NodeSeq): NodeSeq = 
-    auctions.flatMap(a => single(a,xhtml))
+  // protected def many(auctions: List[Auction], xhtml: NodeSeq): NodeSeq = 
+  //   auctions.flatMap(a => single(a,xhtml))
+  
+  protected def many(auctions: List[Auction]) = auctions.map(a => single(a))
   
   protected def boxToNotice[T](sucsess: String, warning: String)(f: => Box[T]){
     f match {
@@ -58,24 +60,36 @@ trait AuctionHelpers extends Loggable {
     }
   }
   
-  protected def single(auction: Auction, xhtml: NodeSeq): NodeSeq =
-    bind("a", xhtml,
-      "name" -> auction.name,
-      "description" -> TextileParser.toHtml(auction.description),
-      "winning_customer" -> winningCustomer(auction),
-      "travel_dates" -> auction.travelDates,
-      "link" -%> <a href={"/auction/" +
-        auction.id.toString+"-"+auction.permanent_link}>details >></a>
-    )
+  
+  /** 
+   * In reality i'd build these types of functions as a type class,
+   * but that's really too much complexity to be introducted at this level
+   */
+  protected def single(auction: Auction) = 
+    ".name" #> auction.name &
+    ".description" #> TextileParser.toHtml(auction.description) & 
+    ".winning_customer" #> winningCustomer(auction) &
+    ".travel_dates" #> auction.travelDates & 
+    "a[href]" #> "/auction/%s".format(auction.id.toString) 
+  
+  // protected def single(auction: Auction, xhtml: NodeSeq): NodeSeq =
+  //   bind("a", xhtml,
+  //     "name" -> auction.name,
+  //     "description" -> TextileParser.toHtml(auction.description),
+  //     "winning_customer" -> winningCustomer(auction),
+  //     "travel_dates" -> auction.travelDates,
+  //     "link" -%> <a href={"/auction/" +
+  //       auction.id.toString+"-"+auction.permanent_link}>details >></a>
+  //   )
     
-  protected def single(box: Box[Auction], xhtml: NodeSeq): NodeSeq = 
-    single(box.openOr(new Auction), xhtml)
+  // protected def single(box: Box[Auction], xhtml: NodeSeq): NodeSeq = 
+  //   single(box.openOr(new Auction), xhtml)
   
   
   /**
    * Has the auction in the auction in the current request expired?
    */
-  protected def hasExpired_?(a: Box[Auction]) : Boolean = a.map(_.expired_?).openOr(true)
+  protected def hasExpired_?(a: Box[Auction]): Boolean = a.map(_.expired_?).openOr(true)
 
   /**
    * Obtain the currently leading bid for the auction in the request scope

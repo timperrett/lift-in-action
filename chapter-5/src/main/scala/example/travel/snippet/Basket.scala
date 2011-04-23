@@ -12,6 +12,9 @@ package snippet {
     private lazy val items = 
       Customer.currentUser.flatMap(_.order.map(_.order_auctions.all)).openOr(Nil)
     
+    // def items =
+    //   ""
+    
     def items(xhtml: NodeSeq): NodeSeq = items.flatMap(oa => 
       bind("a", single(oa.auction.obj,xhtml))
     )

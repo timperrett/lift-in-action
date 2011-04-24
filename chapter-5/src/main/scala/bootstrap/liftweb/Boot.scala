@@ -85,7 +85,7 @@ class Boot extends Loggable {
 
     LiftRules.statelessRewrite.append {
       case RewriteRequest(ParsePath("auction" :: key :: Nil,"",true,_),_,_) =>
-           RewriteResponse("auction" :: Nil, Map("id" -> key.split("-")(0)))
+           RewriteResponse("auction" :: Nil, Map("id" -> key))
     }
     
   }

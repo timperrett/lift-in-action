@@ -44,10 +44,10 @@ class AuctionMachine extends ProtoStateMachine[AuctionMachine, AuctionStates.typ
   }
   
   override def transition(from: AuctionStates.Value, to: StV, why: Meta#Event){
-    println("AuctionMachine.transition() from= " + from + " to= " + to + " why= " + why + " for auction " + auction)
+    // println("AuctionMachine.transition() from= " + from + " to= " + to + " why= " + why + " for auction " + auction)
     (from, to, auction.obj) match {
       case (AuctionStates.Initial, AuctionStates.Active, _) =>
-        println("Initial to Active")
+        // println("Initial to Active")
       case (AuctionStates.Active, AuctionStates.Expired, Full(auc)) => {
         auc.attributeToWinningCustomer
         auc.close

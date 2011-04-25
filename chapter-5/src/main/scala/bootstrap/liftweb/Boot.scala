@@ -39,7 +39,7 @@ class Boot extends Loggable {
       Bid, Auction, Supplier, Customer, Order, OrderAuction, AuctionMachine)
 
     // setup the loan pattern
-    S.addAround(DB.buildLoanWrapper)
+    // S.addAround(DB.buildLoanWrapper)
 
     /**** user experience settings ****/
 
@@ -62,8 +62,8 @@ class Boot extends Loggable {
     LiftRules.setSiteMap(SiteMap(List(
       Menu("Home") / "index" >> LocGroup("public"),
       Menu("Auctions") / "auctions" >> LocGroup("public"),
-      Menu("Search") / "search" >> LocGroup("public") >> MustBeLoggedIn,
-      Menu("History") / "history" >> LocGroup("public") >> MustBeLoggedIn,
+      // Menu("Search") / "search" >> LocGroup("public") >> MustBeLoggedIn,
+      // Menu("History") / "history" >> LocGroup("public") >> MustBeLoggedIn,
       Menu("Auction Detail") / "auction" >> LocGroup("public") >> Hidden,
       Menu("Checkout") / "checkout" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
       Menu("Checkout Finalize") / "summary" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
@@ -87,12 +87,11 @@ class Boot extends Loggable {
       case RewriteRequest(ParsePath("auction" :: key :: Nil,"",true,_),_,_) =>
            RewriteResponse("auction" :: Nil, Map("id" -> key))
     }
-    
   }
   
   object Database extends StandardDBVendor(
     Props.get("db.class").openOr("org.h2.Driver"),
-    Props.get("db.url").openOr("jdbc:h2:database/chapter_5;DB_CLOSE_DELAY=-1"),
+    Props.get("db.url").openOr("jdbc:h2:database/temp"),
     Props.get("db.user"),
     Props.get("db.pass"))
 }

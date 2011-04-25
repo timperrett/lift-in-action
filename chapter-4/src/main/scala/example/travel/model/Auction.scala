@@ -12,8 +12,8 @@ object Auction
   with LongKeyedMetaMapper[Auction]
   with CRUDify[Long,Auction]{
     override def dbTableName = "auctions"
-    override def fieldOrder = List(name,description,ends_at,
-      outbound_on,inbound_on,flying_from,permanent_link,is_closed)
+    override def fieldOrder = List(name,description,endsAt,
+      outboundOn,inboundOn,flyingFrom,permanent_link,isClosed)
     
     // crudify
     override def pageWrapper(body: NodeSeq) = 
@@ -37,12 +37,12 @@ class Auction extends LongKeyedMapper[Auction] with IdPK with CreatedUpdated {
       super.validations
   }
   object description extends MappedText(this)
-  object ends_at extends MappedDateTime(this)
-  object outbound_on extends MappedDateTime(this)
-  object inbound_on extends MappedDateTime(this)
-  object flying_from extends MappedString(this, 100)
+  object endsAt extends MappedDateTime(this)
+  object outboundOn extends MappedDateTime(this)
+  object inboundOn extends MappedDateTime(this)
+  object flyingFrom extends MappedString(this, 100)
   object permanent_link extends MappedString(this, 150)
-  object is_closed extends MappedBoolean(this)
+  object isClosed extends MappedBoolean(this)
   
   // relationships
   object supplier extends LongMappedMapper(this, Supplier){
@@ -65,7 +65,7 @@ class Auction extends LongKeyedMapper[Auction] with IdPK with CreatedUpdated {
       new Bid().auction(this).customer(Customer.currentUser).amount(vld).saveMe
     }
   
-  def expired_? : Boolean = ends_at.is.getTime < now.getTime
+  def expired_? : Boolean = endsAt.is.getTime < now.getTime
   
   def winningCustomer: Box[Customer] = topBid.flatMap(_.customer.obj)
   
@@ -76,7 +76,7 @@ class Auction extends LongKeyedMapper[Auction] with IdPK with CreatedUpdated {
   def currentAmount: Box[Double] = topBid.map(_.amount.is)
   def nextAmount: Box[Double] = currentAmount.map(_ + 1D)
   
-  def travelDates: String = (Box.!!(inbound_on.is), Box.!!(outbound_on.is)) match {
+  def travelDates: String = (Box.!!(inboundOn.is), Box.!!(outboundOn.is)) match {
     case (Full(in), Full(out)) => out.toString + ", returning " + in.toString
     case (Empty,Full(out)) => out.toString + " (one way)"
     case _ => "Travel dates not specified, call the vendor."

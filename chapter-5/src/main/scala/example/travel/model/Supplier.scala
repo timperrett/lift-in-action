@@ -33,7 +33,7 @@ class Supplier extends LongKeyedMapper[Supplier]
   
   // relationships
   object auctions extends MappedOneToMany(Auction, Auction.supplier, 
-    OrderBy(Auction.ends_at, Descending)) 
+    OrderBy(Auction.endsAt, Descending)) 
       with Owned[Auction] 
       with Cascade[Auction] 
 }

@@ -19,11 +19,13 @@ object Customer extends Customer
   override def homePage = "/"
   override def skipEmailValidation = true
   override def loginMenuLocParams = LocGroup("public") :: super.loginMenuLocParams
+  override def logoutMenuLocParams = LocGroup("public") :: super.logoutMenuLocParams
   override def createUserMenuLocParams = LocGroup("public") :: super.createUserMenuLocParams
   override def screenWrap: Box[Node] = 
     Full(
       <lift:surround with="default" at="content">
         <div id="box1" class="topbg">
+          <lift:msgs showAll="true" />
           <lift:bind />
         </div>
         <lift:with-param name="sidebar">

@@ -37,7 +37,7 @@ class AuctionUpdater extends CometActor with AuctionInstanceHelpers {
    */
   def countdown = 
     if(hasExpired_?) Text("This auction has ended.") 
-    else Text(TimeSpan.format((auction.map(_.ends_at.is.getTime).openOr(now.getTime) - now.getTime) / 1000L * 1000L))
+    else Text(TimeSpan.format((auction.map(_.endsAt.is.getTime).openOr(now.getTime) - now.getTime) / 1000L * 1000L))
   
   def notifyOtherAuctionUpdate {
     warning("You have been outbid on an auction you are participating in")

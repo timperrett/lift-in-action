@@ -3,13 +3,16 @@ package lib
 
 import example.travel.model.Auction
 import scala.xml.{NodeSeq,Text}
-import net.liftweb.util.Helpers._
-import net.liftweb.textile.TextileParser
-import net.liftweb.common.{Full,Box,Empty,Failure,Loggable}
-import net.liftweb.mapper.{By}
-import net.liftweb.http.{S,SessionVar}
-import net.liftweb.http.js.JsCmd
-import net.liftweb.http.js.JsCmds.Noop
+
+import net.liftweb._,
+  common.{Full,Box,Empty,Failure,Loggable},
+  util.Helpers._,
+  util.CssSel,
+  http.{S,SessionVar},
+  http.js.JsCmd,
+  http.js.JsCmds.Noop,
+  mapper.{By},
+  textile.TextileParser
 
 trait AuctionInstanceHelpers extends AuctionHelpers {
   
@@ -44,10 +47,22 @@ trait AuctionInstanceHelpers extends AuctionHelpers {
  */
 trait AuctionHelpers extends Loggable {
   
-  // protected def many(auctions: List[Auction], xhtml: NodeSeq): NodeSeq = 
-  //   auctions.flatMap(a => single(a,xhtml))
-  
   protected def many(auctions: List[Auction]) = auctions.map(a => single(a))
+  
+  /** 
+   * In reality i'd build these types of functions as a type class,
+   * but that's really too much complexity to be introducted at this level
+   */
+  protected def single(auction: Auction): CssSel = 
+    ".name *" #> auction.name &
+    ".desc" #> TextileParser.toHtml(auction.description) & 
+    "#winning_customer" #> winningCustomer(auction) &
+    "#travel_dates" #> auction.travelDates & 
+    "a [href]" #> "/auction/%s".format(auction.id.toString) 
+
+    
+  protected def single(box: Box[Auction]): CssSel = 
+    single(box.openOr(new Auction))
   
   protected def boxToNotice[T](sucsess: String, warning: String)(f: => Box[T]){
     f match {
@@ -59,32 +74,6 @@ trait AuctionHelpers extends Loggable {
         S.warning(warning)
     }
   }
-  
-  
-  /** 
-   * In reality i'd build these types of functions as a type class,
-   * but that's really too much complexity to be introducted at this level
-   */
-  protected def single(auction: Auction) = 
-    ".name" #> auction.name &
-    ".description" #> TextileParser.toHtml(auction.description) & 
-    ".winning_customer" #> winningCustomer(auction) &
-    ".travel_dates" #> auction.travelDates & 
-    "a[href]" #> "/auction/%s".format(auction.id.toString) 
-  
-  // protected def single(auction: Auction, xhtml: NodeSeq): NodeSeq =
-  //   bind("a", xhtml,
-  //     "name" -> auction.name,
-  //     "description" -> TextileParser.toHtml(auction.description),
-  //     "winning_customer" -> winningCustomer(auction),
-  //     "travel_dates" -> auction.travelDates,
-  //     "link" -%> <a href={"/auction/" +
-  //       auction.id.toString+"-"+auction.permanent_link}>details >></a>
-  //   )
-    
-  // protected def single(box: Box[Auction], xhtml: NodeSeq): NodeSeq = 
-  //   single(box.openOr(new Auction), xhtml)
-  
   
   /**
    * Has the auction in the auction in the current request expired?

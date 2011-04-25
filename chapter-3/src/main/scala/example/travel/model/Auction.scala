@@ -10,8 +10,8 @@ object Auction
   with LongKeyedMetaMapper[Auction]
   with CRUDify[Long,Auction]{
     override def dbTableName = "auctions"
-    override def fieldOrder = List(name,description,ends_at,
-      outbound_on,inbound_on,flying_from,permanent_link,is_closed)
+    override def fieldOrder = List(name,description,endsAt,
+      outboundOn,inboundOn,flyingFrom,permanent_link,isClosed)
     
     // crudify
     override def pageWrapper(body: NodeSeq) = 
@@ -30,12 +30,12 @@ class Auction extends LongKeyedMapper[Auction] with IdPK with CreatedUpdated {
   // fields
   object name extends MappedString(this, 150)
   object description extends MappedText(this)
-  object ends_at extends MappedDateTime(this)
-  object outbound_on extends MappedDateTime(this)
-  object inbound_on extends MappedDateTime(this)
-  object flying_from extends MappedString(this, 100)
+  object endsAt extends MappedDateTime(this)
+  object outboundOn extends MappedDateTime(this)
+  object inboundOn extends MappedDateTime(this)
+  object flyingFrom extends MappedString(this, 100)
   object permanent_link extends MappedString(this, 150)
-  object is_closed extends MappedBoolean(this)
+  object isClosed extends MappedBoolean(this)
   
   // relationships
   object supplier extends LongMappedMapper(this, Supplier){

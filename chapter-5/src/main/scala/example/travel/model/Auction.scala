@@ -10,19 +10,35 @@ object Auction
   extends Auction 
   with LongKeyedMetaMapper[Auction]
   with CRUDify[Long,Auction]{
+    
     override def dbTableName = "auctions"
-    override def fieldOrder = List(name,description,ends_at,
-      outbound_on,inbound_on,flying_from,permanent_link,starting_amount,is_closed)
+    override def fieldOrder = List(name,description,endsAt,
+      outboundOn,inboundOn,flyingFrom,startingAmount,isClosed)
+    
+    override def dbAddTable = Full(populate _)
+    private def populate {
+      val airports = List("Bristol", "London Heathrow", "Paris", "New York")
+      for(l <- 'A' to 'Z')
+        Auction.create
+          .name("Trip %s".format(l))
+          .description("""utpat vel aliquam eget, auctor ac nisl. Curabitur laoreet urna consectetur utpat vel aliquam eget, auctor ac nisl. Curabitur laoreet urna consectetur lectus faucibus ultricies. Maecenas nec lectus et dui sodales ultricies. Fusce eu pulvinar ipsum. In varius euismod lectus. Suspendisse potenti. Integer velit nisl, iaculis in aliquet non""")
+          .flyingFrom(airports.apply(scala.util.Random.nextInt(3)))
+          .isClosed(false)
+          .startingAmount(1.0D)
+          .save
+    }
     
     // life cycle
-    override def beforeCreate = List(_.ends_at(TimeSpan(now.getTime + duration.toMillis)))
+    override def beforeCreate = List(_.endsAt(duration.later.toDate))
     override def afterCreate = List(
-      a => new Bid().amount(a.starting_amount.is).auction(a).save,
-      a => AuctionMachine.createNewInstance(AuctionMachine.FirstEvent, Full(_.auction(a)))
+      a => new Bid().amount(a.startingAmount.is).auction(a).save,
+      a => AuctionMachine.createNewInstance(AuctionMachine.FirstEvent, Full(_.auction(a))),
+      a => println(">>> " + a.endsAt.is)
     )
     
     //val duration = 1 minutes
-    val duration = 5 minutes
+    // val duration = 5 minutes
+    val duration = 2.hours
     // val duration = 24 hours
     // val duration = 48 hours
     
@@ -48,13 +64,13 @@ class Auction extends LongKeyedMapper[Auction] with CreatedUpdated with IdPK {
       super.validations
   }
   object description extends MappedText(this)
-  object ends_at extends MappedDateTime(this)
-  object outbound_on extends MappedDateTime(this)
-  object inbound_on extends MappedDateTime(this)
-  object flying_from extends MappedString(this, 100)
-  object permanent_link extends MappedString(this, 150)
-  object is_closed extends MappedBoolean(this)
-  object starting_amount extends MappedDouble(this)
+  object endsAt extends MappedDateTime(this)
+  object outboundOn extends MappedDateTime(this)
+  object inboundOn extends MappedDateTime(this)
+  object flyingFrom extends MappedString(this, 100)
+  // object permanentLink extends MappedString(this, 150)
+  object isClosed extends MappedBoolean(this)
+  object startingAmount extends MappedDouble(this)
   
   // relationships
   object supplier extends LongMappedMapper(this, Supplier){
@@ -76,7 +92,7 @@ class Auction extends LongKeyedMapper[Auction] with CreatedUpdated with IdPK {
       new Bid().auction(this).customer(Customer.currentUser).amount(vld).saveMe
     }
   
-  def expired_? : Boolean = if(!is_closed.is) ends_at.is.getTime < now.getTime else true
+  def expired_? : Boolean = if(!isClosed.is) endsAt.is.getTime < now.getTime else true
   
   def winningCustomer: Box[Customer] = topBid.flatMap(_.customer.obj)
   
@@ -87,15 +103,15 @@ class Auction extends LongKeyedMapper[Auction] with CreatedUpdated with IdPK {
   def currentAmount: Box[Double] = topBid.map(_.amount.is)
   def nextAmount: Box[Double] = currentAmount.map(_ + 1D)
   
-  def travelDates: String = (Box.!!(inbound_on.is), Box.!!(outbound_on.is)) match {
+  def travelDates: String = (Box.!!(inboundOn.is), Box.!!(outboundOn.is)) match {
     case (Full(in), Full(out)) => out.toString + ", returning " + in.toString
     case (Empty,Full(out)) => out.toString + " (one way)"
     case _ => "Travel dates not specified, call the vendor."
   }
   
-  def expires_at: TimeSpan = TimeSpan(((ends_at.is.getTime - now.getTime) / 1000L * 1000L))
+  def expires_at: TimeSpan = TimeSpan(((endsAt.is.getTime - now.getTime) / 1000L * 1000L))
   
-  def close: Boolean = this.is_closed(true).save
+  def close: Boolean = this.isClosed(true).save
   
   def attributeToWinningCustomer {
     println("Attributing auction to the winning customer")

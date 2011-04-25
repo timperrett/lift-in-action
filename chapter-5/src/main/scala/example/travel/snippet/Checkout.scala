@@ -14,10 +14,7 @@ object Checkout extends LiftScreen {
   addFields(() => order.shippingAddressCounty)
   
   def finish(){
-    if(order.save){
-      S.redirectTo("summary")
-    } else {
-      S.error("Unable to save order details")
-    }
+    if(order.save) S.redirectTo("summary")
+    else S.error("Unable to save order details")
   }
 }

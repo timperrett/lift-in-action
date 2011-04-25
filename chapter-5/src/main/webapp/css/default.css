@@ -226,6 +226,7 @@ hr { display: none; }
 .auction .description {
   clear: both;
   padding-top: 20px;
+  font-size: 13px;
 /*  background-color: red;*/
 }
 

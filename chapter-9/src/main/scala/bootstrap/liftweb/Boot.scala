@@ -28,6 +28,7 @@ class Boot {
       Menu("Basic AJAX") / "basic_ajax",
       Menu("Sophisticated AJAX") / "more_ajax",
       Menu("JSON Form") / "json_form",
+      Menu("LiftScreen AJAX") / "lift_screen_ajax",
       Menu("Wiring: Basic") / "simple_wiring",
       Menu("Comet: Rock, Paper, Scissors") / "rock_paper_scissors"
     )

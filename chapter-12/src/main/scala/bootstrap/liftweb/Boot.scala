@@ -41,6 +41,13 @@ class Boot extends LazyLoggable {
       }).openOr(Locale.getDefault))
     
     /**
+     * Log a wanring in the case that a translation key is missing.
+     */
+    LiftRules.localizationLookupFailureNotice = 
+      Full((key,locale) => 
+        logger.warn("No translation for %s exists for %s".format(key,locale.getDisplayName)))
+    
+    /**
      * Build the sitemap
      */
     LiftRules.setSiteMap(SiteMap(

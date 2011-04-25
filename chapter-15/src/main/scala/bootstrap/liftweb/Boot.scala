@@ -94,8 +94,8 @@ class Boot extends LazyLoggable {
   object OstrichWebAdmin extends AdminServiceConfig { 
     httpPort = 9990 
     statsNodes = new StatsConfig {
-      reporters = new TimeSeriesCollectorConfig
-    }
+      reporters = new TimeSeriesCollectorConfig :: Nil
+    } :: Nil
     lazy val service = 
       super.apply()(new RuntimeEnvironment(this))
   }

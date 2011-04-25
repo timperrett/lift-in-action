@@ -1,4 +1,5 @@
-package example.travel.snippet
+package example.travel
+package snippet
 
 import net.liftweb.util.Props
 

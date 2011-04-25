@@ -4,7 +4,7 @@ import scala.xml.NodeSeq
 import net.liftweb.common.Box
 import net.liftweb.http.{LiftScreen,S,SHtml}
 
-object AskAboutIceCreamOne extends LiftScreen {
+class AskAboutIceCreamOne extends LiftScreen {
   val flavor = field("What's your favorite Ice cream flavor", "")
   def finish(){
     S.notice("I like "+flavor.is+" too!")

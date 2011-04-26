@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false" debug="false">
+  <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>[%4p] [%d{ISO8601}] [%t] %c{1}: %m%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="R" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <File>./logs/lia.log</File>
+    <encoder>
+      <pattern>[%4p] [%t] %c: %m%n</pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>./logs/akka.log.%d{yyyy-MM-dd-HH}</fileNamePattern>
+    </rollingPolicy>
+  </appender>
+  <logger name="akka" level="INFO"/>
+  <root level="INFO">
+    <appender-ref ref="stdout"/>
+    <appender-ref ref="R"/>
+  </root>
+</configuration>

@@ -5,7 +5,7 @@ import net.liftweb.common.{Full,Box,Empty,Failure}
 import net.liftweb.sitemap.Loc._
 import scala.xml.NodeSeq
 import net.liftweb.mapper._
-import net.liftweb.util.Helpers.{tryo,now}
+import net.liftweb.util.Helpers._
 
 object Auction 
   extends Auction 
@@ -24,6 +24,8 @@ object Auction
           .description("""utpat vel aliquam eget, auctor ac nisl. Curabitur laoreet urna consectetur utpat vel aliquam eget, auctor ac nisl. Curabitur laoreet urna consectetur lectus faucibus ultricies. Maecenas nec lectus et dui sodales ultricies. Fusce eu pulvinar ipsum. In varius euismod lectus. Suspendisse potenti. Integer velit nisl, iaculis in aliquet non""")
           .flyingFrom(airports.apply(scala.util.Random.nextInt(3)))
           .isClosed(false)
+          .startingAmount(1.0D)
+          .endsAt(2.hours.later.toDate)
           .save
     }
     
@@ -54,6 +56,7 @@ class Auction extends LongKeyedMapper[Auction] with IdPK with CreatedUpdated {
   object inboundOn extends MappedDateTime(this)
   object flyingFrom extends MappedString(this, 100)
   object isClosed extends MappedBoolean(this)
+  object startingAmount extends MappedDouble(this)
   
   // relationships
   object supplier extends LongMappedMapper(this, Supplier){

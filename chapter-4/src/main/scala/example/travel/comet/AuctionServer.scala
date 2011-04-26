@@ -20,10 +20,10 @@ object AuctionServer extends LiftActor {
    */ 
   override def messageHandler = {
     case ListenTo(actor,auctions) => 
-      println("Actor ("+actor.hashCode+") listening to: "+ auctions.map(_.toString).mkString(","))
+      // println("Actor ("+actor.hashCode+") listening to: "+ auctions.map(_.toString).mkString(","))
       cometActorAuctions = cometActorAuctions + (actor -> auctions) 
     case msg@NewBid(auction,amount,session) => 
-      println("New bid recived for auction " + auction.toString + ", " + amount.toString)
+      // println("New bid recived for auction " + auction.toString + ", " + amount.toString)
       auctionCometActors(auction).foreach(_ ! msg)
   }
   

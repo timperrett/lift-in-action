@@ -2,14 +2,16 @@ package example.travel
 package comet
 
 import scala.xml.{NodeSeq,Text}
-import net.liftweb.common.{Full,Empty,Failure,Box}
-import net.liftweb.http.CometActor
-import net.liftweb.util.Helpers._
-import net.liftweb.util.Schedule
-import net.liftweb.http.S
-import net.liftweb.http.js.JsCmds._
-import example.travel.model.{Auction,Customer}
-import example.travel.lib.AuctionInstanceHelpers
+import net.liftweb._,
+  common.{Full,Empty,Failure,Box},
+  util.Schedule,
+  http.{CometActor,S},
+  util.Helpers._,
+  http.js.JsCmds._,
+  http.js.jquery.JqJsCmds.FadeOut
+import example.travel._, 
+  model.{Auction,Customer}, 
+  lib.AuctionInstanceHelpers
 
 // messages
 case object CountdownTick
@@ -26,6 +28,7 @@ class AuctionUpdater extends CometActor with AuctionInstanceHelpers {
   private lazy val currentAmountId = "current_amount"
   private lazy val winningCustomerId = "winning_customer"
   private lazy val amountId = "amount"
+  //private lazy val biddingFormId = "bidding-form"
   // helpers
   private val server = AuctionServer
   private var _auction: Box[Auction] = Empty
@@ -63,7 +66,8 @@ class AuctionUpdater extends CometActor with AuctionInstanceHelpers {
   override def lowPriority = {
     case CountdownTick => {
       partialUpdate(SetHtml(countdownId, countdown))
-      if(!hasExpired_?) Schedule.schedule(this, CountdownTick, 5 seconds)
+      if(!hasExpired_?)
+        Schedule.schedule(this, CountdownTick, 5 seconds)
     }
     case CurrentAuction(a) => 
       _auction = a
@@ -86,4 +90,3 @@ class AuctionUpdater extends CometActor with AuctionInstanceHelpers {
   }
   
 }
-

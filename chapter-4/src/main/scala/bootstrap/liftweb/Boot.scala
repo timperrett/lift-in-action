@@ -54,8 +54,6 @@ class Boot extends Loggable {
     LiftRules.setSiteMap(SiteMap(List(
       Menu("Home") / "index" >> LocGroup("public"),
       Menu("Auctions") / "auctions" >> LocGroup("public"),
-      Menu("Search") / "search" >> LocGroup("public") >> MustBeLoggedIn,
-      Menu("History") / "history" >> LocGroup("public") >> MustBeLoggedIn,
       Menu("Auction Detail") / "auction" >> LocGroup("public") >> Hidden,
       // admin
       Menu("Admin") / "admin" / "index" >> LocGroup("admin"),

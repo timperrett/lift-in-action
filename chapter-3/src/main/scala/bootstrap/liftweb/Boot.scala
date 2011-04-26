@@ -11,7 +11,6 @@ import net.liftweb.mapper.{DB,Schemifier,DefaultConnectionIdentifier,StandardDBV
 
 // app imports
 import example.travel.model.{Auction,Supplier,Customer,Bid,Order,OrderAuction}
-// import example.travel.lib.{Helpers}
 
 class Boot extends Loggable {
   def boot {
@@ -42,8 +41,6 @@ class Boot extends Loggable {
     
     LiftRules.setSiteMap(SiteMap(List(
       Menu("Home") / "index" >> LocGroup("public"),
-      Menu("Search") / "search" >> LocGroup("public"),
-      Menu("History") / "history" >> LocGroup("public"),
       Menu("Auctions") / "auctions" >> LocGroup("public"),
       Menu("Auction Detail") / "auction" >> LocGroup("public") >> Hidden,
       Menu("Admin") / "admin" / "index" >> LocGroup("admin"),
@@ -60,7 +57,7 @@ class Boot extends Loggable {
   
   object Database extends StandardDBVendor(
     Props.get("db.class").openOr("org.h2.Driver"),
-    Props.get("db.url").openOr("jdbc:h2:database/chapter_3;DB_CLOSE_DELAY=-1"),
+    Props.get("db.url").openOr("jdbc:h2:database/temp"),
     Props.get("db.user"),
     Props.get("db.pass"))
 }

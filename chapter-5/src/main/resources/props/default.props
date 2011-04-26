@@ -1,2 +1,2 @@
 db.class=org.h2.Driver
-db.url=jdbc:h2:database/chapter_5;MVCC=TRUE
+db.url=jdbc:h2:database/chapter_5;MVCC=TRUE;AUTO_SERVER=TRUE

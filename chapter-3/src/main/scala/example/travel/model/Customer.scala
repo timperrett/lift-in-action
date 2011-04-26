@@ -22,6 +22,7 @@ object Customer extends Customer
     Full(
       <lift:surround with="default" at="content">
         <div id="box1" class="topbg">
+          <lift:msgs showAll="true" />
           <lift:bind />
         </div>
         <lift:with-param name="sidebar">

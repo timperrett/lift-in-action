@@ -13,38 +13,34 @@ import example.travel.comet.{AuctionServer,NewBid,CurrentAuction}
 
 class Details extends StatefulSnippet with AuctionInstanceHelpers with Loggable {
   
-  val dispatch: DispatchIt = {
-    case "show" => show _
-    case "bid" => bid _
+  override def dispatch = {
+    case "show" => show
+    case "bid" => bid
   }
   
   lazy val auction = Auction.find(By(Auction.id,S.param("id").map(_.toLong).openOr(0L)))
   
-  def bid(xhtml: NodeSeq): NodeSeq = {
-    var amountBox: Box[String] = Empty
-    def submit = boxToNotice(
-      "Your bid was accepted!",
-      "Unable to place bid at this time."){
-        (for(a <- auction; v <- a.barter(amountBox)) yield v).pass(box => 
-          if(!box.isEmpty)
-            AuctionServer ! NewBid(auction.map(_.id.is).openOr(0L), 
-                  amountBox.openOr("0").toDouble, S.session.map(_.uniqueId)))
-      }
-    SHtml.ajaxForm(bind("b",xhtml,
-      "amount" -%> SHtml.text(amountBox.openOr(""), s => amountBox = Box.!!(s)) % ("id" -> "amount"),
-      "submit" -> SHtml.ajaxSubmit("Place Bid", { () => submit; Noop })
-    ))
+  def bid = {
+    var amount: Box[String] = Empty
+    def submit = boxToNotice("Your bid was accepted!", "Unable to place bid at this time."){
+      for {
+        a <- auction
+        b <- a.barter(amount)
+        c <- amount
+        d <- tryo(c.toDouble)
+      } yield AuctionServer ! NewBid(a.id.is, d, S.session.map(_.uniqueId))
+    }
+    "type=text" #> SHtml.text(amount.openOr(""), s => amount = Box.!!(s)) &
+    "type=submit" #> SHtml.ajaxSubmit("Place Bid", submit _) andThen SHtml.makeFormsAjax
   }
   
-  def show(xhtml: NodeSeq): NodeSeq = {
-    println("Looking for comet: " + S.session.map(_.findComet("AuctionUpdater")).openOr(Nil).toString)
-    
+  def show = {
     S.session.map(_.findComet("AuctionUpdater")).openOr(Nil).foreach(_ ! CurrentAuction(auction))
-    auction.map(a => 
-      bind("a", single(a, xhtml),
-        "current_amount" -> <span>{leadingBid.toString}</span> % ("id" -> "current_amount"),
-        "next_amount" -> <span>{minimumBid.toString}</span> % ("id" -> "next_amount")
-      )).openOr(Text("That auction does not exist"))
+    auction.map { 
+      single(_) &
+      "#current_amount" #> <span>{leadingBid.toString}</span> & 
+      "#next_amount" #> <span>{minimumBid.toString}</span>
+    } openOr("*" #> "That auction does not exist.")
   }
   
 }

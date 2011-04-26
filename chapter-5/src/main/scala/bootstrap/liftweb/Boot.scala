@@ -39,7 +39,7 @@ class Boot extends Loggable {
       Bid, Auction, Supplier, Customer, Order, OrderAuction, AuctionMachine)
 
     // setup the loan pattern
-    // S.addAround(DB.buildLoanWrapper)
+    S.addAround(DB.buildLoanWrapper)
 
     /**** user experience settings ****/
 
@@ -62,8 +62,6 @@ class Boot extends Loggable {
     LiftRules.setSiteMap(SiteMap(List(
       Menu("Home") / "index" >> LocGroup("public"),
       Menu("Auctions") / "auctions" >> LocGroup("public"),
-      // Menu("Search") / "search" >> LocGroup("public") >> MustBeLoggedIn,
-      // Menu("History") / "history" >> LocGroup("public") >> MustBeLoggedIn,
       Menu("Auction Detail") / "auction" >> LocGroup("public") >> Hidden,
       Menu("Checkout") / "checkout" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,
       Menu("Checkout Finalize") / "summary" >> LocGroup("public") >> Hidden >> MustBeLoggedIn,

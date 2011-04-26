@@ -1,8 +1,9 @@
-package example.travel.snippet
+package example.travel
+package snippet
 
-import scala.xml.{NodeSeq}
-import net.liftweb.util.Helpers._
+import net.liftweb.util.Props
 
 class HelloWorld {
-  def howdy = "*" #> <strong>hello world!</strong>
+  def howdy = <span>Welcome to lift-travel at {new _root_.java.util.Date}. Mode is {Props.mode}</span>
 }
+

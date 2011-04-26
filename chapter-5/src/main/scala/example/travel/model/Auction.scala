@@ -32,8 +32,7 @@ object Auction
     override def beforeCreate = List(_.endsAt(duration.later.toDate))
     override def afterCreate = List(
       a => new Bid().amount(a.startingAmount.is).auction(a).save,
-      a => AuctionMachine.createNewInstance(AuctionMachine.FirstEvent, Full(_.auction(a))),
-      a => println(">>> " + a.endsAt.is)
+      a => AuctionMachine.createNewInstance(AuctionMachine.FirstEvent, Full(_.auction(a)))
     )
     
     //val duration = 1 minutes
@@ -68,7 +67,6 @@ class Auction extends LongKeyedMapper[Auction] with CreatedUpdated with IdPK {
   object outboundOn extends MappedDateTime(this)
   object inboundOn extends MappedDateTime(this)
   object flyingFrom extends MappedString(this, 100)
-  // object permanentLink extends MappedString(this, 150)
   object isClosed extends MappedBoolean(this)
   object startingAmount extends MappedDouble(this)
   
@@ -116,11 +114,7 @@ class Auction extends LongKeyedMapper[Auction] with CreatedUpdated with IdPK {
   def attributeToWinningCustomer {
     println("Attributing auction to the winning customer")
     winningCustomer.map(_.order.foreach(o => {
-      println(o)
-      
       (o.order_auctions.+=(new OrderAuction().order(o).auction(this))).save
-      
-      //o.order_auctions.+:(new OrderAuction().order(o).auction(this)).save
       o.status(OrderStatus.Pending).save
     }))
   }

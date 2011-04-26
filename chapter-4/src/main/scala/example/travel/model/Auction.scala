@@ -13,7 +13,19 @@ object Auction
   with CRUDify[Long,Auction]{
     override def dbTableName = "auctions"
     override def fieldOrder = List(name,description,endsAt,
-      outboundOn,inboundOn,flyingFrom,permanent_link,isClosed)
+      outboundOn,inboundOn,flyingFrom,isClosed)
+    
+    override def dbAddTable = Full(populate _)
+    private def populate {
+      val airports = List("Bristol", "London Heathrow", "Paris", "New York")
+      for(l <- 'A' to 'Z')
+        Auction.create
+          .name("Trip %s".format(l))
+          .description("""utpat vel aliquam eget, auctor ac nisl. Curabitur laoreet urna consectetur utpat vel aliquam eget, auctor ac nisl. Curabitur laoreet urna consectetur lectus faucibus ultricies. Maecenas nec lectus et dui sodales ultricies. Fusce eu pulvinar ipsum. In varius euismod lectus. Suspendisse potenti. Integer velit nisl, iaculis in aliquet non""")
+          .flyingFrom(airports.apply(scala.util.Random.nextInt(3)))
+          .isClosed(false)
+          .save
+    }
     
     // crudify
     override def pageWrapper(body: NodeSeq) = 
@@ -41,7 +53,6 @@ class Auction extends LongKeyedMapper[Auction] with IdPK with CreatedUpdated {
   object outboundOn extends MappedDateTime(this)
   object inboundOn extends MappedDateTime(this)
   object flyingFrom extends MappedString(this, 100)
-  object permanent_link extends MappedString(this, 150)
   object isClosed extends MappedBoolean(this)
   
   // relationships
@@ -59,12 +70,11 @@ class Auction extends LongKeyedMapper[Auction] with IdPK with CreatedUpdated {
   def barter(next: Box[String]): Box[Bid] = 
     for(ass <- next ?~! "Amount is not a number";
         amo <- tryo(BigDecimal(ass).doubleValue) ?~! "Amount is not a number";
-        nxt <- nextAmount;
-        vld <- tryo(amo).filter(_ >= nxt) ?~ "Your bid is lower than required!"
-    ) yield {
-      new Bid().auction(this).customer(Customer.currentUser).amount(vld).saveMe
-    }
-  
+        vld <- tryo(amo).filter(_ >= (nextAmount openOr 0D)) ?~ "Your bid is lower than required!"
+  ) yield {
+    new Bid().auction(this).customer(Customer.currentUser).amount(vld).saveMe
+  }
+      
   def expired_? : Boolean = endsAt.is.getTime < now.getTime
   
   def winningCustomer: Box[Customer] = topBid.flatMap(_.customer.obj)

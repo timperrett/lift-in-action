@@ -11,18 +11,20 @@ import example.travel.lib.AuctionHelpers
 
 class Listings extends DispatchSnippet with AuctionHelpers {
   override def dispatch = {
-    case "all" => all _
-    case "top" => top _ 
+    case "all" => all
+    case "top" => top
     case "paginate" => paginator.paginate _
   }
   
-  val paginator = new MapperPaginatorSnippet(Auction){
+  private val paginator = new MapperPaginatorSnippet(Auction){
     override def itemsPerPage = 5
-    constantParams = OrderBy(Auction.id, Descending) :: Nil
   }
   
-  def all(xhtml: NodeSeq): NodeSeq = many(paginator.page, xhtml)
+  def all = "li *" #> many(paginator.page)
   
-  def top(xhtml: NodeSeq): NodeSeq = 
-    many(Auction.findAll(MaxRows(3), OrderBy(Auction.id, Descending)), xhtml)
+  def top =
+    ".auction_row *" #> many(Auction.findAll(
+      By(Auction.isClosed, false), 
+      MaxRows(3), 
+      OrderBy(Auction.id, Descending)))
 }

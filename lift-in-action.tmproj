@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>project/build/LiftInActionProject.scala</string>
+	<string>chapter-4/src/main/scala/example/travel/model/Auction.scala</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -35,59 +35,150 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>chapter-6/src/main/scala/bootstrap/liftweb/Boot.scala</key>
+		<key>chapter-4/src/main/scala/example/travel/model/Auction.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>34</integer>
+				<integer>73</integer>
 				<key>line</key>
-				<integer>34</integer>
+				<integer>74</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>60</integer>
 		</dict>
-		<key>project/build/LiftInActionProject.scala</key>
+		<key>chapter-4/src/main/scala/example/travel/snippet/Details.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>9</integer>
+				<integer>2</integer>
 				<key>line</key>
-				<integer>130</integer>
+				<integer>21</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>12</integer>
+		</dict>
+		<key>chapter-4/src/main/scala/example/travel/snippet/Listings.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>30</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>114</integer>
+			<integer>0</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>130</integer>
+				<integer>3</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>131</integer>
+				<integer>30</integer>
 			</dict>
+		</dict>
+		<key>chapter-4/src/main/webapp/index.html</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>4</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>10</integer>
+				<key>line</key>
+				<integer>10</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>4</integer>
+			</dict>
+		</dict>
+		<key>chapter-5/src/main/scala/example/travel/snippet/Basket.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>chapter-5/src/main/scala/example/travel/snippet/Listings.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>chapter-5/src/main/scala/example/travel/snippet/OrderSummary.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>chapter-6/src/main/scala/bootstrap/liftweb/Boot.scala</string>
-		<string>project/build/LiftInActionProject.scala</string>
+		<string>chapter-4/src/main/scala/example/travel/snippet/Details.scala</string>
+		<string>chapter-4/src/main/scala/example/travel/snippet/Listings.scala</string>
+		<string>chapter-5/src/main/scala/example/travel/snippet/OrderSummary.scala</string>
+		<string>chapter-5/src/main/scala/example/travel/snippet/Basket.scala</string>
+		<string>chapter-5/src/main/scala/example/travel/snippet/Listings.scala</string>
+		<string>chapter-4/src/main/scala/example/travel/model/Auction.scala</string>
+		<string>chapter-4/src/main/webapp/index.html</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{492, 86}, {876, 673}}</string>
+	<string>{{598, 38}, {876, 673}}</string>
 </dict>
 </plist>

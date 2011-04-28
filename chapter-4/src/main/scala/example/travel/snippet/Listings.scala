@@ -1,11 +1,11 @@
 package example.travel
 package snippet
 
-import scala.xml.{NodeSeq,Text}
-import net.liftweb.util.Helpers._
-import net.liftweb.http.{S,DispatchSnippet}
-import net.liftweb.mapper.{MaxRows,By,OrderBy,Descending,StartAt}
-import net.liftweb.mapper.view.{MapperPaginatorSnippet}
+import net.liftweb._,
+  util.Helpers._,
+  http.DispatchSnippet,
+  mapper.{MaxRows,By,OrderBy,Descending,StartAt},
+  mapper.view.MapperPaginatorSnippet
 import example.travel.model.Auction
 import example.travel.lib.AuctionHelpers
 

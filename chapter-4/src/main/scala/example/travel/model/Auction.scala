@@ -70,13 +70,11 @@ class Auction extends LongKeyedMapper[Auction] with IdPK with CreatedUpdated {
   // helper: get all the bids for this auction
   def bids = Bid.findAll(By(Bid.auction, this.id), OrderBy(Bid.amount, Descending))
   
-  def barter(next: Box[String]): Box[Bid] = 
-    for(ass <- next ?~! "Amount is not a number";
-        amo <- tryo(BigDecimal(ass).doubleValue) ?~! "Amount is not a number";
-        vld <- tryo(amo).filter(_ >= (nextAmount openOr 0D)) ?~ "Your bid is lower than required!"
-  ) yield {
-    new Bid().auction(this).customer(Customer.currentUser).amount(vld).saveMe
-  }
+  def barter(next: Box[String]): Box[Bid] = for {
+    ass <- next ?~! "Amount is not a number"
+    amo <- tryo(BigDecimal(ass).doubleValue) ?~! "Amount is not a number"
+    vld <- tryo(amo).filter(_ >= (nextAmount openOr 0D)) ?~ "Your bid is lower than required!"
+   } yield new Bid().auction(this).customer(Customer.currentUser).amount(vld).saveMe
       
   def expired_? : Boolean = endsAt.is.getTime < now.getTime
   

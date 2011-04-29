@@ -38,7 +38,8 @@ object Customer extends Customer
 class Customer extends MegaProtoUser[Customer] with CreatedUpdated {
   def getSingleton = Customer
   
-  def participatingIn: List[Long] = 
-    Bid.findAll(By(Bid.customer, this.id)).map(_.auction.obj)
-      .distinct.filter(!_.isEmpty).map(_.open_!.id.is)
+  def participatingIn: List[Long] = (for {
+    b <- Bid.findAll(By(Bid.customer, this.id))
+    a <- b.auction.obj
+  } yield a.id.is).distinct
 }

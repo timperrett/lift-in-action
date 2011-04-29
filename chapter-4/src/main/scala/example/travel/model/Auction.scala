@@ -71,8 +71,8 @@ class Auction extends LongKeyedMapper[Auction] with IdPK with CreatedUpdated {
   def bids = Bid.findAll(By(Bid.auction, this.id), OrderBy(Bid.amount, Descending))
   
   def barter(next: Box[String]): Box[Bid] = for {
-    ass <- next ?~! "Amount is not a number"
-    amo <- tryo(BigDecimal(ass).doubleValue) ?~! "Amount is not a number"
+    ann <- next ?~! "Amount is not a number"
+    amo <- tryo(BigDecimal(ann).doubleValue) ?~! "Amount is not a number"
     vld <- tryo(amo).filter(_ >= (nextAmount openOr 0D)) ?~ "Your bid is lower than required!"
    } yield new Bid().auction(this).customer(Customer.currentUser).amount(vld).saveMe
       
@@ -81,7 +81,7 @@ class Auction extends LongKeyedMapper[Auction] with IdPK with CreatedUpdated {
   def winningCustomer: Box[Customer] = topBid.flatMap(_.customer.obj)
   
   private def topBid: Box[Bid] = bids match {
-    case list if list.length > 0 => Full(list.head)
+    case List(first, _*) => Full(first)
     case _ => Empty
   }
   def currentAmount: Box[Double] = topBid.map(_.amount.is)

@@ -11,7 +11,7 @@ object Supplier
     with LongKeyedMetaMapper[Supplier]
     with CRUDify[Long,Supplier]{
   override def dbTableName = "suppliers"
-  override def fieldOrder = name :: email :: address :: telephone :: opening_hours :: Nil
+  override def fieldOrder = name :: email :: address :: telephone :: openingHours :: Nil
   override def pageWrapper(body: NodeSeq) = 
     <lift:surround with="admin" at="content">{body}</lift:surround>
   override def calcPrefix = List("admin",_dbTableNameLC)
@@ -31,7 +31,7 @@ class Supplier extends LongKeyedMapper[Supplier]
   object telephone extends MappedString(this, 30)
   object email extends MappedEmail(this, 200)
   object address extends MappedText(this)
-  object opening_hours extends MappedString(this, 255)
+  object openingHours extends MappedString(this, 255)
   
   // relationships
   object auctions extends MappedOneToMany(Auction, Auction.supplier, 

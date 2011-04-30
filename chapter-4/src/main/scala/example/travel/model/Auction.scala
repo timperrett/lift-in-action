@@ -74,7 +74,7 @@ class Auction extends LongKeyedMapper[Auction] with IdPK with CreatedUpdated {
     ann <- next ?~! "Amount is not a number"
     amo <- tryo(BigDecimal(ann).doubleValue) ?~! "Amount is not a number"
     vld <- tryo(amo).filter(_ >= (nextAmount openOr 0D)) ?~ "Your bid is lower than required!"
-   } yield new Bid().auction(this).customer(Customer.currentUser).amount(vld).saveMe
+   } yield Bid.create.auction(this).customer(Customer.currentUser).amount(vld).saveMe
       
   def expired_? : Boolean = endsAt.is.getTime < now.getTime
   

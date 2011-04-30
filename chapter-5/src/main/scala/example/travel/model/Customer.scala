@@ -43,7 +43,7 @@ class Customer extends MegaProtoUser[Customer] with CreatedUpdated {
   def order: Box[Order] = 
     Order.find(By(Order.customer, this.id), 
       ByList(Order.status, List(OrderStatus.Open, OrderStatus.Pending))
-    ) or Full(new Order().saveMe)
+    ) or Full(Order.create.saveMe)
   
   def participatingIn: List[Long] = (for {
     b <- Bid.findAll(By(Bid.customer, this.id))

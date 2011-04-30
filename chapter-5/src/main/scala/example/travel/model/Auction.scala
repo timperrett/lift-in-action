@@ -36,8 +36,8 @@ object Auction
     )
     
     //val duration = 1 minutes
-    // val duration = 5 minutes
-    val duration = 2.hours
+    val duration = 5 minutes
+    // val duration = 2.hours
     // val duration = 24 hours
     // val duration = 48 hours
     
@@ -114,7 +114,7 @@ class Auction extends LongKeyedMapper[Auction] with CreatedUpdated with IdPK {
   def attributeToWinningCustomer {
     println("Attributing auction to the winning customer")
     winningCustomer.map(_.order.foreach(o => {
-      (o.order_auctions.+=(new OrderAuction().order(o).auction(this))).save
+      (o.order_auctions.+=(OrderAuction.create.order(o).auction(this))).save
       o.status(OrderStatus.Pending).save
     }))
   }

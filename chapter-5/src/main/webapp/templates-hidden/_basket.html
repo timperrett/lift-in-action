@@ -2,23 +2,20 @@
   <h2>Your Basket</h2>
   
   <lift:test_cond.loggedin>
-    <lift:basket.chooser>
-      <basket:full>
-        <lift:basket.items>
-          <div class="basket-row">
-            <h3><a:name /></h3>
-          </div>
-          <div class="basket-row">
-            <input type="button" name="checkout" value="checkout" onclick="window.location.href='checkout'" />
-          </div>
-        </lift:basket.items>
-      </basket:full>
-      
-      <basket:empty>
+    <lift:basket.items>
+      <full>
+        <div class="basket-row">
+          <h3 class="name">Name</h3>
+        </div>
+        <div class="basket-row">
+          <input type="button" name="checkout" value="checkout" onclick="window.location.href='checkout'" />
+        </div>
+      </full>
+
+      <empty>
         <p>You have not won any auctions</p>
-      </basket:empty>
-      
-    </lift:basket.chooser>
+      </empty>
+    </lift:basket.items>
   </lift:test_cond.loggedin>
   
   <lift:test_cond.loggedout>

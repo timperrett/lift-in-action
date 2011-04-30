@@ -8,30 +8,38 @@
   
   <div>
     <h2>Order Summary</h2>
+    
     <lift:basket.items>
-      <div class="basket-row ">
-        <a:name />
-      </div>
+      <full>
+        <div class="basket-row">
+          <h3 class="name">Name</h3>
+        </div>
+      </full>
+      <empty>
+        <p>You have not won any auctions</p>
+      </empty>
     </lift:basket.items>
-    <div class="basket-row ">
-      <p class="bold">Total purchase value: £<lift:order_summary.value /></p>
+    
+    <div class="basket-row" lift="basket.items">
+      <span class="name">Name</span>
     </div>
     
+    <div class="basket-row">
+      <p class="bold">Total purchase value: £<em lift="order_summary.value" /></p>
+    </div>
     
     <h2>Shipping Details</h2>
-    <lift:order_summary.shipping>
-      <p>Details of travel will be sent to the following address: (<a href="checkout">Edit</a>)</p>
-      <p class="bold">
-        <s:address_one /><br/>
-        <s:address_two /><br/>
-        <s:city /><br/>
-        <s:postcode /><br/>
-      </p>
-      
-    </lift:order_summary.shipping>
+    <p>Details of travel will be sent to the following address: (<a href="checkout">Edit</a>)</p>
+    
+    <p class="bold" lift="order_summary.shipping">
+      <address_one /><br/>
+      <address_two /><br/>
+      <city /><br/>
+      <postcode /><br/>
+    </p>
     
     <h2>Payment</h2>
-    <p>Please pay for your items using the the paypal button below</p>
+    <p>Please pay for your items using the the PayPal button below</p>
     
     <lift:order_summary.paynow />
     

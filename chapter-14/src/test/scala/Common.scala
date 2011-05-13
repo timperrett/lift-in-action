@@ -11,7 +11,7 @@ trait SetupAndDestroy { _: Specification =>
 }
 
 trait JettySetupAndTearDown extends SetupAndDestroy { _: Specification => 
-  def setup() = JettyTestServer.start()
+  def setup() = JettyTestServer.start
   def destroy() = JettyTestServer.stop()
 }
 

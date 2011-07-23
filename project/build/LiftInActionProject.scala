@@ -154,9 +154,9 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info) with Id
     val postgresql = "postgresql" % "postgresql" % "9.0-801.jdbc4" % "compile"
   }
   
-  trait DeployToStax extends stax.StaxPlugin { _: DefaultWebProject =>
-    override def staxApplicationId = "liftinaction"
-    override def staxUsername = "timperrett"
+  trait DeployToStax extends bees.RunCloudPlugin { _: DefaultWebProject =>
+    override def beesApplicationId = Some("liftinaction")
+    override def beesUsername = Some("timperrett")
   }
   
   // define some defaults

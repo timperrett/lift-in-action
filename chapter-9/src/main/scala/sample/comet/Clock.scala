@@ -1,10 +1,9 @@
 package sample.comet
 
 import scala.xml.Text
-import net.liftweb.util.Schedule
-import net.liftweb.util.Helpers._
-import net.liftweb.http.CometActor
-import net.liftweb.http.js.JsCmds.SetHtml
+import net.liftweb._,
+  util.Schedule, util.Helpers._,
+  http.CometActor, http.js.JsCmds.SetHtml
 
 case object Tick
 

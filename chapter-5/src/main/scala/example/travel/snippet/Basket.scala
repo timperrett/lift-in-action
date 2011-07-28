@@ -10,6 +10,6 @@ class Basket extends AuctionHelpers {
   private lazy val contents = 
     Customer.currentUser.flatMap(_.order.map(_.order_auctions.all)).openOr(Nil)
   
-  def items = "*" #> contents.map(x => single(x.auction.obj)) &
-    "%s ^*".format(if(contents.isEmpty) "empty" else "full") #> NodeSeq.Empty 
+  def items = (if (contents.isEmpty) {"*" #> (y=>y)} else {"*" #> contents.map(x => single(x.auction.obj))}) &
+    "%s ^*".format(if(contents.isEmpty) "empty" else "full") #> NodeSeq.Empty
 }

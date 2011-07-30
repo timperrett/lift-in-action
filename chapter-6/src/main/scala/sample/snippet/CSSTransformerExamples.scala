@@ -46,6 +46,6 @@ class IntermediateExample {
   def list = 
     "ul" #> Library.books.map { author =>
       ".name" #> author.name &
-      ".books *" #> author.books.map(_.name)
+      ".books" #> ("li *" #> author.books.map(_.name))
     }
 }

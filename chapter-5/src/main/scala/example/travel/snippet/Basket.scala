@@ -9,7 +9,7 @@ import example.travel.lib.AuctionHelpers
 class Basket extends AuctionHelpers {
   private lazy val contents = 
     Customer.currentUser.flatMap(_.order.map(_.order_auctions.all)).openOr(Nil)
-  
-  def items = "full *" #> contents.map(x => single(x.auction.obj)) andThen
+
+  def items = ".basket-row *" #> contents.map(x => single(x.auction.obj)) andThen
     "%s ^*".format(if(contents.isEmpty) "empty" else "full") #> NodeSeq.Empty
 }

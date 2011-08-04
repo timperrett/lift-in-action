@@ -6,7 +6,6 @@ class Plugins(info: ProjectInfo) extends PluginDefinition(info) {
   lazy val scctPlugin = "reaktor" % "sbt-scct-for-2.8" % "0.1-SNAPSHOT"
   lazy val sbtIdea = "com.github.mpeltonen" % "sbt-idea-plugin" % "0.3.0"
   // repos
-  // val staxReleases = "stax.repo" at "http://mvn.stax.net/content/repositories/public/"
   val sonaTypeGithubRepo = "sonatype.repo.github" at "http://oss.sonatype.org/content/groups/github/"
   val sonatypeRepo = "sonatype.repo" at "https://oss.sonatype.org/content/groups/public"
   val scctRepo = "scct.repo" at "http://mtkopone.github.com/scct/maven-repo/"

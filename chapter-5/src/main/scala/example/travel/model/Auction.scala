@@ -23,7 +23,6 @@ object Auction
           .name("Trip %s".format(l))
           .description("""utpat vel aliquam eget, auctor ac nisl. Curabitur laoreet urna consectetur utpat vel aliquam eget, auctor ac nisl. Curabitur laoreet urna consectetur lectus faucibus ultricies. Maecenas nec lectus et dui sodales ultricies. Fusce eu pulvinar ipsum. In varius euismod lectus. Suspendisse potenti. Integer velit nisl, iaculis in aliquet non""")
           .flyingFrom(airports.apply(scala.util.Random.nextInt(3)))
-          .isClosed(false)
           .startingAmount(1.0D)
           .save
     }
@@ -36,7 +35,7 @@ object Auction
     )
     
     //val duration = 1 minutes
-    val duration = 5 minutes
+    val duration = 15 minutes
     // val duration = 2.hours
     // val duration = 24 hours
     // val duration = 48 hours
@@ -67,7 +66,9 @@ class Auction extends LongKeyedMapper[Auction] with CreatedUpdated with IdPK {
   object outboundOn extends MappedDateTime(this)
   object inboundOn extends MappedDateTime(this)
   object flyingFrom extends MappedString(this, 100)
-  object isClosed extends MappedBoolean(this)
+  object isClosed extends MappedBoolean(this){
+    override def defaultValue = false
+  }
   object startingAmount extends MappedDouble(this)
   
   // relationships

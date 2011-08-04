@@ -95,9 +95,9 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info) with Id
     val squeryl = "net.liftweb" %% "lift-squeryl-record" % liftVersion % "compile"
     val couch = "net.liftweb" %% "lift-couchdb" % liftVersion % "compile"
     val mongo = "net.liftweb" %% "lift-mongodb-record" % liftVersion % "compile"
-    // statically supplied the 2.8.1 version as it does not currently exist in 
-    // any public repository
-    // val rogue = "com.foursquare" %% "rogue" % "1.0.2" % "compile"
+    // statically supplied the 2.8.1 version as the versions in scala-tools
+    // requires 2.4-SNAPSHOT of Lift which the book does not use.
+    // val rogue = "com.foursquare" %% "rogue" % "1.0.10" % "compile"
   }
   
   class ChapterTwelve(info: ProjectInfo) 

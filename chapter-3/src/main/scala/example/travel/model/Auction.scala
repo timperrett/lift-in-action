@@ -47,7 +47,9 @@ class Auction extends LongKeyedMapper[Auction] with IdPK with CreatedUpdated {
   object outboundOn extends MappedDateTime(this)
   object inboundOn extends MappedDateTime(this)
   object flyingFrom extends MappedString(this, 100)
-  object isClosed extends MappedBoolean(this)
+  object isClosed extends MappedBoolean(this){
+    override def defaultValue = false
+  }
   object startingAmount extends MappedDouble(this)
   
   // relationships

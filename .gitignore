@@ -47,3 +47,7 @@ stax-web.xml
 stax.txt
 *.jar
 *_managed/*
+logs/*
+project/boot/*
+project/plugins/project/*
+project/plugins/src_managed/*

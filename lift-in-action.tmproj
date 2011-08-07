@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>chapter-9/src/main/scala/sample/snippet/BasicAJAX.scala</string>
+	<string>chapter-4/src/main/scala/bootstrap/liftweb/Boot.scala</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,58 +21,44 @@
 	<integer>368</integer>
 	<key>metaData</key>
 	<dict>
-		<key>chapter-9/src/main/scala/bootstrap/liftweb/Boot.scala</key>
+		<key>chapter-4/src/main/scala/bootstrap/liftweb/Boot.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>45</integer>
+				<integer>17</integer>
 				<key>line</key>
-				<integer>13</integer>
+				<integer>51</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>chapter-9/src/main/scala/sample/snippet/BasicAJAX.scala</key>
-		<dict>
-			<key>caret</key>
+			<integer>45</integer>
+			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>21</integer>
+				<integer>8</integer>
 				<key>line</key>
-				<integer>18</integer>
+				<integer>51</integer>
 			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>chapter-9/src/main/webapp/more_ajax.html</key>
-		<dict>
-			<key>caret</key>
+			<key>selectTo</key>
 			<dict>
 				<key>column</key>
-				<integer>14</integer>
+				<integer>22</integer>
 				<key>line</key>
-				<integer>6</integer>
+				<integer>51</integer>
 			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>chapter-9/src/main/scala/bootstrap/liftweb/Boot.scala</string>
-		<string>chapter-9/src/main/scala/sample/snippet/BasicAJAX.scala</string>
-		<string>chapter-9/src/main/webapp/more_ajax.html</string>
+		<string>chapter-4/src/main/scala/bootstrap/liftweb/Boot.scala</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<false/>
 	<key>windowFrame</key>
-	<string>{{0, 61}, {1440, 817}}</string>
+	<string>{{283, 155}, {1085, 723}}</string>
 </dict>
 </plist>

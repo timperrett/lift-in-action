@@ -56,7 +56,7 @@ trait AuctionHelpers extends Loggable {
   protected def single(auction: Auction): CssSel = 
     ".name *" #> auction.name &
     ".desc" #> TextileParser.toHtml(auction.description) & 
-    "#winning_customer" #> winningCustomer(auction) &
+    "#winning_customer *" #> winningCustomer(auction) &
     "#travel_dates" #> auction.travelDates & 
     "a [href]" #> "/auction/%s".format(auction.id.toString) 
   

@@ -49,7 +49,6 @@ class Boot extends Loggable {
 
     /**** request settings ****/
 
-    val MustBeLoggedIn = Customer.loginFirst
     // set the application sitemap
     LiftRules.setSiteMap(SiteMap(List(
       Menu("Home") / "index" >> LocGroup("public"),

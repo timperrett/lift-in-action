@@ -9,8 +9,8 @@ object AuctionServer extends LiftActor {
   /** 
    * Internal state about who's listening for what and what is listening for who!
    */
-  private var cometActorAuctions: Map[CometActor,List[Long]] = Map()
-  private def auctionCometActors: Map[Long, List[CometActor]] = 
+  private var cometActorAuctions = Map.empty[CometActor,List[Long]]
+  private def auctionCometActors = 
     cometActorAuctions.foldLeft[Map[Long, List[CometActor]]](Map.empty withDefaultValue Nil){
       case (prev, (k, vs)) => vs.foldLeft(prev)((prev, v) => prev + (v -> (k::prev(v))))
     }

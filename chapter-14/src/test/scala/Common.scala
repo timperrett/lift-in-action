@@ -32,8 +32,14 @@ trait SeleniumSetupAndTearDown extends JettySetupAndTearDown { _: Specification 
   }
   
   object SeleniumTestClient {
+    private val browserPath = 
+      if(System.getProperty("os.name").startsWith("Mac"))
+        "*firefox /Applications/Firefox.app/Contents/MacOS/firefox"
+      else
+        "*firefox C:\\Program Files (x86)\\Mozilla Firefox\\Firefox.exe"
+    
     lazy val browser = new DefaultSelenium("localhost", SeleniumTestServer.port, 
-      "*firefox", JettyTestServer.url+"/")
+      browserPath, JettyTestServer.url+"/")
 
     def start(){
       browser.start()

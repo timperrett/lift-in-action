@@ -1,3 +1,4 @@
+
 package sample.model
 
 // Generally speaking I wouldnt import the whole namespace, 

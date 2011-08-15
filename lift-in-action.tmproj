@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>chapter-4/src/main/scala/bootstrap/liftweb/Boot.scala</string>
+	<string>project/plugins/Plugins.scala</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -18,47 +18,107 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>368</integer>
+	<integer>449</integer>
 	<key>metaData</key>
 	<dict>
-		<key>chapter-4/src/main/scala/bootstrap/liftweb/Boot.scala</key>
+		<key>chapter-5/src/main/scala/example/travel/lib/PaypalHandler.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>17</integer>
+				<integer>10</integer>
 				<key>line</key>
+				<integer>42</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>8</integer>
+		</dict>
+		<key>chapter-5/src/main/scala/example/travel/snippet/OrderSummary.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>33</integer>
+				<key>line</key>
+				<integer>20</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>7</integer>
+		</dict>
+		<key>chapter-5/src/main/webapp/summary.html</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
 				<integer>51</integer>
+				<key>line</key>
+				<integer>27</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>9</integer>
+		</dict>
+		<key>chapter-5/src/main/webapp/templates-hidden/_basket.html</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>4</integer>
+				<key>line</key>
+				<integer>4</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>45</integer>
+			<integer>0</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>8</integer>
+				<integer>24</integer>
 				<key>line</key>
-				<integer>51</integer>
+				<integer>17</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
-				<integer>22</integer>
+				<integer>4</integer>
 				<key>line</key>
-				<integer>51</integer>
+				<integer>4</integer>
 			</dict>
+		</dict>
+		<key>project/plugins/Plugins.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>12</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>chapter-4/src/main/scala/bootstrap/liftweb/Boot.scala</string>
+		<string>chapter-5/src/main/scala/example/travel/snippet/OrderSummary.scala</string>
+		<string>chapter-5/src/main/webapp/templates-hidden/_basket.html</string>
+		<string>chapter-5/src/main/webapp/summary.html</string>
+		<string>chapter-5/src/main/scala/example/travel/lib/PaypalHandler.scala</string>
+		<string>project/plugins/Plugins.scala</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<false/>
 	<key>windowFrame</key>
-	<string>{{283, 155}, {1085, 723}}</string>
+	<string>{{176, 116}, {1240, 622}}</string>
 </dict>
 </plist>

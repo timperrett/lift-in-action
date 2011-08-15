@@ -132,8 +132,8 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info) with Id
     val scalacheck = "org.scala-tools.testing" %% "scalacheck" % "1.8" % "test"
     val jwebunit = "net.sourceforge.jwebunit" % "jwebunit-htmlunit-plugin" % "2.5" % "test"
     // selenium
-    val selenium = "org.seleniumhq.selenium" % "selenium" % "2.0b1" % "test"
-    val seleniumsvr = "org.seleniumhq.selenium" % "selenium-server" % "2.0b1" % "test"
+    val selenium = "org.seleniumhq.selenium" % "selenium-java" % "2.3.1" % "test"
+    val seleniumsvr = "org.seleniumhq.selenium" % "selenium-server" % "2.3.1" % "test"
     // configure the testing classpath
     override def testClasspath  = super.testClasspath +++ ("src" / "main" / "webapp")
   }

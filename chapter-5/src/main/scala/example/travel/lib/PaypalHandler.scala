@@ -19,6 +19,7 @@ import example.travel.model.{Order,OrderStatus}
  * them both lets us explore the integration nicely and get belt and braces.
  */
 object PaypalHandler extends PaypalIPN with PaypalPDT with Loggable {
+  import PaypalTransactionStatus._
   
   /**
    * Paypal PDT
@@ -26,7 +27,8 @@ object PaypalHandler extends PaypalIPN with PaypalPDT with Loggable {
   val paypalAuthToken = "WhsP9vgRJ7lIegtlIaIpgvtio5X8g9kCbEmqZgNzOiG5ZhumC1WI067_KBq"
   def pdtResponse = {
     case (info, resp) => info.paymentStatus match {
-      case Full(PaypalTransactionStatus.CompletedPayment) => DoRedirectResponse.apply("/paypal/success")
+      case Full(CompletedPayment) => 
+        DoRedirectResponse.apply("/paypal/success")
       case _ => DoRedirectResponse.apply("/paypal/failure")
     }
   }
@@ -35,10 +37,10 @@ object PaypalHandler extends PaypalIPN with PaypalPDT with Loggable {
    * Paypal IPN
    */
   def actions = {
-    case (PaypalTransactionStatus.CompletedPayment,info,_) => 
+    case (CompletedPayment,info,_) => 
       logger.info("IPN completed")
       updateOrder(info,OrderStatus.Complete)
-    case (PaypalTransactionStatus.FailedPayment,info,_) => 
+    case (FailedPayment,info,_) => 
       logger.info("IPN failed")
       updateOrder(info,OrderStatus.Failed)
     case (status, info, resp) =>

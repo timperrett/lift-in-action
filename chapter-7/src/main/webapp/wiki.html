@@ -1,18 +1,20 @@
 <lift:surround with="default" at="content">
+  <p><a href="/wiki/all">Show All Pages</a></p>
+  
   <lift:wiki>
-    <p><a href="/wiki/all">Show All Pages</a></p>
-    
     <!-- Contents to display for edit page -->
-    <display:edit>
-      <p><e:message /><br /><e:textarea /></p>
-      <p><e:cancel /> <e:submit /></p>
-    </display:edit>
+    <edit>
+      <form action="" method="post">
+        <p><message /><br /><textarea rows="8" cols="40"></textarea></p>
+        <p><a href="">Cancel</a> <input type="submit" /></p>
+      </form>
+    </edit>
     
     <!-- Content to display for view page -->
-    <display:view>
-      <v:content />
-      <p><v:edit /></p>
-    </display:view>
+    <view>
+      <content />
+      <p><a href="">Edit</a></p>
+    </view>
     
   </lift:wiki>
 </lift:surround>

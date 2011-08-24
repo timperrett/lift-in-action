@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>project/plugins/Plugins.scala</string>
+	<string>chapter-14/src/main/scala/sample/lib/DependencyInjection.scala</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,104 +21,44 @@
 	<integer>449</integer>
 	<key>metaData</key>
 	<dict>
-		<key>chapter-5/src/main/scala/example/travel/lib/PaypalHandler.scala</key>
+		<key>chapter-14/src/main/scala/sample/lib/DependencyInjection.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>10</integer>
+				<integer>16</integer>
 				<key>line</key>
-				<integer>42</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>8</integer>
-		</dict>
-		<key>chapter-5/src/main/scala/example/travel/snippet/OrderSummary.scala</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>33</integer>
-				<key>line</key>
-				<integer>20</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>7</integer>
-		</dict>
-		<key>chapter-5/src/main/webapp/summary.html</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>51</integer>
-				<key>line</key>
-				<integer>27</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>9</integer>
-		</dict>
-		<key>chapter-5/src/main/webapp/templates-hidden/_basket.html</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>4</integer>
-				<key>line</key>
-				<integer>4</integer>
+				<integer>32</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>19</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>24</integer>
+				<integer>10</integer>
 				<key>line</key>
-				<integer>17</integer>
+				<integer>32</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
-				<integer>4</integer>
+				<integer>20</integer>
 				<key>line</key>
-				<integer>4</integer>
+				<integer>32</integer>
 			</dict>
-		</dict>
-		<key>project/plugins/Plugins.scala</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>12</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>chapter-5/src/main/scala/example/travel/snippet/OrderSummary.scala</string>
-		<string>chapter-5/src/main/webapp/templates-hidden/_basket.html</string>
-		<string>chapter-5/src/main/webapp/summary.html</string>
-		<string>chapter-5/src/main/scala/example/travel/lib/PaypalHandler.scala</string>
-		<string>project/plugins/Plugins.scala</string>
+		<string>chapter-14/src/main/scala/sample/lib/DependencyInjection.scala</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<false/>
 	<key>windowFrame</key>
-	<string>{{176, 116}, {1240, 622}}</string>
+	<string>{{200, 67}, {1240, 622}}</string>
 </dict>
 </plist>

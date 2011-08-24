@@ -5,7 +5,7 @@ import scala.xml.{Text, NodeSeq}
 import net.liftweb.common.{Box,Full,Empty,Failure}
 import net.liftweb.util.NamedPF
 import net.liftweb.util.Helpers._
-import net.liftweb.http.{SHtml,RewriteRequest,RewriteResponse,ParsePath}
+import net.liftweb.http.{SHtml,S,RewriteRequest,RewriteResponse,ParsePath}
 import net.liftweb.sitemap.Loc
 import net.liftweb.mapper.{OrderBy,Ascending,By}
 import net.liftweb.textile.TextileParser
@@ -18,30 +18,30 @@ import sample.model.WikiEntry
  * @param page - the name of the page
  * @param edit - are we viewing or editing the page?
  */
-case class WikiLoc(page: String, edit: Boolean) {
+case class Page(title: String, edit: Boolean) {
 
   /**
    * Get the underly database record for this page. 
    * When requested, the page will go to the database and look
    * for an entry who's name matches that passed as the
-   * paramerter to the WikiLoc instance.
+   * paramerter to the Page instance.
    */
-  lazy val record: WikiEntry =
-    WikiEntry.find(By(WikiEntry.name, page)) openOr WikiEntry.create.name(page)
+  lazy val data: WikiEntry =
+    WikiEntry.find(By(WikiEntry.name, title)) openOr WikiEntry.create.name(title)
 }
 
 /**
  * The WikiStuff object that provides menu, URL rewriting,
  * and snippet support for the page that displays wiki contents
  */
-object Wiki extends Loc[WikiLoc] {
-  object AllLoc extends WikiLoc("all", false)
+object Wiki extends Loc[Page] {
+  object AllLoc extends Page("all", false)
 
   // the name of the page
   def name = "wiki"
 
   // the default parameters (used for generating the menu listing)
-  def defaultValue = Full(WikiLoc("HomePage", false))
+  def defaultValue = Full(Page("HomePage", false))
   
   def params = Nil
   
@@ -59,37 +59,37 @@ object Wiki extends Loc[WikiLoc] {
    */
   override val snippets: SnippetTest = {
     case ("wiki", Full(AllLoc)) => showAll _
-    case ("wiki", Full(wp @ WikiLoc(_ , true))) => editRecord(wp.record) _
-    case ("wiki", Full(wp @ WikiLoc(_ , false))) if !wp.record.saved_? => editRecord(wp.record) _
-    case ("wiki", Full(wp: WikiLoc)) => displayRecord(wp.record) _
+    case ("wiki", Full(wp @ Page(_ , true))) => editRecord(wp.data)
+    case ("wiki", Full(wp @ Page(_ , false))) if !wp.data.saved_? => editRecord(wp.data)
+    case ("wiki", Full(wp: Page)) => displayRecord(wp.data)
   }
   
   /**
    * Generate a link based on the current page
    */
-  val link = new Loc.Link[WikiLoc](List("wiki"), false){
-    override def createLink(in: WikiLoc) = 
-      if(in.edit) Full(Text("/wiki/edit/"+urlEncode(in.page)))
-      else Full(Text("/wiki/"+urlEncode(in.page)))
+  val link = new Loc.Link[Page](List("wiki"), false){
+    override def createLink(in: Page) = 
+      if(in.edit) Full(Text("/wiki/edit/"+urlEncode(in.title)))
+      else Full(Text("/wiki/"+urlEncode(in.title)))
   }
   
   /**
    * What's the text of the link?
    */
   val text = new Loc.LinkText(calcLinkText _)
-  def calcLinkText(in: WikiLoc): NodeSeq = 
-    if(in.edit) Text("Wiki edit "+in.page) else Text("Wiki "+in.page)
+  def calcLinkText(in: Page): NodeSeq = 
+    if(in.edit) Text("Wiki edit "+in.title) else Text("Wiki "+in.title)
 
   /**
    * Rewrite the request so that we a) get friendly URLs and
    * b) get the appropriate page and context (edit or view) params
-   * in order to pass them to the WikiLoc 
+   * in order to pass them to the Page 
    */
   override val rewrite: LocRewrite = Full(NamedPF("Wiki Rewrite"){
-    case RewriteRequest(ParsePath("wiki" :: "edit" :: page :: Nil, _, _,_),_, _) =>
-      (RewriteResponse("wiki" :: Nil), WikiLoc(page, true))
-    case RewriteRequest(ParsePath("wiki" :: page :: Nil, _, _,_),_,_) =>
-      (RewriteResponse("wiki" :: Nil), WikiLoc(page, false))
+    case RewriteRequest(ParsePath("wiki" :: "edit" :: title :: Nil, _, _,_),_, _) =>
+      (RewriteResponse("wiki" :: Nil), Page(title, true))
+    case RewriteRequest(ParsePath("wiki" :: title :: Nil, _, _,_),_,_) =>
+      (RewriteResponse("wiki" :: Nil), Page(title, false))
   })
   
   /**
@@ -100,37 +100,36 @@ object Wiki extends Loc[WikiLoc] {
   
   
   /**
-   * Make the URL to be accessed based up the page in the WikiLoc. 
+   * Make the URL to be accessed based up the page in the Page. 
    * The createLink method already ensures that spaces etc are encoded
    */
-  def url(page: String) = createLink(WikiLoc(page, false))
+  def url(title: String) = createLink(Page(title, false))
   
   /**
    * The render bind for actually displaying the wiki contents. This will 
    * look just like what you are familiar with for creating snippets
    */
-  def editRecord(r: WikiEntry)(xhtml: NodeSeq): NodeSeq = {
+  def editRecord(r: WikiEntry) = {
     val isNew = !r.saved_?
     val pageName = r.name.is
-    <form action={url(pageName)} method="post">{
-      bind("e", chooseTemplate("display","edit", xhtml),
-      "message" -> (if(isNew) Text("Create Entry named '"+pageName+"'") 
-          else Text("Edit entry named '"+pageName+"'")),
-      "cancel" -> <a href={url(pageName)}>Cancel</a>,
-      "textarea" -> r.entry.toForm,
-      "submit" -> SHtml.submit(isNew ? "Add" | "Save", () => r.save)
-    )}</form>
+    "a [href]" #> url(pageName) &
+    "form [action]" #> url(pageName) &
+    "textarea" #> r.entry.toForm &
+    "type=submit" #> SHtml.submit(isNew ? "Add" | "Save", () => r.save) &
+    "message" #> 
+      (if(isNew) Text("Create Entry named '"+pageName+"'") 
+      else Text("Edit entry named '"+pageName+"'")) &
+    "edit ^*" #> NodeSeq.Empty
   }
   
   /** 
    * Pretty much the same as the editRecord method, but obviously
    * minus the err, editing.
    */
-  def displayRecord(entry: WikiEntry)(xhtml: NodeSeq): NodeSeq = 
-    bind("v",chooseTemplate("display","view", xhtml),
-      "content" -> TextileParser.toHtml(entry.entry, textileWriter),
-      "edit" -> <a href={createLink(WikiLoc(entry.name, true))}>Edit</a>
-    )
+  def displayRecord(entry: WikiEntry) = 
+    "content" #> TextileParser.toHtml(entry.entry, textileWriter) & 
+    "a [href]" #> createLink(Page(entry.name, true)) & 
+    "view ^*" #> NodeSeq.Empty
     
   private val textileWriter = Some((info: WikiURLInfo) =>
     info match {

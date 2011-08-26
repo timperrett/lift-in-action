@@ -25,5 +25,5 @@ object Book {
   
   implicit val booksAsPlainText: ReturnAs[List[Book], PlainTextResponse] = 
     (books:List[Book]) => PlainTextResponse("Books\n"+
-      books.map(b => "publisher:"+b.publisher + ", title:"+b.title))
+      books.map(b => "publisher: %s, title: %s".format(b.publisher, b.title)))
 }

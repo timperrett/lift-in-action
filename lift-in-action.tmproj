@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>chapter-7/src/main/webapp/wiki.html</string>
+	<string>chapter-9/src/main/webapp/lift_screen_ajax.html</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,72 +21,74 @@
 	<integer>449</integer>
 	<key>metaData</key>
 	<dict>
-		<key>chapter-7/src/main/scala/sample/lib/Wiki.scala</key>
+		<key>chapter-6/src/main/scala/sample/snippet/LiftScreenExample.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>128</integer>
+				<integer>38</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>117</integer>
+			<integer>18</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>30</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>131</integer>
+				<integer>31</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>128</integer>
+				<integer>38</integer>
 			</dict>
 		</dict>
-		<key>chapter-7/src/main/scala/sample/model/WikiEntry.scala</key>
+		<key>chapter-6/src/main/scala/sample/snippet/WizardExample.scala</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
+				<integer>6</integer>
+				<key>line</key>
+				<integer>10</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>36</integer>
+				<key>line</key>
+				<integer>11</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>6</integer>
+				<key>line</key>
+				<integer>10</integer>
+			</dict>
+		</dict>
+		<key>chapter-9/src/main/webapp/lift_screen_ajax.html</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>43</integer>
+				<key>line</key>
 				<integer>2</integer>
-				<key>line</key>
-				<integer>13</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>chapter-7/src/main/scala/sample/snippet/HelloWorld.scala</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>14</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>chapter-7/src/main/webapp/wiki.html</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>0</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
@@ -97,29 +99,28 @@
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>16</integer>
+				<integer>32</integer>
 				<key>line</key>
-				<integer>19</integer>
+				<integer>2</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>43</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>2</integer>
 			</dict>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>chapter-7/src/main/scala/sample/model/WikiEntry.scala</string>
-		<string>chapter-7/src/main/scala/sample/lib/Wiki.scala</string>
-		<string>chapter-7/src/main/webapp/wiki.html</string>
-		<string>chapter-7/src/main/scala/sample/snippet/HelloWorld.scala</string>
+		<string>chapter-6/src/main/scala/sample/snippet/WizardExample.scala</string>
+		<string>chapter-6/src/main/scala/sample/snippet/LiftScreenExample.scala</string>
+		<string>chapter-9/src/main/webapp/lift_screen_ajax.html</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<false/>
 	<key>windowFrame</key>
-	<string>{{200, 67}, {1240, 622}}</string>
+	<string>{{195, 65}, {1240, 622}}</string>
 </dict>
 </plist>

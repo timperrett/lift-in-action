@@ -18,13 +18,12 @@ class MoreAjax {
   
   private val editFormDiv = "edit_display"
   
-  def list = {
+  def list = 
     ".line" #> stock.is.map { b => 
       ".name *" #> b.title &
       ".name [id]" #> b.reference &
       ".edit" #> edit(b)
     }
-  }
   
   def edit(b: Book): NodeSeq => NodeSeq = { ns =>
     val form = 
@@ -32,11 +31,9 @@ class MoreAjax {
       "type=submit" #> SHtml.ajaxSubmit("Update", 
         () => SetHtml(b.reference, Text(b.title))
       ) andThen SHtml.makeFormsAjax 
+    
     SHtml.a(() => 
-      SetHtml(editFormDiv, form(ns)) & 
-      Show(editFormDiv, 1 seconds)
-    , Text("Edit"))
+      SetHtml(editFormDiv, form(ns)) & Show(editFormDiv, 1 seconds), 
+      Text("Edit"))
   }
-  
-  // def form(b: Book): NodeSeq => NodeSeq =
 }

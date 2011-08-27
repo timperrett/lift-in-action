@@ -3,7 +3,7 @@ package sample.snippet
 import scala.xml.{NodeSeq,Text}
 import net.liftweb.util.Helpers._
 import net.liftweb.http.{SHtml,SessionVar}
-import net.liftweb.http.js.JsCmds.SetHtml
+import net.liftweb.http.js.JsCmds.{SetHtml,Alert}
 import net.liftweb.http.js.jquery.JqJsCmds.{Show,Hide}
 
 case class Book(reference: String, var title: String)
@@ -20,19 +20,23 @@ class MoreAjax {
   
   def list = {
     ".line" #> stock.is.map { b => 
-      ".name" #> b.title &
-      ".line [id]" #> b.reference &
-      ".edit" #>((ns: NodeSeq) => SHtml.a(() => 
-        SetHtml(editFormDiv, SHtml.ajaxForm(edit(b)(ns), Hide(editFormDiv, 1 seconds))) & 
-        Show(editFormDiv, 1 seconds), Text("Edit"))
-      )
+      ".name *" #> b.title &
+      ".name [id]" #> b.reference &
+      ".edit" #> edit(b)
     }
   }
   
-  def edit(b: Book) = {
-    "#book_name" #> SHtml.text(b.title, b.title = _) &
-    "type=submit" #> SHtml.ajaxSubmit("Update", 
-      () => SetHtml(b.reference, Text(b.title))) 
+  def edit(b: Book): NodeSeq => NodeSeq = { ns =>
+    val form = 
+      "#book_name" #> SHtml.text(b.title, b.title = _) &
+      "type=submit" #> SHtml.ajaxSubmit("Update", 
+        () => SetHtml(b.reference, Text(b.title))
+      ) andThen SHtml.makeFormsAjax 
+    SHtml.a(() => 
+      SetHtml(editFormDiv, form(ns)) & 
+      Show(editFormDiv, 1 seconds)
+    , Text("Edit"))
   }
   
+  // def form(b: Book): NodeSeq => NodeSeq =
 }

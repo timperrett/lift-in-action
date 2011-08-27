@@ -132,7 +132,7 @@ class RockPaperScissors extends CometActor {
   
   def render = 
     if(!game.isEmpty)
-      "#information *" #> Text("Now you're playing! Make your move...") &
+      "#information *" #> "Now you're playing! Make your move..." &
       ".line" #> List(Rock, Paper, Scissors).map(move => 
         SHtml.ajaxButton(Text(move.toString), () => {
           game.foreach(_ ! Make(move, this))

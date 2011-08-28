@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>chapter-9/src/main/webapp/lift_screen_ajax.html</string>
+	<string>chapter-10/src/main/scala/net/liftweb/mapper/MappedSplitName.scala</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,6 +21,78 @@
 	<integer>449</integer>
 	<key>metaData</key>
 	<dict>
+		<key>chapter-10/src/main/scala/net/liftweb/mapper/MappedSplitName.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>17</integer>
+				<key>line</key>
+				<integer>18</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>11</integer>
+		</dict>
+		<key>chapter-10/src/main/scala/sample/model/Account.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>chapter-10/src/main/scala/sample/model/AggregationSample.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>7</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>chapter-10/src/main/scala/sample/snippet/LiftScreenSample.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>9</integer>
+				<key>line</key>
+				<integer>8</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>2</integer>
+				<key>line</key>
+				<integer>8</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>11</integer>
+				<key>line</key>
+				<integer>8</integer>
+			</dict>
+		</dict>
 		<key>chapter-6/src/main/scala/sample/snippet/LiftScreenExample.scala</key>
 		<dict>
 			<key>caret</key>
@@ -81,6 +153,20 @@
 				<integer>10</integer>
 			</dict>
 		</dict>
+		<key>chapter-9/src/main/scala/sample/snippet/MoreAJAX.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>5</integer>
+				<key>line</key>
+				<integer>25</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>12</integer>
+		</dict>
 		<key>chapter-9/src/main/webapp/lift_screen_ajax.html</key>
 		<dict>
 			<key>caret</key>
@@ -117,6 +203,11 @@
 		<string>chapter-6/src/main/scala/sample/snippet/WizardExample.scala</string>
 		<string>chapter-6/src/main/scala/sample/snippet/LiftScreenExample.scala</string>
 		<string>chapter-9/src/main/webapp/lift_screen_ajax.html</string>
+		<string>chapter-9/src/main/scala/sample/snippet/MoreAJAX.scala</string>
+		<string>chapter-10/src/main/scala/sample/model/AggregationSample.scala</string>
+		<string>chapter-10/src/main/scala/sample/model/Account.scala</string>
+		<string>chapter-10/src/main/scala/sample/snippet/LiftScreenSample.scala</string>
+		<string>chapter-10/src/main/scala/net/liftweb/mapper/MappedSplitName.scala</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<false/>

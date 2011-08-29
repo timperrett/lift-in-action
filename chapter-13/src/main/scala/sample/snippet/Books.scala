@@ -17,7 +17,7 @@ class Books {
     val current = book
     val authors = Model.createNamedQuery[Author]("findAllAuthors").getResultList
     val choices = authors.map(author => (author.id.toString -> author.name)).toList
-    val default = (Box !! book.author).map(_.id.toString) or Empty
+    val default = Full(Authors.authorVar.is.id.toString)
     
     "type=hidden" #> SHtml.hidden(() => bookVar(current)) &
     "name=title" #> SHtml.text(book.title, book.title = _) &

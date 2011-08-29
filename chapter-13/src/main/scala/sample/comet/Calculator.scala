@@ -11,7 +11,9 @@ class Calculator extends Actor {
         case "*" => a * b
         case "+" => a + b
         case "/" => a / b
-        case _ => println("Unknown type of maths fool!"); 0D
+        case _ => 
+          println("Unknown type of maths!")
+          0D
       }
       self.reply(result)
     }

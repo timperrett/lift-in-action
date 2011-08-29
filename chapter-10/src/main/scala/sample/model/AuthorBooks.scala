@@ -6,9 +6,9 @@ package sample.model
 // more than 10 or 15 types.
 import net.liftweb.mapper._
 
-object BookAuthors extends BookAuthors with MetaMapper[BookAuthors]
+object BookAuthors extends BookAuthors with LongKeyedMetaMapper[BookAuthors]
 
-class BookAuthors extends Mapper[BookAuthors] {
+class BookAuthors extends LongKeyedMapper[BookAuthors] with IdPK {
   def getSingleton = BookAuthors
   object author extends LongMappedMapper(this, Author)
   object book extends LongMappedMapper(this, Book)

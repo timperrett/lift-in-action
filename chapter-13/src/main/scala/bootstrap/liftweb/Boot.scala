@@ -27,14 +27,14 @@ class Boot extends LazyLoggable {
       Menu("Java Enterprise Integration") / "jee" / "index" submenus(
         Menu("JPA: Authors: List") / "jee" / "authors" / "index",
         Menu("JPA: Authors: Add") / "jee" / "authors" / "add",
-        Menu("JPA: Books: Add") / "jee" / "books" / "add",
-        Menu("JTA") / "jee" / "jta"
+        Menu("JPA: Books: Add") / "jee" / "books" / "add"
       ),
       Menu("Messaging and Distribution") / "distributed" >> EarlyResponse(() => Full(RedirectResponse("/distributed/akka-calculator"))) submenus(
         Menu("Comet Calculator") / "distributed" / "akka-calculator"
       )
     ))
     
+    import akka.actor.Actor
     import akka.actor.Actor.{remote,actorOf}
     import akka.actor.Supervisor
     import akka.config.Supervision.{SupervisorConfig,OneForOneStrategy,Supervise,Permanent}
@@ -49,9 +49,7 @@ class Boot extends LazyLoggable {
     // remote.register("hello-service", actorOf[HelloWorldActor])
     
     LiftRules.unloadHooks.append(() => {
-      actorOf[HelloWorldActor].shutdownLinkedActors()
-      actorOf[IntTransformer].shutdownLinkedActors()
-      actorOf[sample.comet.Calculator].shutdownLinkedActors()
+      Actor.registry.shutdownAll
     }) 
     
     /**

@@ -115,9 +115,6 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info) with Id
     val remote = "se.scalablesolutions.akka" % "akka-remote" % "1.0" % "compile"
     val hibem = "org.hibernate" % "hibernate-entitymanager" % "3.6.0.Final" % "compile"
     val hibval = "org.hibernate" % "hibernate-validator-annotation-processor" % "4.1.0.Final" % "compile"
-    // val atomikos_api = "com.atomikos" % "transactions-api" % "3.2.3" % "compile"
-    // val atomikos_jta = "com.atomikos" % "transactions-jta" % "3.2.3" % "compile"
-    // val atomikos_txn = "com.atomikos" % "transactions" % "3.2.3" % "compile"
   }
   
   class ChapterFourteen(info: ProjectInfo) 

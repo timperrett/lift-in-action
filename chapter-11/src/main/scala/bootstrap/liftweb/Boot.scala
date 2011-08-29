@@ -44,7 +44,7 @@ class Boot extends Loggable {
     /**
      * Add the request wrapper for database connectivity
      */
-    S.addAround(DB.buildLoanWrapper)
+    // S.addAround(DB.buildLoanWrapper)
     
     /**
      * CouchDB Setup

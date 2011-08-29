@@ -57,8 +57,9 @@ class CalculatorDisplay extends AkkaCometActor {
   def render = 
     "#value_one" #> doubleInput(one = _) &
     "#value_two" #> doubleInput(two = _) &
-    "#operation" #> SHtml.select(Seq("+","/","*").map(x => (x -> x)), 
-      operation, v => operation = Full(v)) &
+    "#operation" #> SHtml.select(Seq("+","/","*")
+      .map(x => (x -> x)), operation, 
+      v => operation = Full(v)) &
     "type=submit" #> SHtml.ajaxSubmit("Submit", () => {
       registry.actorFor[Calculator].map {
         _ ! Compute(one,two,operation.openOr("+"))

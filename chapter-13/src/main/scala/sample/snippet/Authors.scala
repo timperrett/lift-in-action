@@ -25,8 +25,8 @@ class Authors {
     }
   
   def add = {
-    val currentId = author.id
-    "type=hidden" #> SHtml.hidden(() => author.id = currentId) &
+    val current = author
+    "type=hidden" #> SHtml.hidden(() => authorVar(current)) &
     "type=text" #> SHtml.text(author.name, author.name = _) &
     "type=submit" #> SHtml.onSubmitUnit(() =>
       tryo(Model.mergeAndFlush(author)) match {

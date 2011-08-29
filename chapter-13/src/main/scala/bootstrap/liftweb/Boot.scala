@@ -23,7 +23,7 @@ class Boot extends LazyLoggable {
      * Build the sitemap
      */
     LiftRules.setSiteMap(SiteMap(
-      Menu("Home") / "index" >> EarlyResponse(() => Full(RedirectResponse("/localization/"))) >> Hidden,
+      Menu("Home") / "index" >> EarlyResponse(() => Full(RedirectResponse("/jee/"))) >> Hidden,
       Menu("Java Enterprise Integration") / "jee" / "index" submenus(
         Menu("JPA: Authors: List") / "jee" / "authors" / "index",
         Menu("JPA: Authors: Add") / "jee" / "authors" / "add",

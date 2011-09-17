@@ -1,7 +1,6 @@
 package sample.test
 
 import org.specs.{Specification,ScalaCheck}
-// import net.liftweb.http.BootManager
 
 trait SetupAndDestroy { _: Specification => 
   def setup(): Unit

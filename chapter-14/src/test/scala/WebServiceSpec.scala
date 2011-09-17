@@ -17,7 +17,7 @@ trait WebServiceSpec { _: Specification with JettySetupAndTearDown with TestKit 
   "Example web service" should {
     "List the days of the week in order" in {
       for {
-        days <- get("/testkit/services/days") !@ "Unable to get day list"
+        days <- get("/t/services/days") !@ "Unable to get day list"
         xml <- days.xml
       } {
         xml must ==/(<days>
@@ -31,15 +31,15 @@ trait WebServiceSpec { _: Specification with JettySetupAndTearDown with TestKit 
     }
     
     "Not have access to secret stuff if not authenticated" in {
-      get("/testkit/services/secret") ! (
+      get("/t/services/secret") ! (
         403, "Access should fail with unauthorized status"
       ) must haveClass[HttpResponse]
     }
     
     "Gain access to secret stuff if they are loggedin" in {
       for {
-        auth <- post("/testkit/services/login") !@ "Unable to login!"
-        resp <- auth.get("/testkit/services/secret") !@ "Not properly authenticated"
+        auth <- post("/t/services/login") !@ "Unable to login!"
+        resp <- auth.get("/t/services/secret") !@ "Not properly authenticated"
       }{
         resp must haveClass[HttpResponse]
       }

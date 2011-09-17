@@ -139,7 +139,7 @@ class RockPaperScissors extends CometActor {
           Run("$('button').attr('disabled',true);")
         }))
     else 
-      "#game *" replaceWith "Waiting in the lobby for an opponent..."
+      "#game *" #> "Waiting in the lobby for an opponent..."
   
   override def lifespan: Box[TimeSpan] = Full(2 minutes)
   

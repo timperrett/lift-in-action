@@ -30,7 +30,7 @@ trait BookRepository {
     }
 
     trait BookRepositoryComponent {
-      val repository: BookRepository
+      def repository: BookRepository
 
       class DefaultBookRepository extends BookRepository {
         def lookup(isbn: String): Option[Book] = Library.books.find(_.isbn == isbn)
@@ -39,7 +39,7 @@ trait BookRepository {
     }
 
     trait BookServiceComponent { _: BookRepositoryComponent =>
-      val service: BookService
+      def service: BookService
 
       class DefaultBookService extends BookService {
         def lookupBook(isbn: String) = repository.lookup(isbn)

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>chapter-14/src/test/scala/CookieListSpec.scala</string>
+	<string>chapter-14/src/main/scala/sample/model/Book.scala</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,6 +21,20 @@
 	<integer>449</integer>
 	<key>metaData</key>
 	<dict>
+		<key>chapter-14/src/main/scala/sample/dispatch/Example.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>11</integer>
+				<key>line</key>
+				<integer>10</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
 		<key>chapter-14/src/main/scala/sample/lib/DependencyInjection.scala</key>
 		<dict>
 			<key>caret</key>
@@ -34,6 +48,20 @@
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>16</integer>
+		</dict>
+		<key>chapter-14/src/main/scala/sample/model/Book.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>3</integer>
+				<key>line</key>
+				<integer>21</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
 		</dict>
 		<key>chapter-14/src/test/scala/CookieListSpec.scala</key>
 		<dict>
@@ -49,15 +77,47 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
+		<key>chapter-14/src/test/scala/SpecsExample.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>12</integer>
+				<key>line</key>
+				<integer>2</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>chapter-14/src/test/scala/WebServiceSpec.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>28</integer>
+				<key>line</key>
+				<integer>41</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>chapter-14/src/main/scala/sample/lib/DependencyInjection.scala</string>
 		<string>chapter-14/src/test/scala/CookieListSpec.scala</string>
+		<string>chapter-14/src/main/scala/sample/dispatch/Example.scala</string>
+		<string>chapter-14/src/test/scala/SpecsExample.scala</string>
+		<string>chapter-14/src/test/scala/WebServiceSpec.scala</string>
+		<string>chapter-14/src/main/scala/sample/model/Book.scala</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<false/>
 	<key>windowFrame</key>
-	<string>{{71, 103}, {1205, 775}}</string>
+	<string>{{70, 85}, {1205, 775}}</string>
 </dict>
 </plist>

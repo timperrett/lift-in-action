@@ -60,7 +60,7 @@ class Boot extends Loggable {
   }
   
   lazy val MySnippets = new DispatchLocSnippets {  
-    val dispatch: PartialFunction[String, NodeSeq => NodeSeq] = {  
+    override def dispatch = {  
       case "demo" => xhtml => bind("l",xhtml,"sample" -> "sample")
       case "thing" => xhtml => bind("x",xhtml,"some" -> "example")
     }

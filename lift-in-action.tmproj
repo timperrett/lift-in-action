@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>chapter-14/src/main/scala/sample/model/Book.scala</string>
+	<string>chapter-6/src/main/scala/sample/snippet/WizardExample.scala</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -21,6 +21,20 @@
 	<integer>449</integer>
 	<key>metaData</key>
 	<dict>
+		<key>chapter-11/src/main/webapp/templates-hidden/default.html</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>44</integer>
+				<key>line</key>
+				<integer>5</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
 		<key>chapter-14/src/main/scala/sample/dispatch/Example.scala</key>
 		<dict>
 			<key>caret</key>
@@ -54,9 +68,9 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>3</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>21</integer>
+				<integer>8</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -105,19 +119,28 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
+		<key>chapter-6/src/main/scala/sample/snippet/WizardExample.scala</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>6</integer>
+				<key>line</key>
+				<integer>10</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>chapter-14/src/main/scala/sample/lib/DependencyInjection.scala</string>
-		<string>chapter-14/src/test/scala/CookieListSpec.scala</string>
-		<string>chapter-14/src/main/scala/sample/dispatch/Example.scala</string>
-		<string>chapter-14/src/test/scala/SpecsExample.scala</string>
-		<string>chapter-14/src/test/scala/WebServiceSpec.scala</string>
-		<string>chapter-14/src/main/scala/sample/model/Book.scala</string>
+		<string>chapter-6/src/main/scala/sample/snippet/WizardExample.scala</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<false/>
 	<key>windowFrame</key>
-	<string>{{70, 85}, {1205, 775}}</string>
+	<string>{{235, 57}, {1205, 775}}</string>
 </dict>
 </plist>

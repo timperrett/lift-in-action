@@ -1,6 +1,5 @@
 import sbt._
 class Plugins(info: ProjectInfo) extends PluginDefinition(info) {
-  lazy val cloudbees = "eu.getintheloop" % "sbt-cloudbees-plugin" % "0.2.7"
   lazy val n2a = "eu.getintheloop" % "sbt-native2ascii-plugin" % "0.1.0"
   lazy val sbtYui = "hoffrocket" % "sbt-yui" % "0.2"
   lazy val scctPlugin = "reaktor" % "sbt-scct-for-2.8" % "0.1-SNAPSHOT"

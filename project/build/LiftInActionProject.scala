@@ -41,7 +41,6 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info) with Id
   class ChapterThree(info: ProjectInfo) 
       extends ChapterTwo(info) 
       with DatabaseDrivers
-      with DeployToStax 
   {
     val mapper = "net.liftweb" %% "lift-mapper" % liftVersion % "compile"
   }
@@ -49,7 +48,6 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info) with Id
   class ChapterFour(info: ProjectInfo) 
       extends ChapterThree(info) 
       with DatabaseDrivers 
-      with DeployToStax 
   {
     val textile = "net.liftweb" %% "lift-textile" % liftVersion % "compile"
   }
@@ -57,7 +55,6 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info) with Id
   class ChapterFive(info: ProjectInfo) 
       extends ChapterFour(info) 
       with DatabaseDrivers 
-      with DeployToStax 
   {
     val machine = "net.liftweb" %% "lift-machine" % liftVersion % "compile"
     val paypal = "net.liftweb" %% "lift-paypal" % liftVersion % "compile"
@@ -149,11 +146,6 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info) with Id
     val h2 = "com.h2database" % "h2" % h2Version % "compile"
     val mysql = "mysql" % "mysql-connector-java" % "5.1.12" % "compile"
     val postgresql = "postgresql" % "postgresql" % "9.0-801.jdbc4" % "compile"
-  }
-  
-  trait DeployToStax extends bees.RunCloudPlugin { _: DefaultWebProject =>
-    override def beesApplicationId = Some("liftinaction")
-    override def beesUsername = Some("timperrett")
   }
   
   // define some defaults

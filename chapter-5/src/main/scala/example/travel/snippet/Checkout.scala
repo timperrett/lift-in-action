@@ -11,7 +11,7 @@ object Checkout extends LiftScreen {
   addFields(() => order.shippingAddressTwo)
   addFields(() => order.shippingAddressCity)
   addFields(() => order.shippingAddressPostalCode)
-  addFields(() => order.shippingAddressCounty)
+  addFields(() => order.shippingAddressCountry)
   
   def finish(){
     if(order.save) S.redirectTo("summary")

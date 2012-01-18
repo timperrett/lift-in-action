@@ -32,10 +32,10 @@ class Order extends LongKeyedMapper[Order]
   object shippingAddressCity extends MappedString(this,255){
     override def displayName = "City"
   }
-  object shippingAddressPostalCode extends MappedPostalCode(this,shippingAddressCounty){
+  object shippingAddressPostalCode extends MappedPostalCode(this,shippingAddressCountry){
     override def displayName = "Postcode"
   }
-  object shippingAddressCounty extends MappedCountry(this){
+  object shippingAddressCountry extends MappedCountry(this){
     override def displayName = "Country"
   }
   

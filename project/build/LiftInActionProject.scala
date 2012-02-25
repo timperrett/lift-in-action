@@ -1,5 +1,4 @@
 import sbt._
-import hoffrocket.YuiCompressorPlugin
 import eu.getintheloop.Native2AsciiPlugin
 import reaktor.scct.ScctProject
 
@@ -151,7 +150,6 @@ class LiftInActionProject(info: ProjectInfo) extends ParentProject(info) with Id
   // define some defaults
   abstract class ProjectDefaults(info: ProjectInfo) 
       extends DefaultWebProject(info) 
-      with YuiCompressorPlugin
       with IdeaProject {
     
     override def compileOptions = Unchecked :: Deprecation :: super.compileOptions.toList
